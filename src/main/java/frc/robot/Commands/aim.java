@@ -30,6 +30,8 @@ public class aim extends CommandBase{
             List<PhotonTrackedTarget> targets = result.getTargets();
 
             //if remote button pressed is b, run speaker aiming
+            //speaker aiming is difficult because need to figure out how to calculate aiming even when not facing straight
+            //from the speaker
             if(true){
 
                 PhotonTrackedTarget leftSpeaker = targets.get(1);
@@ -48,9 +50,8 @@ public class aim extends CommandBase{
                 }
                 double dist = leftSpeaker.getSkew() - rightSpeaker.getSkew();
                 //figure out how to find dist between
-                if(dist > 0 && dist < 30){
-                    Robot.m_swerve.drive(0, 0, dist, false);
-                }
+                Robot.m_swerve.drive(0, 0, dist, false);
+                
             }
 
 
