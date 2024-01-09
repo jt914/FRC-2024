@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import org.photonvision.PhotonCamera;
+
+import frc.robot.Subsystems.Camera;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -13,6 +17,9 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    public static final Camera visionCam = new Camera();
+
     /* - - - SWERVE DRIVE CONSTANTS - - - */
     public static final int frontLeftDriveID = 4;
     public static final int frontRightDriveID = 6;
