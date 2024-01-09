@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.util.sendable.*;
 
 import frc.robot.Subsystems.*;
+import frc.robot.Subsystems.Swerve.Drivetrain;
 import frc.robot.Commands.*;;
 
 public class Robot extends TimedRobot {
@@ -25,7 +26,7 @@ public class Robot extends TimedRobot {
   public final static Drivetrain m_swerve = new Drivetrain();
   int routine1 = 1;
   int routine2 = 2;
-  Autos currentRoutine = new Autos();
+  autoRoutines currentRoutine = new autoRoutines();
 
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
   private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(Constants.xSlewRateLimiter);
