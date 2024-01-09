@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.Commands;
 
 public class Autos {
 
