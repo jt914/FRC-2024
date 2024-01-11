@@ -7,6 +7,7 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.Subsystems.Camera;
 
 
 public class aim extends CommandBase{
@@ -24,42 +25,11 @@ public class aim extends CommandBase{
     
     @Override
     public void execute(){
-        var result = Constants.visionCam.getLatestResult();
+        Camera.LimeLight vision = new Camera.LimeLight();
 
-        if(result.hasTargets()){
-            List<PhotonTrackedTarget> targets = result.getTargets();
-
-            //if remote button pressed is b, run speaker aiming
-            if(true){
-
-                PhotonTrackedTarget leftSpeaker = targets.get(1);
-                PhotonTrackedTarget rightSpeaker = targets.get(1);
-
-
-                for(PhotonTrackedTarget target : targets){
-
-                    if(target.getFiducialId() == 4 || target.getFiducialId() == 8){
-                        leftSpeaker = target;
-                    }
-                    if(target.getFiducialId() == 3 || target.getFiducialId() == 7){
-                        rightSpeaker = target;
-                    }
-
-                }
-                double dist = leftSpeaker.getSkew() - rightSpeaker.getSkew();
-                //figure out how to find dist between
-                if(dist > 0 && dist < 30){
-                    Robot.m_swerve.drive(0, 0, dist, false);
-                }
-            }
-
-
-
+        for (double i : vision.getTids()) {
+            System.out.println(i);
         }
-
-
-        
-        
     }
 
     
