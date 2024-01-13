@@ -4,12 +4,7 @@
 
 package frc.robot.Subsystems.Swerve;
 
-import com.kauailabs.navx.frc.*;
-
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class Gyro {

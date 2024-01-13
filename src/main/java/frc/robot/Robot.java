@@ -4,18 +4,8 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Commands.SwerveCommand;
-import frc.robot.Subsystems.Swerve.*;
 
 public class Robot extends TimedRobot {
   
