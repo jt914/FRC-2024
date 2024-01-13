@@ -10,11 +10,9 @@ import frc.robot.Robot;
 import frc.robot.Subsystems.Camera;
 
 
-public class aim extends CommandBase{
+public class AimCommand extends CommandBase{
 
-    public aim(){
-        //maybe depending on which target (apriltag) it sees, it will adjust aim code so only need 1 button
-    }
+
 
 
     @Override
@@ -25,11 +23,6 @@ public class aim extends CommandBase{
     
     @Override
     public void execute(){
-        Camera.LimeLight vision = new Camera.LimeLight();
-
-        for (double i : vision.getTids()) {
-            System.out.println(i);
-        }
     }
 
     

@@ -2,7 +2,7 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class autoRoutines {
+public class AutoCommand {
 
     public void runAuto(int routine)
     {

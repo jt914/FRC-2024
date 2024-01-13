@@ -4,10 +4,9 @@
 
 package frc.robot.Subsystems.Swerve;
 
-import javax.naming.LimitExceededException;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
@@ -19,12 +18,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import frc.robot.Constants;
 
 public class SwerveModule {
@@ -39,32 +36,26 @@ public class SwerveModule {
   public RelativeEncoder driveEncoder;
   public RelativeEncoder turnEncoder;
 
-  // Gains are for example purposes only - must be determined for your own robot!
-  // private final PIDController drivePIDController = new PIDController(0.025, 0, 0);
-
-  // Gains are for example purposes only - must be determined for your own robot!
   private final PIDController turnPIDController = new PIDController(0.006, 0.000, 0.00001);
       
-  // Gains are for example purposes only - must be determined for your own robot!
-  // private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(0.55493, 2.3014, 0.51488);
-  // private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(0, 2.3014, 0.51488);
-  private double turnEncoder180;
-  DigitalInput swerveLimitSwitch;
 
+  private double turnEncoder180;
+  
   /**
    * Constructs a SwerveModule with a drive motor, turning motor, drive encoder and turning encoder.
    *
    */
   public SwerveModule(int driveMotorID, int turnMotorID) 
   {
-    swerveLimitSwitch = new DigitalInput(driveMotorID);
     driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
     turnMotor = new CANSparkMax(turnMotorID , MotorType.kBrushless);
 
+    driveMotor.setIdleMode(IdleMode.kCoast);
+    turnMotor.setIdleMode(IdleMode.kCoast);
+
+
     driveEncoder = driveMotor.getEncoder();
     turnEncoder = turnMotor.getEncoder();
-    // unmodified_turningEncoder = m_turningMotor.getEncoder();
-    // m_turningEncoder = unmodified_turningEncoder.getPosition()*Math.toRadians((1/360)*(1/15.2));
 
     driveEncoder.setPosition(0);
     turnEncoder.setPosition(0);
@@ -76,11 +67,6 @@ public class SwerveModule {
     turnEncoder.setPositionConversionFactor(Constants.turnEncoderPositionConversion);
 
     
-
-    // Set the distance (in this case, angle) in radians per pulse for the turning encoder.
-    // This is the the angle through an entire rotation (2 * pi) divided by the
-    // encoder resolution.
-    // m_turningEncoder.setDistancePerPulse(2 * Math.PI / kEncoderResolution);
 
     
     // Limit the PID Controller's input range between -pi and pi and set the input
@@ -98,27 +84,16 @@ public class SwerveModule {
     double moduleVelocity = desiredState.speedMetersPerSecond;
     double moduleAngle = desiredState.angle.getDegrees();
     double optimizedModuleOutput[] = glacierOptimized(moduleAngle, getTurn180Angle(), moduleVelocity);
-      SmartDashboard.putNumber("moduleVelocity " + module, moduleVelocity);
-      SmartDashboard.putNumber("moduleAngle " + module, moduleAngle);
-      SmartDashboard.putNumber("turnPosition " + module, turnEncoder.getPosition());
-      SmartDashboard.putNumber("turn180Angle " + module, getTurn180Angle());
-      SmartDashboard.putNumber("optimizedAngle " + module, optimizedModuleOutput[0]);
-      SmartDashboard.putNumber("optimizedVelocity "+ module, optimizedModuleOutput[1]);
-
 
     double driveOutput = optimizedModuleOutput[1];
     driveMotor.setVoltage(driveOutput);
-      SmartDashboard.putNumber("driveOutput" + module, driveOutput);
+      // SmartDashboard.putNumber("driveOutput" + module, driveOutput);
 
     double turnOutput = MathUtil.clamp(turnPIDController.calculate(getTurn180Angle(), optimizedModuleOutput[0]), -0.4, 0.4);
-    turnMotor.set(turnOutput);
-      SmartDashboard.putNumber("turnOutput " + module, turnOutput);
-      SmartDashboard.putNumber("getTurn180Angle " + module, getTurn180Angle());
-      SmartDashboard.putBoolean("Switch " + swerveLimitSwitch.getChannel(), swerveLimitSwitch.get());
-    if(swerveLimitSwitch.get() == false)
-    {
-      turnEncoder.setPosition(0);
-    }
+    turnMotor.set(-turnOutput);
+      // SmartDashboard.putNumber("turnOutput " + module, turnOutput);
+      // SmartDashboard.putNumber("getTurn180Angle " + module, getTurn180Angle());
+
   }
 
   /**

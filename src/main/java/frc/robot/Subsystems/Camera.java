@@ -11,7 +11,7 @@ public class Camera {
         private NetworkTable table;
         
         public LimeLight() {
-            table = NetworkTableInstance.getDefault().getTable("limelight");
+            table = NetworkTableInstance.getDefault().getTable("limelight-cam");
         }
 
         public NetworkTable getTable() {
@@ -19,7 +19,8 @@ public class Camera {
         }
 
         public double getTid() {
-            return table.getEntry("id").getDouble(0);
+            System.out.println("getTid");
+            return table.getEntry("tid").getDouble(0);
         }
 
         public double[] getTids() {
