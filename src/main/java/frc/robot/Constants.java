@@ -31,12 +31,12 @@ public final class Constants {
 
     public static final int frontLeftDriveID = 4;
     public static final int frontRightDriveID = 6;
-    public static final int backLeftDriveID = 2;
+    public static final int backLeftDriveID = 1;
     public static final int backRightDriveID = 7;
 
     public static final int frontLeftTurnID = 3;
     public static final int frontRightTurnID = 5;
-    public static final int backLeftTurnID = 1;
+    public static final int backLeftTurnID = 2;
     public static final int backRightTurnID = 8;
 
     public static final double frontLeftOffset = 0;
@@ -45,8 +45,8 @@ public final class Constants {
     public static final double backRightoffset = 0;
 
     public static final double driveEncoderVelocityConversion = (1/5.33);
-    public static final double driveEncoderPositionConversion = 1/8;
-    public static final double turnEncoderPositionConversion = 1/23.684;
+    public static final double driveEncoderPositionConversion = 1;
+    public static final double turnEncoderPositionConversion = 1;
 
     public static final double drivetrainModuleOffset = 0.2923; /* Assuming the robot is square, the X & Y offset from the center of rotation to each module */
     public static final int numberOfModules = 4;

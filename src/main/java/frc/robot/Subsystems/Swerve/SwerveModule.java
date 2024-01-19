@@ -147,7 +147,7 @@ public class SwerveModule {
    */
   public SwerveModuleState getState() {
     return new SwerveModuleState(
-        driveEncoder.getVelocity(), new Rotation2d(turnEncoder.getPosition()*23.684*23.684));
+        driveEncoder.getVelocity(), new Rotation2d(turnEncoder.getPosition()*23.684));
   }
 
   /**
@@ -167,14 +167,14 @@ public class SwerveModule {
    * @return Angle of the module converted to a range between -180 degrees and 180 degrees
    */
   public double getTurn180Angle() {
-    if (turnEncoder.getPosition()*23.684*23.684 > 360) {
-      turnEncoder180 = ((turnEncoder.getPosition()*23.684*23.684) % 360) - 180;
+    if (turnEncoder.getPosition()*23.684 > 360) {
+      turnEncoder180 = ((turnEncoder.getPosition()*23.684) % 360) - 180;
     }
-    else if (turnEncoder.getPosition()*23.684*23.684 < 0) {
-      turnEncoder180 = ((turnEncoder.getPosition()*23.684* 23.684) % 360) + 180;
+    else if (turnEncoder.getPosition()*23.684 < 0) {
+      turnEncoder180 = ((turnEncoder.getPosition()*23.684) % 360) + 180;
     }
     else {
-      turnEncoder180 = (turnEncoder.getPosition()*23.684* 23.684) - 180;
+      turnEncoder180 = (turnEncoder.getPosition()*23.684) - 180;
     }
     return turnEncoder180;
   }
