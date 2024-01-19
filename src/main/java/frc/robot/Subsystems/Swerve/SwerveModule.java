@@ -41,14 +41,16 @@ public class SwerveModule {
   {
     driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
     turnMotor = new CANSparkMax(turnMotorID , MotorType.kBrushless);
-
+    driveMotor.restoreFactoryDefaults();
+    turnMotor.restoreFactoryDefaults();
     driveMotor.setIdleMode(IdleMode.kCoast);
     turnMotor.setIdleMode(IdleMode.kCoast);
 
 
     driveEncoder = driveMotor.getEncoder();
     turnEncoder = turnMotor.getEncoder();
-
+    driveMotor.burnFlash();
+    turnMotor.burnFlash();
     driveEncoder.setPosition(0);
     turnEncoder.setPosition(0);
 
