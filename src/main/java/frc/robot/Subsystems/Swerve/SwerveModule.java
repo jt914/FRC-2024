@@ -55,7 +55,7 @@ public class SwerveModule {
   {
     driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
     turnMotor = new CANSparkMax(turnMotorID , MotorType.kBrushless);
-    turnMotor.setInverted(false);
+    turnMotor.setInverted(true);
     turnMotor.burnFlash();
 
     driveEncoder = driveMotor.getEncoder();
@@ -157,7 +157,7 @@ public class SwerveModule {
    */
   public SwerveModulePosition getPosition() {
     return new SwerveModulePosition(
-        driveEncoder.getPosition(), new Rotation2d(turnEncoder.getPosition()));
+        driveEncoder.getPosition()/20, new Rotation2d(turnEncoder.getPosition()/23.684));
 
   }
 

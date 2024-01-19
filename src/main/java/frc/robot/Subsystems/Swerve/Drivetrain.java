@@ -52,15 +52,15 @@ public class Drivetrain {
     m_gyro = Constants.m_gyro;
     m_gyro.resetGyroYaw();
 
-    m_frontLeftLocation = new Translation2d(Constants.drivetrainModuleOffset, Constants.drivetrainModuleOffset);
-    m_frontRightLocation = new Translation2d(Constants.drivetrainModuleOffset, -Constants.drivetrainModuleOffset);
-    m_backLeftLocation = new Translation2d(-Constants.drivetrainModuleOffset, Constants.drivetrainModuleOffset);
-    m_backRightLocation = new Translation2d(-Constants.drivetrainModuleOffset, -Constants.drivetrainModuleOffset);
+    m_frontLeftLocation = new Translation2d(Constants.drivetrainModuleOffset, -Constants.drivetrainModuleOffset);
+    m_frontRightLocation = new Translation2d(Constants.drivetrainModuleOffset, Constants.drivetrainModuleOffset);
+    m_backLeftLocation = new Translation2d(-Constants.drivetrainModuleOffset, -Constants.drivetrainModuleOffset);
+    m_backRightLocation = new Translation2d(-Constants.drivetrainModuleOffset, Constants.drivetrainModuleOffset);
 
-    m_frontLeft = new SwerveModule(Constants.frontRightDriveID, Constants.frontRightTurnID);
-    m_frontRight = new SwerveModule(Constants.frontLeftDriveID, Constants.frontLeftTurnID);
-    m_backLeft = new SwerveModule(Constants.backRightDriveID, Constants.backRightTurnID);
-    m_backRight = new SwerveModule(Constants.backLeftDriveID, Constants.backLeftTurnID);
+    m_frontLeft = new SwerveModule(Constants.frontLeftDriveID, Constants.frontLeftTurnID);
+    m_frontRight = new SwerveModule(Constants.frontRightDriveID, Constants.frontRightTurnID);
+    m_backLeft = new SwerveModule(Constants.backLeftDriveID, Constants.backLeftTurnID);
+    m_backRight = new SwerveModule(Constants.backRightDriveID, Constants.backRightTurnID);
 
     m_kinematics =
       new SwerveDriveKinematics(
