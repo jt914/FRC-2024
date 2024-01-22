@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems.Swerve;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -35,10 +37,10 @@ public class Drivetrain {
 
   private final SwerveModule m_frontLeft;
   private final SwerveModule m_frontRight;
-  private final SwerveModule m_backLeft;
+  public final SwerveModule m_backLeft;
   private final SwerveModule m_backRight;
-  private Rotation2d m_previousAngle;
-  private SwerveDriveWheelPositions m_previousWheelPositions;
+
+  public SwerveModuleState[] states = new SwerveModuleState[4];
 
 
   private final SwerveDriveKinematics m_kinematics;
@@ -52,15 +54,15 @@ public class Drivetrain {
     m_gyro = Constants.m_gyro;
     m_gyro.resetGyroYaw();
 
-    m_frontLeftLocation = new Translation2d(Constants.drivetrainModuleOffset, -Constants.drivetrainModuleOffset);
-    m_frontRightLocation = new Translation2d(Constants.drivetrainModuleOffset, Constants.drivetrainModuleOffset);
-    m_backLeftLocation = new Translation2d(-Constants.drivetrainModuleOffset, -Constants.drivetrainModuleOffset);
-    m_backRightLocation = new Translation2d(-Constants.drivetrainModuleOffset, Constants.drivetrainModuleOffset);
+    m_frontLeftLocation = new Translation2d(Constants.drivetrainModuleOffset, Constants.drivetrainModuleOffset);
+    m_frontRightLocation = new Translation2d(Constants.drivetrainModuleOffset, -Constants.drivetrainModuleOffset);
+    m_backLeftLocation = new Translation2d(-Constants.drivetrainModuleOffset, Constants.drivetrainModuleOffset);
+    m_backRightLocation = new Translation2d(-Constants.drivetrainModuleOffset, -Constants.drivetrainModuleOffset);
 
-    m_frontLeft = new SwerveModule(Constants.frontLeftDriveID, Constants.frontLeftTurnID);
-    m_frontRight = new SwerveModule(Constants.frontRightDriveID, Constants.frontRightTurnID);
-    m_backLeft = new SwerveModule(Constants.backLeftDriveID, Constants.backLeftTurnID);
-    m_backRight = new SwerveModule(Constants.backRightDriveID, Constants.backRightTurnID);
+    m_frontLeft = new SwerveModule(Constants.frontLeftDriveID, Constants.frontLeftTurnID,0);
+    m_frontRight = new SwerveModule(Constants.frontRightDriveID, Constants.frontRightTurnID,1);
+    m_backLeft = new SwerveModule(Constants.backLeftDriveID, Constants.backLeftTurnID,2);
+    m_backRight = new SwerveModule(Constants.backRightDriveID, Constants.backRightTurnID,3);
 
     m_kinematics =
       new SwerveDriveKinematics(
@@ -77,8 +79,6 @@ public class Drivetrain {
         m_backLeft.getPosition(),
         m_backRight.getPosition() }
         );
-    m_previousAngle = new Rotation2d(Constants.m_gyro.getTotalAngleDegrees());
-    m_previousWheelPositions = new SwerveDriveWheelPositions(new SwerveModulePosition[] {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_backLeft.getPosition(), m_backRight.getPosition()});;
 
   }
 
@@ -98,12 +98,18 @@ public class Drivetrain {
     //             : new ChassisSpeeds(xSpeed, ySpeed, rot));
 
     var swerveModuleStates = m_kinematics.toSwerveModuleStates(new ChassisSpeeds(xSpeed, ySpeed, yaw));
-    
+
+
+    Logger.recordOutput("MyStates", swerveModuleStates);
+    states = swerveModuleStates;
+
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, 12);
     m_frontLeft.setModuleState(swerveModuleStates[0], 0);
     m_frontRight.setModuleState(swerveModuleStates[1], 1);
     m_backLeft.setModuleState(swerveModuleStates[2], 2);
     m_backRight.setModuleState(swerveModuleStates[3], 3);
+
+    
     // SmartDashboard.putNumber("xSpeed", xSpeed);
     // SmartDashboard.putNumber("ySpeed", ySpeed);
     // SmartDashboard.putNumber("rotation", yaw);
@@ -111,18 +117,20 @@ public class Drivetrain {
 
   /** Updates the field relative position of the robot. */
   public void updateOdometry() {
-    SwerveDriveWheelPositions wheelPositions = new SwerveDriveWheelPositions(new SwerveModulePosition[] {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_backLeft.getPosition(), m_backRight.getPosition()});
-    Rotation2d angle = new Rotation2d(Constants.m_gyro.getTotalAngleDegrees());
+    // SwerveDriveWheelPositions wheelPositions = new SwerveDriveWheelPositions(new SwerveModulePosition[] {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_backLeft.getPosition(), m_backRight.getPosition()});
+    // Rotation2d angle = new Rotation2d(Constants.m_gyro.getTotalAngleDegrees());
 
-    Twist2d twist = m_kinematics.toTwist2d(m_previousWheelPositions, wheelPositions);
-    twist.dtheta = angle.minus(m_previousAngle).getRadians();
+    // Twist2d twist = m_kinematics.toTwist2d(m_previousWheelPositions, wheelPositions);
+    // twist.dtheta = angle.minus(m_previousAngle).getRadians();
     // SmartDashboard.putNumber("twist", twist.dtheta);
     // SmartDashboard.putNumber("twistX", twist.dx);
     // SmartDashboard.putNumber("twistY", twist.dy);
 
-    SmartDashboard.putString("previous", m_previousWheelPositions.toString());
-    SmartDashboard.putString("current", wheelPositions.toString());
+    // SmartDashboard.putString("previous", m_previousWheelPositions.toString());
+    // SmartDashboard.putString("current", wheelPositions.toString());
 
+
+    //CHECK IF ROTATING CORRECT AMT
     m_odometry.update(
         Rotation2d.fromDegrees(m_gyro.getTotalAngleDegrees()),
         new SwerveModulePosition[] {
@@ -130,6 +138,8 @@ public class Drivetrain {
           m_frontRight.getPosition(),
           m_backLeft.getPosition(),
           m_backRight.getPosition()
+
+
         });
 
     SmartDashboard.putNumber("frontLeft", m_frontLeft.getPosition().distanceMeters);
@@ -137,10 +147,8 @@ public class Drivetrain {
 
     SmartDashboard.putNumber("yDist", m_odometry.getPoseMeters().getY());
     SmartDashboard.putNumber("XDist", m_odometry.getPoseMeters().getX());
+    SmartDashboard.putNumber("deg", m_odometry.getPoseMeters().getRotation().getDegrees());
 
-    m_previousWheelPositions = new SwerveDriveWheelPositions(new SwerveModulePosition[] {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_backLeft.getPosition(), m_backRight.getPosition()});
-
-    m_previousAngle = angle;
 
   }
 

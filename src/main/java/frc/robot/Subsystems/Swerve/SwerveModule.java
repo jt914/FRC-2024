@@ -25,12 +25,13 @@ import frc.robot.Constants;
 
 public class SwerveModule {
   private static final int kEncoderResolution = 1;
+  private int id = 0;
 
   private static final double kModuleMaxAngularVelocity = Drivetrain.kMaxAngularSpeed;
   private static final double kModuleMaxAngularAcceleration = 2 * Math.PI; // radians per second squared
 
-  private final CANSparkMax driveMotor;
-  private final CANSparkMax turnMotor;
+  public final CANSparkMax driveMotor;
+  public final CANSparkMax turnMotor;
 
   public RelativeEncoder driveEncoder;
   public RelativeEncoder turnEncoder;
@@ -51,15 +52,18 @@ public class SwerveModule {
    * Constructs a SwerveModule with a drive motor, turning motor, drive encoder and turning encoder.
    *
    */
-  public SwerveModule(int driveMotorID, int turnMotorID) 
+  public SwerveModule(int driveMotorID, int turnMotorID, int Id) 
   {
     driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
     turnMotor = new CANSparkMax(turnMotorID , MotorType.kBrushless);
-    turnMotor.setInverted(true);
-    turnMotor.burnFlash();
+    driveMotor.restoreFactoryDefaults();
+    turnMotor.restoreFactoryDefaults();
+    id = Id;
 
+    
     driveEncoder = driveMotor.getEncoder();
     turnEncoder = turnMotor.getEncoder();
+
     // unmodified_turningEncoder = m_turningMotor.getEncoder();
     // m_turningEncoder = unmodified_turningEncoder.getPosition()*Math.toRadians((1/360)*(1/15.2));
 
@@ -72,8 +76,6 @@ public class SwerveModule {
     driveEncoder.setPositionConversionFactor(Constants.driveEncoderPositionConversion);
     turnEncoder.setPositionConversionFactor(Constants.turnEncoderPositionConversion);
 
-    
-
     // Set the distance (in this case, angle) in radians per pulse for the turning encoder.
     // This is the the angle through an entire rotation (2 * pi) divided by the
     // encoder resolution.
@@ -83,6 +85,12 @@ public class SwerveModule {
     // Limit the PID Controller's input range between -pi and pi and set the input
     // to be continuous.
     turnPIDController.enableContinuousInput(-180,  180);
+    driveMotor.setInverted(true);
+    turnMotor.setInverted(true);
+
+    driveMotor.burnFlash();
+    turnMotor.burnFlash();
+    
   }
 
   /**
@@ -156,8 +164,22 @@ public class SwerveModule {
    * @return The current position of the module.
    */
   public SwerveModulePosition getPosition() {
+    // if(Constants.m_swerve != null && Constants.m_swerve.states != null && Constants.m_swerve.states[id] != null && Constants.m_swerve.states[id].angle != null){
+    //   if(id == 0)
+    //     System.out.println(Constants.m_swerve.states[id].angle);
+
+    //   return new SwerveModulePosition(driveEncoder.getPosition()/20, Constants.m_swerve.states[id].angle);
+    // }
+
+
+  
+  //        driveEncoder.getPosition()/20, new Rotation2d(turnEncoder.getPosition()*15.2 * 2 * Math.PI));
+        // driveEncoder.getPosition()/20, new Rotation2d(turnEncoder.getPosition()*23.684));
+
+        // System.out.println("updating");
+
     return new SwerveModulePosition(
-        driveEncoder.getPosition()/20, new Rotation2d(turnEncoder.getPosition()/23.684));
+         driveEncoder.getPosition()/20, new Rotation2d(turnEncoder.getPosition()/15.2 * 2 * Math.PI));
 
   }
 
@@ -169,6 +191,7 @@ public class SwerveModule {
   public double getTurn180Angle() {
     if (turnEncoder.getPosition()*23.684 > 360) {
       turnEncoder180 = ((turnEncoder.getPosition()*23.684) % 360) - 180;
+
     }
     else if (turnEncoder.getPosition()*23.684 < 0) {
       turnEncoder180 = ((turnEncoder.getPosition()*23.684) % 360) + 180;

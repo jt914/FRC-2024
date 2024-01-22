@@ -4,6 +4,13 @@
 
 package frc.robot;
 
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.MathUtil;
@@ -17,9 +24,11 @@ import frc.robot.Subsystems.Swerve.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.SPI;
 
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
     Field2d m_field = new Field2d();
 
   
@@ -27,6 +36,19 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    // Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+
+    // if (isReal()) {
+    //     Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+    // } else {
+    //     setUseTiming(false); // Run as fast as possible
+    //     String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
+    //     Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
+    // }
+
+    // // Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
+    // Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+
   }
 
   @Override
@@ -45,6 +67,7 @@ public class Robot extends TimedRobot {
     // this line or comment it out.
     // if (m_autonomousCommand != null) {
     //   m_autonomousCommand.cancel();
+
     CommandScheduler.getInstance().schedule(new SwerveCommand());
     SmartDashboard.putData("Field", m_field);
 
