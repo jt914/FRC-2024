@@ -30,6 +30,7 @@ public class SwerveModule {
   private static final double kModuleMaxAngularVelocity = Drivetrain.kMaxAngularSpeed;
   private static final double kModuleMaxAngularAcceleration = 2 * Math.PI; // radians per second squared
 
+  private double previousState;
   public final CANSparkMax driveMotor;
   public final CANSparkMax turnMotor;
 
@@ -129,8 +130,15 @@ public class SwerveModule {
    * @param moduleVelocity In voltage (relies on motor kv and gear ratio)
    * @return Optimized angle and velocity calculations, in that order
    */
+
+  // public double[] optimized(double desiredModuleAngle, double currentModuleAngle, double moduleVelocity){
+
+
+  //   return null;
+  // }
   public double[] glacierOptimized(double desiredModuleAngle, double currentModuleAngle, double moduleVelocity) {
     double optimized[] = new double[2];
+    //current 179 desired 1
       if (Math.abs(desiredModuleAngle - currentModuleAngle) > 90 && Math.abs(desiredModuleAngle) + Math.abs(currentModuleAngle) < 270) {
         if (desiredModuleAngle >= 0) {
             optimized[0] = desiredModuleAngle - 180;
@@ -145,6 +153,14 @@ public class SwerveModule {
         optimized[0] = desiredModuleAngle;
         optimized[1] = moduleVelocity;
       }
+
+        SmartDashboard.putNumber("current", previousState);
+        SmartDashboard.putNumber("desired", desiredModuleAngle);
+        SmartDashboard.putNumber("optimized", optimized[0]);
+
+        previousState = optimized[0];
+        
+
     return optimized;
   }
   
@@ -179,7 +195,7 @@ public class SwerveModule {
         // System.out.println("updating");
 
     return new SwerveModulePosition(
-         driveEncoder.getPosition()/20, new Rotation2d(turnEncoder.getPosition()/15.2 * 2 * Math.PI));
+         -driveEncoder.getPosition()/26.5, new Rotation2d(turnEncoder.getPosition()/15.2 * 2 * Math.PI));
 
   }
 

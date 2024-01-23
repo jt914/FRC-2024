@@ -28,6 +28,7 @@ public class Camera {
         }
     }
 
+    
 
     public Camera(){
         cam = new PhotonCamera("photonvision");
@@ -42,5 +43,28 @@ public class Camera {
     public void end(){
         cam.close();
     }
+
+    public double[] getDesiredShoot(){
+        /*
+        1. use Camera to get pose from hood
+        2. calculate optimal arm angle and shooter speed for camera
+        might need to do testing
+        
+        */
+        return new double[3];
+        //index 0 is optimal arm angle, index 1 is bot speed, index 2 is top speed, 
+        
+    }
+
+    public double getDriveOffset(){
+        /*
+        1. use Camera to get pose from hood
+        2. calculate rotation needed to make it
+        might need to do testing
+        
+        */
+        return 0;
+    }
+
 
 }

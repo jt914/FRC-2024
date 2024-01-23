@@ -100,8 +100,8 @@ public class Drivetrain {
     var swerveModuleStates = m_kinematics.toSwerveModuleStates(new ChassisSpeeds(xSpeed, ySpeed, yaw));
 
 
-    Logger.recordOutput("MyStates", swerveModuleStates);
-    states = swerveModuleStates;
+    // Logger.recordOutput("MyStates", swerveModuleStates);
+    // states = swerveModuleStates;
 
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, 12);
     m_frontLeft.setModuleState(swerveModuleStates[0], 0);
@@ -145,7 +145,7 @@ public class Drivetrain {
     SmartDashboard.putNumber("frontLeft", m_frontLeft.getPosition().distanceMeters);
     SmartDashboard.putNumber("frontRight", m_frontRight.getPosition().distanceMeters);
 
-    SmartDashboard.putNumber("yDist", m_odometry.getPoseMeters().getY());
+    SmartDashboard.putNumber("yDist", m_odometry.getPoseMeters().getY()/12);
     SmartDashboard.putNumber("XDist", m_odometry.getPoseMeters().getX());
     SmartDashboard.putNumber("deg", m_odometry.getPoseMeters().getRotation().getDegrees());
 

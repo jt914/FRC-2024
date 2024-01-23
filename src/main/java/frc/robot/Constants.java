@@ -3,14 +3,15 @@ package frc.robot;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Subsystems.*;
 import frc.robot.Subsystems.Swerve.Drivetrain;
 import frc.robot.Subsystems.Swerve.Gyro;
 
 public final class Constants {
 
     /* Controller Constants */
-    public static final XboxController swerveController = new XboxController(0);
-    public static final XboxController alternateController = new XboxController(1);
+    public static final XboxController swerveController = new XboxController(1);
+    public static final XboxController alternateController = new XboxController(0);
 
     
     public static final double swerveControllerLeftStickDeadband = 0.1;
@@ -25,10 +26,16 @@ public final class Constants {
 
 
 
-    /* - - - SWERVE DRIVE CONSTANTS - - - */
-
+    /* Mechanisms */
     public static final Gyro m_gyro = new Gyro(90);
     public static final Drivetrain m_swerve = new Drivetrain();
+    public static final Arm arm = new Arm();
+    public static final Intake intake = new Intake();
+    public static final Shooter shooter = new Shooter();
+    public static final Camera camera = new Camera();
+
+
+    /* - - - SWERVE DRIVE CONSTANTS - - - */
 
     public static final int frontLeftDriveID = 4;
     public static final int frontRightDriveID = 6;
@@ -55,6 +62,13 @@ public final class Constants {
     public static final double radiansPerSecondMultiplier = 6; /* Max angular rate in radians/second */
 
     /* - - - OTHER CONSTANTS - - - */
+
+    public static final int intakeID = 9; 
+    public static final int shooterTopID = 10; 
+    public static final int shooterBotID = 11; 
+    public static final int armLeftID = 12; 
+    public static final int armRightID = 13; 
+
 
 
 

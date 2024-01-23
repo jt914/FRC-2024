@@ -17,8 +17,13 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Commands.IntakeCommand;
+import frc.robot.Commands.ShooterCommand;
 import frc.robot.Commands.SwerveCommand;
 import frc.robot.Subsystems.Swerve.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -30,25 +35,44 @@ import edu.wpi.first.wpilibj.SPI;
 
 public class Robot extends LoggedRobot {
     Field2d m_field = new Field2d();
-
+    private boolean startedSwerve = false;
+    private ShooterCommand currentShoot;
+    private IntakeCommand currentIntake;
   
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
 
   @Override
   public void robotInit() {
-    // Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+    Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
-    // if (isReal()) {
-    //     Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-    // } else {
-    //     setUseTiming(false); // Run as fast as possible
-    //     String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
-    //     Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
-    // }
+    if (isReal()) {
+        Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+    } else {
+        setUseTiming(false); // Run as fast as possible
+        Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
 
-    // // Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
-    // Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+        // String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
+        // Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
+    }
 
+    // Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
+    Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+
+  }
+
+  @Override
+  public void robotPeriodic(){
+    double ySpeed = -1 * Constants.m_yspeedLimiter.calculate(Constants.swerveController.getLeftX()) * Drivetrain.kMaxVoltage;
+    double xSpeed = -1 * Constants.m_xspeedLimiter.calculate(Constants.swerveController.getLeftY()) * Drivetrain.kMaxVoltage;
+    double yaw = -1 * Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
+
+    // SmartDashboard.putNumber("xSpeed ", xSpeed);
+    // SmartDashboard.putNumber("ySpeed ", ySpeed);
+    // SmartDashboard.putNumber("yaw ", yaw);
+    // SmartDashboard.putNumber("gyro angle ", Constants.m_gyro.getTotalAngleDegrees());
+    
+    Constants.m_swerve.drive(xSpeed, ySpeed, yaw);
+  
   }
 
   @Override
@@ -68,7 +92,6 @@ public class Robot extends LoggedRobot {
     // if (m_autonomousCommand != null) {
     //   m_autonomousCommand.cancel();
 
-    CommandScheduler.getInstance().schedule(new SwerveCommand());
     SmartDashboard.putData("Field", m_field);
 
 
@@ -77,8 +100,32 @@ public class Robot extends LoggedRobot {
   boolean fieldRelative = false;
   @Override
   public void teleopPeriodic() {
+    if (Constants.swerveController.getStartButtonPressed() && !startedSwerve) {
+      startedSwerve = true;
+      CommandScheduler.getInstance().schedule(new SwerveCommand());
+    }  
+
+    if(Constants.alternateController.getBButtonPressed()){
+      if(currentShoot != null){
+        CommandScheduler.getInstance().cancel(currentShoot);
+      }
+      // currentShoot = new ParallelCommandGroup(new AimCommand(), new ShooterCommand());
+      currentShoot = new ShooterCommand();
+
+      CommandScheduler.getInstance().schedule(currentShoot);
+    }
+
+    if(Constants.alternateController.getAButtonPressed()){
+      if(currentIntake != null){
+        CommandScheduler.getInstance().cancel(currentIntake);
+      }
+      currentIntake = new IntakeCommand();
+      CommandScheduler.getInstance().schedule(currentShoot);
+    }
+
+
     CommandScheduler.getInstance().run();
-    m_field.setRobotPose(Constants.m_swerve.m_odometry.getPoseMeters());
+    // m_field.setRobotPose(Constants.m_swerve.m_odometry.getPoseMeters());
 
   }
 

@@ -10,7 +10,7 @@ import frc.robot.Subsystems.Swerve.Drivetrain;
 public class SwerveCommand extends Command{
 
     private boolean fieldRelative = false;
-    private boolean driving = false;
+    private boolean driving = true;
 
 
     @Override
@@ -25,9 +25,6 @@ public class SwerveCommand extends Command{
 
         if (Constants.swerveController.getBackButtonPressed()) {
           fieldRelative = !fieldRelative;
-        }
-        if (Constants.swerveController.getStartButton()) {
-            driving = !driving;
         }
         if(driving){
             SmartDashboard.putBoolean("fieldRelative", fieldRelative);
@@ -81,7 +78,9 @@ public class SwerveCommand extends Command{
       // SmartDashboard.putNumber("ySpeed ", ySpeed);
       // SmartDashboard.putNumber("yaw ", yaw);
       // SmartDashboard.putNumber("gyro angle ", Constants.m_gyro.getTotalAngleDegrees());
-      
+      SmartDashboard.putNumber("LeftX", Constants.swerveController.getLeftX());
+      SmartDashboard.putNumber("LeftY", Constants.swerveController.getLeftY());
+
       Constants.m_swerve.drive(xSpeed, ySpeed, yaw);
     }
   
