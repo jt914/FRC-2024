@@ -120,7 +120,7 @@ public class Robot extends LoggedRobot {
         CommandScheduler.getInstance().cancel(currentIntake);
       }
       currentIntake = new IntakeCommand();
-      CommandScheduler.getInstance().schedule(currentShoot);
+      CommandScheduler.getInstance().schedule(currentIntake);
     }
 
 
