@@ -2,6 +2,7 @@ package frc.robot.Subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -14,7 +15,9 @@ public class Arm extends SubsystemBase{
 
     private double currentPos;
     private CANSparkMax armLeft,armRight;
-    private DutyCycleEncoder armEnc;
+    // private DutyCycleEncoder armEnc;
+    private RelativeEncoder armEnc;
+
     private double kP, kI, kD;
 
     public Arm() {
@@ -30,7 +33,8 @@ public class Arm extends SubsystemBase{
         armRight.enableVoltageCompensation(11);
         armRight.burnFlash();
 
-        armEnc = new DutyCycleEncoder(1); //idk what goes here
+        // armEnc = new DutyCycleEncoder(1); //idk what goes here
+        armEnc = armLeft.getEncoder(); //idk what goes here
 
         kP = 0.001;
         kI = 0;
@@ -43,7 +47,7 @@ public class Arm extends SubsystemBase{
      * @return updates and returns updated position of arm
      */
     public double updateAngle(){
-        currentPos = armEnc.getAbsolutePosition()/1; //need to put some conversion factor here (??)
+        currentPos = armEnc.getPosition()/360; //need to put some conversion factor here (??)
         return currentPos;
     }
 
@@ -57,8 +61,6 @@ public class Arm extends SubsystemBase{
         double power = kP * (currentPos-desiredAngle);
         armLeft.set(power);
         armRight.set(power);
-
-
     }
 
     public void stop() {

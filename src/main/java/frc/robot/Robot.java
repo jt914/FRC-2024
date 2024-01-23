@@ -36,8 +36,6 @@ import edu.wpi.first.wpilibj.SPI;
 public class Robot extends LoggedRobot {
     Field2d m_field = new Field2d();
     private boolean startedSwerve = false;
-    private ShooterCommand currentShoot;
-    private IntakeCommand currentIntake;
   
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
 
@@ -100,28 +98,7 @@ public class Robot extends LoggedRobot {
   boolean fieldRelative = false;
   @Override
   public void teleopPeriodic() {
-    if (Constants.swerveController.getStartButtonPressed() && !startedSwerve) {
-      startedSwerve = true;
-      CommandScheduler.getInstance().schedule(new SwerveCommand());
-    }  
 
-    if(Constants.alternateController.getBButtonPressed()){
-      if(currentShoot != null){
-        CommandScheduler.getInstance().cancel(currentShoot);
-      }
-      // currentShoot = new ParallelCommandGroup(new AimCommand(), new ShooterCommand());
-      currentShoot = new ShooterCommand();
-
-      CommandScheduler.getInstance().schedule(currentShoot);
-    }
-
-    if(Constants.alternateController.getAButtonPressed()){
-      if(currentIntake != null){
-        CommandScheduler.getInstance().cancel(currentIntake);
-      }
-      currentIntake = new IntakeCommand();
-      CommandScheduler.getInstance().schedule(currentIntake);
-    }
 
 
     CommandScheduler.getInstance().run();

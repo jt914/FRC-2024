@@ -4,7 +4,6 @@ import frc.robot.Constants;
 
 public class IntakeCommand extends Command {
 
-    private boolean isFinished;
 
 
 
@@ -12,32 +11,20 @@ public class IntakeCommand extends Command {
     public void initialize(){
         if(Constants.intake.running){
             Constants.intake.stop();
-            isFinished = true;
         } else{
             Constants.intake.run();
-            isFinished = true;
         }
         
 
     }
 
-    
-    @Override
-    public void execute(){
-    }
 
-    
-    @Override
-    public void end(boolean interrupted){
 
-        
-        
-    }
 
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return true;
     }
 
 

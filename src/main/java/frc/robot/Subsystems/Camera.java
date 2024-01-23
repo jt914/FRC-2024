@@ -51,7 +51,9 @@ public class Camera {
         might need to do testing
         
         */
-        return new double[3];
+
+        double[] ret = new double[]{5, 0.2, 0.2};
+        return ret;
         //index 0 is optimal arm angle, index 1 is bot speed, index 2 is top speed, 
         
     }

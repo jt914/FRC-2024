@@ -34,14 +34,14 @@ public class ShooterCommand extends Command{
         double desiredAngle = Constants.camera.getDriveOffset();
 
         //margin of errors, should be adjusted
-        if(Math.abs(optimal[0] - Constants.arm.updateAngle()) < 10 && Math.abs(Constants.m_gyro.getTotalAngleDegrees()%360 - desiredAngle) < 5){
+        if(Math.abs(optimal[0] - Constants.arm.updateAngle()) < 1 && Math.abs(Constants.m_gyro.getTotalAngleDegrees()%360 - desiredAngle) < 5){
             Constants.intake.reverse(); //to shoot the note out
             isFinished = true;
         }
 
         Constants.arm.set(optimal[0]);
         Constants.shooter.setSpeed(optimal[1], optimal[2]);
-        Constants.m_swerve.drive(0,0, desiredAngle);
+        // Constants.m_swerve.drive(0,0, desiredAngle);
         
     }
 
