@@ -20,7 +20,7 @@ public class Shooter extends SubsystemBase{
         shooterTop.enableVoltageCompensation(11);
         shooterTop.burnFlash();
 
-        shooterBot = new CANSparkMax(Constants.shooterTopID, MotorType.kBrushless);
+        shooterBot = new CANSparkMax(Constants.shooterBotID, MotorType.kBrushless);
         shooterBot.restoreFactoryDefaults();
         shooterBot.setIdleMode(IdleMode.kCoast);
         shooterBot.enableVoltageCompensation(11);

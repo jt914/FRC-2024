@@ -56,7 +56,7 @@ public class Arm extends SubsystemBase{
      * @param desiredAngle desired arm angle
      */
 
-    public void set(double desiredAngle) {
+    public void setAngle(double desiredAngle) {
         updateAngle();
         double power = kP * (currentPos-desiredAngle);
         armLeft.set(power);

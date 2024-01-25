@@ -31,8 +31,8 @@ public class SwerveModule {
   private static final double kModuleMaxAngularAcceleration = 2 * Math.PI; // radians per second squared
 
   private double previousState;
-  public final CANSparkMax driveMotor;
-  public final CANSparkMax turnMotor;
+  // public final CANSparkMax driveMotor;
+  // public final CANSparkMax turnMotor;
 
   public RelativeEncoder driveEncoder;
   public RelativeEncoder turnEncoder;
@@ -55,15 +55,15 @@ public class SwerveModule {
    */
   public SwerveModule(int driveMotorID, int turnMotorID, int Id) 
   {
-    driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
-    turnMotor = new CANSparkMax(turnMotorID , MotorType.kBrushless);
-    driveMotor.restoreFactoryDefaults();
-    turnMotor.restoreFactoryDefaults();
+    // driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
+    // turnMotor = new CANSparkMax(turnMotorID , MotorType.kBrushless);
+    // driveMotor.restoreFactoryDefaults();
+    // turnMotor.restoreFactoryDefaults();
     id = Id;
 
     
-    driveEncoder = driveMotor.getEncoder();
-    turnEncoder = turnMotor.getEncoder();
+    // driveEncoder = driveMotor.getEncoder();
+    // turnEncoder = turnMotor.getEncoder();
 
     // unmodified_turningEncoder = m_turningMotor.getEncoder();
     // m_turningEncoder = unmodified_turningEncoder.getPosition()*Math.toRadians((1/360)*(1/15.2));
@@ -86,11 +86,11 @@ public class SwerveModule {
     // Limit the PID Controller's input range between -pi and pi and set the input
     // to be continuous.
     turnPIDController.enableContinuousInput(-180,  180);
-    driveMotor.setInverted(true);
-    turnMotor.setInverted(true);
+    // driveMotor.setInverted(true);
+    // turnMotor.setInverted(true);
 
-    driveMotor.burnFlash();
-    turnMotor.burnFlash();
+    // driveMotor.burnFlash();
+    // turnMotor.burnFlash();
     
   }
 
@@ -113,11 +113,11 @@ public class SwerveModule {
 
 
     double driveOutput = optimizedModuleOutput[1];
-    driveMotor.setVoltage(driveOutput);
-      // SmartDashboard.putNumber("driveOutput" + module, driveOutput);
+    // driveMotor.setVoltage(driveOutput);
+    //   // SmartDashboard.putNumber("driveOutput" + module, driveOutput);
 
-    double turnOutput = MathUtil.clamp(turnPIDController.calculate(getTurn180Angle(), optimizedModuleOutput[0]), -0.4, 0.4);
-    turnMotor.set(turnOutput);
+    // double turnOutput = MathUtil.clamp(turnPIDController.calculate(getTurn180Angle(), optimizedModuleOutput[0]), -0.4, 0.4);
+    // turnMotor.set(turnOutput);
       // SmartDashboard.putNumber("turnOutput " + module, turnOutput);
       // SmartDashboard.putNumber("getTurn180Angle " + module, getTurn180Angle());
 

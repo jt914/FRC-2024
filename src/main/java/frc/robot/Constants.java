@@ -10,9 +10,10 @@ import frc.robot.Subsystems.Swerve.Gyro;
 public final class Constants {
 
     /* Controller Constants */
-    public static final XboxController swerveController = new XboxController(1);
-    public static final XboxController alternateController = new XboxController(0);
+    public static final XboxController alternateController = new XboxController(1);
+    public static final XboxController swerveController = alternateController;
 
+    public static boolean intakeRunning = false;
     
     public static final double swerveControllerLeftStickDeadband = 0.1;
     public static final double swerveControllerRightXDeadband = 0.1;
@@ -24,11 +25,11 @@ public final class Constants {
     public static SlewRateLimiter m_rotLimiter = new SlewRateLimiter(5);
 
 
-
+    public static double[] randomDesired = new double[]{5,0.1,0.1};
 
     /* Mechanisms */
     public static final Gyro m_gyro = new Gyro(90);
-    public static final Drivetrain m_swerve = new Drivetrain();
+    // public static final Drivetrain m_swerve = new Drivetrain();
     public static final Arm arm = new Arm();
     public static final Intake intake = new Intake();
     public static final Shooter shooter = new Shooter();
@@ -63,11 +64,11 @@ public final class Constants {
 
     /* - - - OTHER CONSTANTS - - - */
 
-    public static final int intakeID = 9; 
-    public static final int shooterTopID = 10; 
-    public static final int shooterBotID = 11; 
-    public static final int armLeftID = 12; 
-    public static final int armRightID = 13; 
+    public static final int intakeID = 5; 
+    public static final int shooterTopID = 6; 
+    public static final int shooterBotID = 7; 
+    public static final int armLeftID = 8; 
+    public static final int armRightID = 9; 
 
 
 

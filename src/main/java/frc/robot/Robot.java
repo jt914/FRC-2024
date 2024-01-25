@@ -36,11 +36,15 @@ import edu.wpi.first.wpilibj.SPI;
 public class Robot extends LoggedRobot {
     Field2d m_field = new Field2d();
     private boolean startedSwerve = false;
-  
+    private RobotContainer robot;
+
+
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
 
   @Override
   public void robotInit() {
+    robot = new RobotContainer();
+
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
     if (isReal()) {
@@ -60,16 +64,22 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotPeriodic(){
+    CommandScheduler.getInstance().run();
+
     double ySpeed = -1 * Constants.m_yspeedLimiter.calculate(Constants.swerveController.getLeftX()) * Drivetrain.kMaxVoltage;
     double xSpeed = -1 * Constants.m_xspeedLimiter.calculate(Constants.swerveController.getLeftY()) * Drivetrain.kMaxVoltage;
     double yaw = -1 * Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
 
-    // SmartDashboard.putNumber("xSpeed ", xSpeed);
-    // SmartDashboard.putNumber("ySpeed ", ySpeed);
-    // SmartDashboard.putNumber("yaw ", yaw);
-    // SmartDashboard.putNumber("gyro angle ", Constants.m_gyro.getTotalAngleDegrees());
+    SmartDashboard.putNumber("xSpeed ", xSpeed);
+    SmartDashboard.putNumber("ySpeed ", ySpeed);
+    SmartDashboard.putNumber("yaw ", yaw);
+    SmartDashboard.putNumber("gyro angle ", Constants.m_gyro.getTotalAngleDegrees());
+
+    if(Constants.alternateController.getXButtonPressed()){
+      Constants.randomDesired = new double[]{Math.random() * 50, 0.2, 0.2};
+
+    }
     
-    Constants.m_swerve.drive(xSpeed, ySpeed, yaw);
   
   }
 
@@ -79,7 +89,7 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    Constants.m_swerve.updateOdometry();
+    // Constants.m_swerve.updateOdometry();
   }
   
   public void teleopInit() {
@@ -101,7 +111,6 @@ public class Robot extends LoggedRobot {
 
 
 
-    CommandScheduler.getInstance().run();
     // m_field.setRobotPose(Constants.m_swerve.m_odometry.getPoseMeters());
 
   }

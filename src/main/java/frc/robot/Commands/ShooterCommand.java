@@ -21,6 +21,8 @@ public class ShooterCommand extends Command{
 
     @Override
     public void initialize(){
+        System.out.println("working");
+
     }
 
     
@@ -39,7 +41,7 @@ public class ShooterCommand extends Command{
             isFinished = true;
         }
 
-        Constants.arm.set(optimal[0]);
+        Constants.arm.setAngle(optimal[0]);
         Constants.shooter.setSpeed(optimal[1], optimal[2]);
         // Constants.m_swerve.drive(0,0, desiredAngle);
         
