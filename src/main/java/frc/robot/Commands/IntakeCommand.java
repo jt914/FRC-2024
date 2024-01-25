@@ -17,7 +17,6 @@ public class IntakeCommand extends Command {
     public void initialize(){
         arm = Constants.arm;
         intake = Constants.intake;
-        Constants.intakeRunning = !Constants.intakeRunning;
         Constants.arm.setAngle(10);
 
         
@@ -26,12 +25,7 @@ public class IntakeCommand extends Command {
     @Override
     public void execute(){
         Constants.arm.setAngle(10);
-        if(Constants.intakeRunning){
-            intake.run();
-        }else{
-            intake.stop();
-            isFinished = true;        
-        }
+        intake.run();
     }
     @Override
     public boolean isFinished(){
@@ -43,7 +37,7 @@ public class IntakeCommand extends Command {
     public void end(boolean interrupted) {
     // Constants.intakeStatus = false;
         intake.stop();
-        Constants.arm.setAngle(20); //retracted or slightly raised position
+        Constants.arm.stop();
         NetworkTableInstance.getDefault().getTable("/datatable").getEntry("IntakeCommand").setBoolean(false);
 
     }

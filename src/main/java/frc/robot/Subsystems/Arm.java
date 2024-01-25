@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -36,7 +37,7 @@ public class Arm extends SubsystemBase{
         // armEnc = new DutyCycleEncoder(1); //idk what goes here
         armEnc = armLeft.getEncoder(); //idk what goes here
 
-        kP = 0.001;
+        kP = 0.01;
         kI = 0;
         kD = 0;
 
@@ -47,7 +48,7 @@ public class Arm extends SubsystemBase{
      * @return updates and returns updated position of arm
      */
     public double updateAngle(){
-        currentPos = armEnc.getPosition()/360; //need to put some conversion factor here (??)
+        currentPos = armEnc.getPosition(); //need to put some conversion factor here (??)
         return currentPos;
     }
 
@@ -57,10 +58,12 @@ public class Arm extends SubsystemBase{
      */
 
     public void setAngle(double desiredAngle) {
-        updateAngle();
-        double power = kP * (currentPos-desiredAngle);
-        armLeft.set(power);
-        armRight.set(power);
+        double power = kP * (desiredAngle - currentPos);
+        if(Math.abs(desiredAngle - currentPos) > 2){
+            armLeft.set(power);
+            armRight.set(power);
+
+        }
     }
 
     public void stop() {

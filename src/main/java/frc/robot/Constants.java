@@ -10,7 +10,7 @@ import frc.robot.Subsystems.Swerve.Gyro;
 public final class Constants {
 
     /* Controller Constants */
-    public static final XboxController alternateController = new XboxController(1);
+    public static final XboxController alternateController = new XboxController(0);
     public static final XboxController swerveController = alternateController;
 
     public static boolean intakeRunning = false;

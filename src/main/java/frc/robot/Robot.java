@@ -75,10 +75,12 @@ public class Robot extends LoggedRobot {
     SmartDashboard.putNumber("yaw ", yaw);
     SmartDashboard.putNumber("gyro angle ", Constants.m_gyro.getTotalAngleDegrees());
 
+    SmartDashboard.putNumber("current pos", Constants.arm.updateAngle());
+
     if(Constants.alternateController.getXButtonPressed()){
       Constants.randomDesired = new double[]{Math.random() * 50, 0.2, 0.2};
-
     }
+
     
   
   }

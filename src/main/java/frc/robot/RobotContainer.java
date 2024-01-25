@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.simulation.XboxControllerSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Subsystems.*;
 import frc.robot.Commands.*;
 
@@ -52,9 +53,9 @@ public class RobotContainer {
 
     new JoystickButton(Constants.swerveController, XboxController.Button.kStart.value).onTrue(new SwerveCommand());
     new JoystickButton(Constants.alternateController, XboxController.Button.kB.value).onTrue(new ShooterCommand());
-    new JoystickButton(Constants.alternateController, XboxController.Button.kA.value).onTrue(new IntakeCommand());
+    new JoystickButton(Constants.alternateController, XboxController.Button.kRightBumper.value).whileTrue(new IntakeCommand());
 
-    
+
 
   }
   /**
