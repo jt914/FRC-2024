@@ -15,7 +15,7 @@ public class ShooterCommand extends Command{
      * 3rd button, if needed, moves shooter to lowered position for moving under the stage
      */
 
-    private boolean isFinished;
+    private boolean finish;
 
 
 
@@ -36,13 +36,27 @@ public class ShooterCommand extends Command{
         double desiredAngle = Constants.camera.getDriveOffset();
 
         //margin of errors, should be adjusted
-        if(Math.abs(optimal[0] - Constants.arm.updateAngle()) < 1 && Math.abs(Constants.m_gyro.getTotalAngleDegrees()%360 - desiredAngle) < 5){
-            Constants.intake.reverse(); //to shoot the note out
-            isFinished = true;
+        SmartDashboard.putNumber("arm", optimal[0] - Constants.arm.updateAngle());
+        SmartDashboard.putNumber("gyro", Constants.m_gyro.getTotalAngleDegrees()%360 - desiredAngle);
+
+        if(finish){
+            Constants.intake.run(); //to shoot the note out
+            Constants.shooter.setSpeed(optimal[1], optimal[2]);
+
+        }
+        else{
+            if(Math.abs(optimal[0] - Constants.arm.updateAngle()) < 1 && Math.abs(Constants.m_gyro.getTotalAngleDegrees()%360 - desiredAngle) < 5){
+            finish = true;
+        }
+        else{
+            Constants.arm.setAngle(optimal[0]);
+            Constants.shooter.setSpeed(optimal[1], optimal[2]);
         }
 
-        Constants.arm.setAngle(optimal[0]);
-        Constants.shooter.setSpeed(optimal[1], optimal[2]);
+
+        }
+
+
         // Constants.m_swerve.drive(0,0, desiredAngle);
         
     }
@@ -58,7 +72,7 @@ public class ShooterCommand extends Command{
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return false;
     }
 
 

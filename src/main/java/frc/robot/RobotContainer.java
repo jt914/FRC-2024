@@ -52,7 +52,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     new JoystickButton(Constants.swerveController, XboxController.Button.kStart.value).onTrue(new SwerveCommand());
-    new JoystickButton(Constants.alternateController, XboxController.Button.kB.value).onTrue(new ShooterCommand());
+    new JoystickButton(Constants.alternateController, XboxController.Button.kB.value).toggleOnTrue(new ShooterCommand());
     new JoystickButton(Constants.alternateController, XboxController.Button.kRightBumper.value).whileTrue(new IntakeCommand());
 
 

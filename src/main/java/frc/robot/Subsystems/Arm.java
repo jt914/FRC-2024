@@ -3,6 +3,8 @@ package frc.robot.Subsystems;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkLimitSwitch;
+import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -18,8 +20,9 @@ public class Arm extends SubsystemBase{
     private CANSparkMax armLeft,armRight;
     // private DutyCycleEncoder armEnc;
     private RelativeEncoder armEnc;
-
+    private SparkLimitSwitch limitSwitch;
     private double kP, kI, kD;
+    public double desiredAngle;
 
     public Arm() {
         armLeft = new CANSparkMax(Constants.armLeftID, MotorType.kBrushless);
@@ -33,6 +36,9 @@ public class Arm extends SubsystemBase{
         armRight.setIdleMode(IdleMode.kCoast);
         armRight.enableVoltageCompensation(11);
         armRight.burnFlash();
+
+        // limitSwitch = armRight.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
+        // limitSwitch.enableLimitSwitch(true);
 
         // armEnc = new DutyCycleEncoder(1); //idk what goes here
         armEnc = armLeft.getEncoder(); //idk what goes here
@@ -48,7 +54,7 @@ public class Arm extends SubsystemBase{
      * @return updates and returns updated position of arm
      */
     public double updateAngle(){
-        currentPos = armEnc.getPosition(); //need to put some conversion factor here (??)
+        currentPos = armEnc.getPosition()/10; //need to put some conversion factor here (??)
         return currentPos;
     }
 
@@ -58,7 +64,9 @@ public class Arm extends SubsystemBase{
      */
 
     public void setAngle(double desiredAngle) {
+        this.desiredAngle = desiredAngle;
         double power = kP * (desiredAngle - currentPos);
+        SmartDashboard.putNumber("power", power);
         if(Math.abs(desiredAngle - currentPos) > 2){
             armLeft.set(power);
             armRight.set(power);
