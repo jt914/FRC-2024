@@ -78,9 +78,9 @@ public class Robot extends LoggedRobot {
     SmartDashboard.putNumber("current pos", Constants.arm.updateAngle());
     SmartDashboard.putNumber("desired", Constants.arm.desiredAngle);
 
-    if(Constants.alternateController.getXButtonPressed()){
-      Constants.randomDesired = new double[]{Math.random() * 50, 0.2, 0.2};
-    }
+    // if(Constants.alternateController.getXButtonPressed()){
+    //   Constants.randomDesired = new double[]{Math.random() * 50, 0.2, 0.2};
+    // }
 
     
   

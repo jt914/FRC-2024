@@ -9,7 +9,6 @@ import frc.robot.Subsystems.Swerve.Drivetrain;
 
 public class SwerveCommand extends Command{
 
-    private boolean fieldRelative = false;
     private boolean driving = true;
 
 
@@ -23,19 +22,17 @@ public class SwerveCommand extends Command{
     public void execute(){
         // Constants.m_swerve.updateOdometry();
 
-        if (Constants.swerveController.getBackButtonPressed()) {
-          fieldRelative = !fieldRelative;
-        }
+        Constants.swerveController.back().onTrue(new FieldRelativeCommand());
         if(driving){
-            SmartDashboard.putBoolean("fieldRelative", fieldRelative);
-            driveWithJoystick(fieldRelative);
+            SmartDashboard.putBoolean("fieldRelative", Constants.fieldRelative);
+            driveWithJoystick(Constants.fieldRelative);
         }
-        if (Constants.swerveController.getAButtonPressed() == true) {
-          Constants.m_gyro.calibrateGyro();
-        }
-        SmartDashboard.putBoolean("Field Relative", fieldRelative);
+        Constants.swerveController.a().onTrue(new CalibrateGyroCommand());
+        
+        SmartDashboard.putBoolean("Field Relative", Constants.fieldRelative);
+      }
     
-    }
+    
 
     
     @Override

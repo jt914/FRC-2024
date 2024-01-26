@@ -3,6 +3,7 @@ package frc.robot;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.*;
 import frc.robot.Subsystems.Swerve.Drivetrain;
 import frc.robot.Subsystems.Swerve.Gyro;
@@ -10,11 +11,11 @@ import frc.robot.Subsystems.Swerve.Gyro;
 public final class Constants {
 
     /* Controller Constants */
-    public static final XboxController alternateController = new XboxController(0);
-    public static final XboxController swerveController = alternateController;
+    public static final CommandXboxController alternateController = new CommandXboxController(0);
+    public static final CommandXboxController swerveController = alternateController;
 
     public static boolean intakeRunning = false;
-    
+    public static boolean fieldRelative = false;
     public static final double swerveControllerLeftStickDeadband = 0.1;
     public static final double swerveControllerRightXDeadband = 0.1;
 
