@@ -41,12 +41,12 @@ public final class Constants {
 
     public static final int frontLeftDriveID = 4;
     public static final int frontRightDriveID = 6;
-    public static final int backLeftDriveID = 2;
+    public static final int backLeftDriveID = 1;
     public static final int backRightDriveID = 7;
 
     public static final int frontLeftTurnID = 3;
     public static final int frontRightTurnID = 5;
-    public static final int backLeftTurnID = 1;
+    public static final int backLeftTurnID = 2;
     public static final int backRightTurnID = 8;
 
     public static final double frontLeftOffset = 0;
