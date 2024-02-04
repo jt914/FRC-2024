@@ -76,20 +76,32 @@ public class Arm extends SubsystemBase{
         armRight.set(armPidController.calculate(armEnc.getDistance(), Constants.armClimbOffset));
     }
 
-    /**
-     * 
-     * @param desiredAngle desired arm angle
-     */
 
-    public void setAngle(double desiredAngle) {
-        this.desiredAngle = desiredAngle;
-        double voltage = kP * (desiredAngle - currentPos);
-        SmartDashboard.putNumber("power", voltage);
-        if(Math.abs(desiredAngle - currentPos) > 2){
-            armLeft.set(voltage);
-            armRight.set(voltage);
+    public void setDesired(double desired){
+        desiredAngle = desired;
+    }
 
+
+
+    public void moveArm() {
+        /* some explaination:
+         * technically the difference shouldn't ever be greater than 0.1, since you can only ever
+         * move the arm 0.1 degrees every time the code runs, which is 20ms
+         * 
+         * But in the scenario when it might be lagging behind or something, I don't want the arm to swing back and forth
+         * So i added this here so if the difference is too great it won't do anything
+         */
+        if(Math.abs(desiredAngle - currentPos) > 1){
+            return;
         }
+
+        double speed = kP * (desiredAngle - currentPos); //speed is from -1.0 to 1.0
+        
+        armLeft.set(speed);
+        armRight.set(speed);
+
+        SmartDashboard.putNumber("speed", speed);
+
     }
 
     public void stop() {

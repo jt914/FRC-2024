@@ -9,29 +9,35 @@ public class ArmCommand extends Command {
     private Arm arm;
     private Intake intake;
     private boolean isFinished = false;
-    private boolean forward;
-
-    public ArmCommand(boolean forward){
-        this.forward = forward;
-
-    }
-
 
     @Override
     public void initialize(){
         arm = Constants.arm;
 
-        
     }
 
     @Override
     public void execute(){
-        if(forward){
-            arm.forward();
+        //right trigger is up
+        //left trigger is down
+        double rightVal = Constants.alternateController.getRightTriggerAxis();
+        double leftVal = Constants.alternateController.getLeftTriggerAxis();
+
+        if(leftVal > 0.2 && rightVal > 0.2){
+            return;
         }
-        else{
-            arm.backward();
+
+        else if(rightVal > 0.2){
+            arm.setDesired(arm.desiredAngle + (0.1 * rightVal)); //0.1 is max degrees per 20 ms
         }
+        
+        else if (leftVal > 0.2){
+            arm.setDesired(arm.desiredAngle - (0.1 * leftVal)); //0.1 is max degrees per 20 ms
+        }
+
+        arm.updateAngle();
+        arm.moveArm();
+        
         
     }
 

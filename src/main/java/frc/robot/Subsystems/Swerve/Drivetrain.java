@@ -26,7 +26,7 @@ import frc.robot.Constants;
 
 /** Represents a swerve drive style drivetrain. */
 public class Drivetrain {
-  public static final double kMaxVelocity = 0.35; // meters/second (m/s)
+  public static final double kMaxVelocity = 1; // meters/second (m/s)
   public static final double kMaxVoltage = kMaxVelocity / (((473 / 9.25) * 0.103 * Math.PI) / 60); /* THIS CANNOT GO OVER 12 VOLTS */
   public static final double kMaxAngularSpeed = 2 * Math.PI; // 1/2 rotation per second
 

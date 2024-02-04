@@ -78,7 +78,7 @@ public class SwerveCommand extends Command{
       SmartDashboard.putNumber("LeftX", Constants.swerveController.getLeftX());
       SmartDashboard.putNumber("LeftY", Constants.swerveController.getLeftY());
 
-      // Constants.m_swerve.drive(xSpeed, ySpeed, yaw);
+      Constants.m_swerve.drive(xSpeed, ySpeed, yaw);
     }
   
 }
