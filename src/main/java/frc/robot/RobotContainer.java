@@ -53,7 +53,8 @@ public class RobotContainer {
     (Constants.alternateController.start()).onTrue(new SwerveCommand());
     (Constants.alternateController.b()).toggleOnTrue(new ShooterCommand());
     (Constants.alternateController.rightTrigger()).whileTrue(new IntakeCommand());
-    
+    Constants.alternateController.rightTrigger().whileTrue(new ArmCommand(true));
+    Constants.alternateController.leftTrigger().whileTrue(new ArmCommand(false));
 
 
 

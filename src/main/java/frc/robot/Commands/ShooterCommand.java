@@ -28,33 +28,34 @@ public class ShooterCommand extends Command{
     
     @Override
     public void execute(){
+        Constants.shooter.setSpeed(-0.6, -0.7);
 
         //idea is that the arm and the shooter motors can continuously adjust incrementally 
         //until they reach within a certain threshold
         
-        double[] optimal = Constants.camera.getDesiredShoot();
-        double desiredAngle = Constants.camera.getDriveOffset();
+        // double[] optimal = Constants.camera.getDesiredShoot();
+        // double desiredAngle = Constants.camera.getDriveOffset();
 
         //margin of errors, should be adjusted
-        SmartDashboard.putNumber("arm", optimal[0] - Constants.arm.updateAngle());
-        SmartDashboard.putNumber("gyro", Constants.m_gyro.getTotalAngleDegrees()%360 - desiredAngle);
+        // SmartDashboard.putNumber("arm", optimal[0] - Constants.arm.updateAngle());
+        // // SmartDashboard.putNumber("gyro", Constants.m_gyro.getTotalAngleDegrees()%360 - desiredAngle);
 
-        if(finish){
-            Constants.intake.run(); //to shoot the note out
-            Constants.shooter.setSpeed(optimal[1], optimal[2]);
+        // if(finish){
+        //     Constants.intake.run(); //to shoot the note out
+        //     Constants.shooter.setSpeed(optimal[1], optimal[2]);
 
-        }
-        else{
-            if(Math.abs(optimal[0] - Constants.arm.updateAngle()) < 1 && Math.abs(Constants.m_gyro.getTotalAngleDegrees()%360 - desiredAngle) < 5){
-            finish = true;
-        }
-        else{
-            Constants.arm.setAngle(optimal[0]);
-            Constants.shooter.setSpeed(optimal[1], optimal[2]);
-        }
+        // }
+        // else{
+        //     // if(Math.abs(optimal[0] - Constants.arm.updateAngle()) < 1 && Math.abs(Constants.m_gyro.getTotalAngleDegrees()%360 - desiredAngle) < 5){
+        //     finish = true;
 
+        // else{
+        //     Constants.arm.setAngle(optimal[0]);
+        //     Constants.shooter.setSpeed(optimal[1], optimal[2]);
+        // }
 
-        }
+        
+
 
 
         // Constants.m_swerve.drive(0,0, desiredAngle);
@@ -64,7 +65,6 @@ public class ShooterCommand extends Command{
     
     @Override
     public void end(boolean interrupted){
-        Constants.intake.stop();
         Constants.shooter.stop();
         
     }

@@ -1,6 +1,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -30,7 +31,7 @@ public final class Constants {
 
     /* Mechanisms */
     public static final Gyro m_gyro = new Gyro(90);
-    // public static final Drivetrain m_swerve = new Drivetrain();
+    public static final Drivetrain m_swerve = new Drivetrain();
     public static final Arm arm = new Arm();
     public static final Intake intake = new Intake();
     public static final Shooter shooter = new Shooter();
@@ -63,13 +64,15 @@ public final class Constants {
     public static final double maxVelocityMultiplier = 6; /* Max velocity in m/s */
     public static final double radiansPerSecondMultiplier = 6; /* Max angular rate in radians/second */
 
+    public static final double armClimbOffset = 1;
+
     /* - - - OTHER CONSTANTS - - - */
 
-    public static final int intakeID = 5; 
-    public static final int shooterTopID = 6; 
-    public static final int shooterBotID = 7; 
-    public static final int armLeftID = 8; 
-    public static final int armRightID = 9; 
+    public static final int intakeID = 1; 
+    public static final int shooterTopID = 4; 
+    public static final int shooterBotID = 6; 
+    public static final int armLeftID = 2; 
+    public static final int armRightID = 7; 
 
 
 

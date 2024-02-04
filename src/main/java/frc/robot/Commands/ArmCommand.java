@@ -5,35 +5,39 @@ import frc.robot.Constants;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Intake;
 
-public class IntakeCommand extends Command {
+public class ArmCommand extends Command {
     private Arm arm;
     private Intake intake;
     private boolean isFinished = false;
+    private boolean forward;
 
+    public ArmCommand(boolean forward){
+        this.forward = forward;
 
+    }
 
 
     @Override
     public void initialize(){
-        intake = Constants.intake;
+        arm = Constants.arm;
 
         
     }
 
     @Override
     public void execute(){
-        intake.run();
-    }
-    @Override
-    public boolean isFinished(){
-        return isFinished;
-
+        if(forward){
+            arm.forward();
+        }
+        else{
+            arm.backward();
+        }
+        
     }
 
     @Override
     public void end(boolean interrupted) {
-    // Constants.intakeStatus = false;
-        intake.stop();
+        arm.stop();
 
     }
 
