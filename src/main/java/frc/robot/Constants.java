@@ -25,8 +25,6 @@ public final class Constants {
     public static SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(5);
     public static SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(5);
     public static SlewRateLimiter m_rotLimiter = new SlewRateLimiter(5);
-
-
     public static double[] randomDesired = new double[]{5,0.1,0.1};
 
     /* Mechanisms */
@@ -36,7 +34,10 @@ public final class Constants {
     public static final Intake intake = new Intake();
     public static final Shooter shooter = new Shooter();
     public static final Camera camera = new Camera();
+    
 
+    public static double RPMTop = 5676.0;
+    public static double RPMBot = 5676.0;
 
     /* - - - SWERVE DRIVE CONSTANTS - - - */
 

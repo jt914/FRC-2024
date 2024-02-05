@@ -1,5 +1,9 @@
 package frc.robot.Commands;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.NetworkTableType;
+import edu.wpi.first.networktables.NetworkTableValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -15,6 +19,7 @@ public class ShooterCommand extends Command{
      * 3rd button, if needed, moves shooter to lowered position for moving under the stage
      */
 
+
     private boolean finish;
 
 
@@ -28,7 +33,27 @@ public class ShooterCommand extends Command{
     
     @Override
     public void execute(){
-        Constants.shooter.setSpeed(-0.6, -0.7);
+        Constants.shooter.setVelocity(Constants.RPMTop, Constants.RPMBot);
+
+        if(Constants.alternateController.rightBumper().getAsBoolean()){
+            Constants.RPMBot = Constants.RPMBot + 100;
+        }
+        if(Constants.alternateController.leftBumper().getAsBoolean()){
+            Constants.RPMBot = Constants.RPMBot - 100;
+        }
+
+        if(Constants.swerveController.leftBumper().getAsBoolean()){
+            Constants.RPMTop = Constants.RPMTop - 100;
+        }
+
+        if(Constants.swerveController.rightBumper().getAsBoolean()){
+            Constants.RPMTop = Constants.RPMTop + 100;
+        }
+
+        SmartDashboard.putNumber("RPMTop", Constants.RPMTop);
+        SmartDashboard.putNumber("RPMBot", Constants.RPMBot);
+
+        
 
         //idea is that the arm and the shooter motors can continuously adjust incrementally 
         //until they reach within a certain threshold
