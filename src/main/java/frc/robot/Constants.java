@@ -12,8 +12,8 @@ import frc.robot.Subsystems.Swerve.Gyro;
 public final class Constants {
 
     /* Controller Constants */
-    public static final CommandXboxController alternateController = new CommandXboxController(0);
-    public static final CommandXboxController swerveController = alternateController;
+    public static final CommandXboxController swerveController = new CommandXboxController(1);
+    public static final CommandXboxController alternateController = swerveController;
 
     public static boolean intakeRunning = false;
     public static boolean fieldRelative = false;
@@ -69,11 +69,11 @@ public final class Constants {
 
     /* - - - OTHER CONSTANTS - - - */
 
-    public static final int intakeID = 1; 
-    public static final int shooterTopID = 4; 
-    public static final int shooterBotID = 6; 
-    public static final int armLeftID = 2; 
-    public static final int armRightID = 7; 
+    public static final int intakeID = 13; 
+    public static final int shooterTopID = 11; 
+    public static final int shooterBotID = 12; 
+    public static final int armLeftID = 10; 
+    public static final int armRightID = 9; 
 
 
 

@@ -22,12 +22,12 @@ public class Intake extends SubsystemBase{
     }
 
     public void run() {
-        intake.set(0.2);
+        intake.set(0.4);
         running = true;
     }
 
     public void reverse() {
-        intake.set(-0.2);
+        intake.set(-0.4);
         running = true;
 
     }

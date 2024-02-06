@@ -1,5 +1,6 @@
 package frc.robot.Commands;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Arm;
@@ -23,20 +24,29 @@ public class ArmCommand extends Command {
         double rightVal = Constants.alternateController.getRightTriggerAxis();
         double leftVal = Constants.alternateController.getLeftTriggerAxis();
 
-        if(leftVal > 0.2 && rightVal > 0.2){
-            return;
+        SmartDashboard.putNumber("right", rightVal);
+
+        if(rightVal > 0.5){
+            arm.forward();
+        }
+        else if (leftVal > 0.5){
+            arm.backward();
         }
 
-        else if(rightVal > 0.2){
-            arm.setDesired(arm.desiredAngle + (0.1 * rightVal)); //0.1 is max degrees per 20 ms
-        }
+        // if(leftVal > 0.2 && rightVal > 0.2){
+        //     return;
+        // }
+
+        // else if(rightVal > 0.2){
+        //     arm.setDesired(arm.desiredAngle + (0.1 * rightVal)); //0.1 is max degrees per 20 ms
+        // }
         
-        else if (leftVal > 0.2){
-            arm.setDesired(arm.desiredAngle - (0.1 * leftVal)); //0.1 is max degrees per 20 ms
-        }
+        // else if (leftVal > 0.2){
+        //     arm.setDesired(arm.desiredAngle - (0.1 * leftVal)); //0.1 is max degrees per 20 ms
+        // }
 
-        arm.updateAngle();
-        arm.moveArm();
+        // arm.updateAngle();
+        // arm.moveArm();
         
         
     }

@@ -1,7 +1,10 @@
 package frc.robot.Subsystems;
 
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -44,6 +47,7 @@ public class Camera {
         cam.close();
     }
 
+    //if null the command to get desired shoot should just do nothing
     public double[] getDesiredShoot(){
         /*
         1. use Camera to get pose from hood
@@ -51,6 +55,31 @@ public class Camera {
         might need to do testing
         
         */
+
+        PhotonTrackedTarget shooterTarget;
+        // PhotonUtils.calculateDistanceToTargetMeters(0, );
+
+        boolean seesShooter = false;
+        for(PhotonTrackedTarget target: getLatestResult().getTargets()){
+            if(target.getFiducialId() == 7 || target.getFiducialId() == 4){
+                shooterTarget = target;
+                seesShooter = true;
+                break;
+        }
+
+        if(!seesShooter){
+            return null;
+        }
+
+
+
+
+        
+        }
+
+
+        
+
 
         // double[] ret = new double[]{Math.random()* 50, Math.random(), Math.random()};
         return new double[]{1,0.1,0.1};

@@ -36,6 +36,12 @@ public class Shooter extends SubsystemBase{
         shooterBot.enableVoltageCompensation(11);
         shooterBot.burnFlash();
 
+        topPID = shooterTop.getPIDController();
+        botPID = shooterBot.getPIDController();
+
+        // botPid = new SparkPIDController(new CanSpark);
+        // topPid = new SparkPIDController()
+
         
         
 
@@ -47,8 +53,8 @@ public class Shooter extends SubsystemBase{
 
     }
     public void setVelocity(double velocityTop, double velocityBot) {
-        botPID.setReference(-botMultiplier * velocityBot, ControlType.kVelocity);
-        topPID.setReference(-topMultiplier * velocityTop, ControlType.kVelocity);
+        botPID.setReference(-1 * velocityBot, ControlType.kVelocity);
+        topPID.setReference(-1 * velocityTop, ControlType.kSmartVelocity);
 
         
         //Inputs RPMs into the PID loop rather than voltage, should account for error 

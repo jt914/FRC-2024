@@ -33,7 +33,6 @@ public class ShooterCommand extends Command{
     
     @Override
     public void execute(){
-        Constants.shooter.setVelocity(Constants.RPMTop, Constants.RPMBot);
 
         if(Constants.alternateController.rightBumper().getAsBoolean()){
             Constants.RPMBot = Constants.RPMBot + 100;
@@ -53,7 +52,9 @@ public class ShooterCommand extends Command{
         SmartDashboard.putNumber("RPMTop", Constants.RPMTop);
         SmartDashboard.putNumber("RPMBot", Constants.RPMBot);
 
-        
+        // Constants.shooter.setVelocity(Constants.RPMTop, Constants.RPMBot);
+        Constants.shooter.setSpeed(-0.6, -0.7);
+
 
         //idea is that the arm and the shooter motors can continuously adjust incrementally 
         //until they reach within a certain threshold

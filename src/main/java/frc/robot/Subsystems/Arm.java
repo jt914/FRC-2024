@@ -91,6 +91,9 @@ public class Arm extends SubsystemBase{
          * But in the scenario when it might be lagging behind or something, I don't want the arm to swing back and forth
          * So i added this here so if the difference is too great it won't do anything
          */
+
+         SmartDashboard.putNumber("desiredangle", desiredAngle);
+         SmartDashboard.putNumber("current()", currentPos);
         if(Math.abs(desiredAngle - currentPos) > 1){
             return;
         }
