@@ -20,7 +20,7 @@ public class Arm extends SubsystemBase{
 
     private double currentPos;
     private CANSparkMax armLeft,armRight;
-    private DutyCycleEncoder armEnc;
+    public DutyCycleEncoder armEnc;
     private SparkLimitSwitch limitSwitch;
     private double kP, kI, kD;
     public double desiredAngle;
@@ -44,7 +44,9 @@ public class Arm extends SubsystemBase{
         // limitSwitch.enableLimitSwitch(true);
 
         // armEnc = new DutyCycleEncoder(1); //idk what goes here
-        armEnc = new DutyCycleEncoder(9); //idk what goes here
+        armEnc = new DutyCycleEncoder(9); 
+
+        armEnc.setPositionOffset(-armEnc.getAbsolutePosition());
 
         kP = 0.01;
         kI = 0;
@@ -57,7 +59,7 @@ public class Arm extends SubsystemBase{
      * @return updates and returns updated position of arm
      */
     public double updateAngle(){
-        currentPos = armEnc.getDistance(); //need to put some conversion factor here (??)
+        currentPos = armEnc.getAbsolutePosition() * 360; //need to put some conversion factor here (??)
         return currentPos;
     }
 

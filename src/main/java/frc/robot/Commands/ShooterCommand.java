@@ -27,6 +27,9 @@ public class ShooterCommand extends Command{
     @Override
     public void initialize(){
         System.out.println("working");
+        SmartDashboard.putNumber("RPMTop", 5676.0);
+        SmartDashboard.putNumber("RPMBot", 5676.0);
+
 
     }
 
@@ -34,26 +37,24 @@ public class ShooterCommand extends Command{
     @Override
     public void execute(){
 
-        if(Constants.alternateController.rightBumper().getAsBoolean()){
-            Constants.RPMBot = Constants.RPMBot + 100;
-        }
-        if(Constants.alternateController.leftBumper().getAsBoolean()){
-            Constants.RPMBot = Constants.RPMBot - 100;
-        }
+        // if(Constants.alternateController.rightBumper().getAsBoolean()){
+        //     Constants.RPMBot = Constants.RPMBot + 100;
+        // }
+        // if(Constants.alternateController.leftBumper().getAsBoolean()){
+        //     Constants.RPMBot = Constants.RPMBot - 100;
+        // }
 
-        if(Constants.swerveController.leftBumper().getAsBoolean()){
-            Constants.RPMTop = Constants.RPMTop - 100;
-        }
+        // if(Constants.swerveController.leftBumper().getAsBoolean()){
+        //     Constants.RPMTop = Constants.RPMTop - 100;
+        // }
 
-        if(Constants.swerveController.rightBumper().getAsBoolean()){
-            Constants.RPMTop = Constants.RPMTop + 100;
-        }
+        // if(Constants.swerveController.rightBumper().getAsBoolean()){
+        //     Constants.RPMTop = Constants.RPMTop + 100;
+        // }
 
-        SmartDashboard.putNumber("RPMTop", Constants.RPMTop);
-        SmartDashboard.putNumber("RPMBot", Constants.RPMBot);
 
-        // Constants.shooter.setVelocity(Constants.RPMTop, Constants.RPMBot);
-        Constants.shooter.setSpeed(-0.6, -0.7);
+        Constants.shooter.setVelocity(SmartDashboard.getNumber("RPMTop", 5676.0), SmartDashboard.getNumber("RPMBot", 5676.0));
+        // Constants.shooter.setSpeed(-0.6, -0.7);
 
 
         //idea is that the arm and the shooter motors can continuously adjust incrementally 

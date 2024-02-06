@@ -24,7 +24,12 @@ public class ArmCommand extends Command {
         double rightVal = Constants.alternateController.getRightTriggerAxis();
         double leftVal = Constants.alternateController.getLeftTriggerAxis();
 
-        SmartDashboard.putNumber("right", rightVal);
+        SmartDashboard.putNumber("armPos", arm.updateAngle());
+
+        if(Constants.alternateController.y().getAsBoolean() == true){
+            arm.armEnc.reset();
+            System.out.println("resetting");
+        }
 
         if(rightVal > 0.5){
             arm.forward();
@@ -32,6 +37,7 @@ public class ArmCommand extends Command {
         else if (leftVal > 0.5){
             arm.backward();
         }
+
 
         // if(leftVal > 0.2 && rightVal > 0.2){
         //     return;

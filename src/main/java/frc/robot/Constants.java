@@ -36,8 +36,6 @@ public final class Constants {
     public static final Camera camera = new Camera();
     
 
-    public static double RPMTop = 5676.0;
-    public static double RPMBot = 5676.0;
 
     /* - - - SWERVE DRIVE CONSTANTS - - - */
 

@@ -26,18 +26,21 @@ public class Shooter extends SubsystemBase{
     public Shooter() {
         shooterTop = new CANSparkMax(Constants.shooterTopID, MotorType.kBrushless);
         shooterTop.restoreFactoryDefaults();
-        shooterTop.setIdleMode(IdleMode.kCoast);
+        shooterTop.setIdleMode(IdleMode.kBrake);
         shooterTop.enableVoltageCompensation(11);
         shooterTop.burnFlash();
 
         shooterBot = new CANSparkMax(Constants.shooterBotID, MotorType.kBrushless);
         shooterBot.restoreFactoryDefaults();
-        shooterBot.setIdleMode(IdleMode.kCoast);
+        shooterBot.setIdleMode(IdleMode.kBrake);
         shooterBot.enableVoltageCompensation(11);
         shooterBot.burnFlash();
 
         topPID = shooterTop.getPIDController();
         botPID = shooterBot.getPIDController();
+        botPID.setP(1);
+        topPID.setP(1);
+        botPID.setOutputRange(-10000, 10000);
 
         // botPid = new SparkPIDController(new CanSpark);
         // topPid = new SparkPIDController()
@@ -53,8 +56,9 @@ public class Shooter extends SubsystemBase{
 
     }
     public void setVelocity(double velocityTop, double velocityBot) {
-        botPID.setReference(-1 * velocityBot, ControlType.kVelocity);
-        topPID.setReference(-1 * velocityTop, ControlType.kSmartVelocity);
+        System.out.println(velocityTop);
+        botPID.setReference(velocityBot, CANSparkMax.ControlType.kVelocity);
+        topPID.setReference(velocityTop, CANSparkMax.ControlType.kVelocity);
 
         
         //Inputs RPMs into the PID loop rather than voltage, should account for error 
