@@ -78,6 +78,7 @@ public class Robot extends LoggedRobot {
     SmartDashboard.putNumber("current pos", Constants.arm.updateAngle());
     SmartDashboard.putNumber("desired", Constants.arm.desiredAngle);
 
+
     // if(Constants.alternateController.getXButtonPressed()){
     //   Constants.randomDesired = new double[]{Math.random() * 50, 0.2, 0.2};
     // }
@@ -114,12 +115,16 @@ public class Robot extends LoggedRobot {
 
 
 
-    // m_field.setRobotPose(Constants.m_swerve.m_odometry.getPoseMeters());
+    m_field.setRobotPose(Constants.m_swerve.m_odometry.getPoseMeters());
 
   }
 
   public void disabledInit() {
     CommandScheduler.getInstance().cancelAll();
+  }
+
+  public void disabledPeriodic(){
+    Constants.arm.stall();
   }
 
 }

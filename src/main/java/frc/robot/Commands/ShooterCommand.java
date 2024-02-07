@@ -21,14 +21,16 @@ public class ShooterCommand extends Command{
 
 
     private boolean finish;
+    private double botSpeed = 0.7;
+    private double topSpeed = 0.7;
+    
 
 
 
     @Override
     public void initialize(){
-        System.out.println("working");
-        SmartDashboard.putNumber("RPMTop", 5676.0);
-        SmartDashboard.putNumber("RPMBot", 5676.0);
+        SmartDashboard.putNumber("botSpeed", botSpeed);
+        SmartDashboard.putNumber("topSpeed", topSpeed);
 
 
     }
@@ -53,8 +55,10 @@ public class ShooterCommand extends Command{
         // }
 
 
-        Constants.shooter.setVelocity(SmartDashboard.getNumber("RPMTop", 5676.0), SmartDashboard.getNumber("RPMBot", 5676.0));
-        // Constants.shooter.setSpeed(-0.6, -0.7);
+        // Constants.shooter.setVelocity();
+
+        Constants.shooter.setSpeed(-0.7, -0.85);
+
 
 
         //idea is that the arm and the shooter motors can continuously adjust incrementally 

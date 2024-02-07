@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,7 +25,8 @@ public class Arm extends SubsystemBase{
     private SparkLimitSwitch limitSwitch;
     private double kP, kI, kD;
     public double desiredAngle;
-    public PIDController armPidController = new PIDController(0.1, 0.000, 0.00001);
+    public ProfiledPIDController controller = new ProfiledPIDController(0.01, 0, 0, null);
+
 
     public Arm() {
         armLeft = new CANSparkMax(Constants.armLeftID, MotorType.kBrushless);
@@ -40,15 +42,17 @@ public class Arm extends SubsystemBase{
         armRight.setInverted(true);
         armRight.burnFlash();
 
+
         // limitSwitch = armRight.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
         // limitSwitch.enableLimitSwitch(true);
 
         // armEnc = new DutyCycleEncoder(1); //idk what goes here
+
         armEnc = new DutyCycleEncoder(9); 
+        armEnc.reset();
 
-        armEnc.setPositionOffset(-armEnc.getAbsolutePosition());
 
-        kP = 0.01;
+        kP = .05;
         kI = 0;
         kD = 0;
 
@@ -59,8 +63,14 @@ public class Arm extends SubsystemBase{
      * @return updates and returns updated position of arm
      */
     public double updateAngle(){
-        currentPos = armEnc.getAbsolutePosition() * 360; //need to put some conversion factor here (??)
+        currentPos = armEnc.getDistance(); //need to put some conversion factor here (??)
         return currentPos;
+    }
+
+    public void stall(){
+        armLeft.set(0.013);
+        armRight.set(0.013);
+
     }
 
     public void forward(){
@@ -74,8 +84,6 @@ public class Arm extends SubsystemBase{
 
     }
     public void climbUp(){
-        armLeft.set(armPidController.calculate(armEnc.getDistance(), -Constants.armClimbOffset));
-        armRight.set(armPidController.calculate(armEnc.getDistance(), Constants.armClimbOffset));
     }
 
 
@@ -86,26 +94,29 @@ public class Arm extends SubsystemBase{
 
 
     public void moveArm() {
-        /* some explaination:
-         * technically the difference shouldn't ever be greater than 0.1, since you can only ever
-         * move the arm 0.1 degrees every time the code runs, which is 20ms
-         * 
-         * But in the scenario when it might be lagging behind or something, I don't want the arm to swing back and forth
-         * So i added this here so if the difference is too great it won't do anything
-         */
 
-         SmartDashboard.putNumber("desiredangle", desiredAngle);
-         SmartDashboard.putNumber("current()", currentPos);
-        if(Math.abs(desiredAngle - currentPos) > 1){
-            return;
-        }
+        armLeft.set(controller.calculate(armEnc.getDistance(), desiredAngle)/100);
+        armRight.set(controller.calculate(armEnc.getDistance(), desiredAngle)/100);
 
-        double speed = kP * (desiredAngle - currentPos); //speed is from -1.0 to 1.0
+
+
+
+        // if(forward){
+        //     speed = - 1 * kP * Math.abs(currentPos - desiredAngle); //speed is from -1.0 to 1.0
+        // }
+        // else{
+        //     speed = 1 * kP * Math.abs(desiredAngle - currentPos); //speed is from -1.0 to 1.0
+        // }
+
+        // if(speed > 0.3){
+        //     return;
+        // }
         
-        armLeft.set(speed);
-        armRight.set(speed);
+        
+        // armLeft.set(speed);
+        // armRight.set(speed);
 
-        SmartDashboard.putNumber("speed", speed);
+        // SmartDashboard.putNumber("speed", speed);
 
     }
 

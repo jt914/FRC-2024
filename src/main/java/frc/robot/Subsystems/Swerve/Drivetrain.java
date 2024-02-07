@@ -100,7 +100,7 @@ public class Drivetrain {
     var swerveModuleStates = m_kinematics.toSwerveModuleStates(new ChassisSpeeds(xSpeed, ySpeed, yaw));
 
 
-    // Logger.recordOutput("MyStates", swerveModuleStates);
+    Logger.recordOutput("MyStates", swerveModuleStates);
     // states = swerveModuleStates;
 
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, 12);

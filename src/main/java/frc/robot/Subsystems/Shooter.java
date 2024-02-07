@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.revrobotics.CANSparkBase.ControlType;
@@ -26,13 +27,13 @@ public class Shooter extends SubsystemBase{
     public Shooter() {
         shooterTop = new CANSparkMax(Constants.shooterTopID, MotorType.kBrushless);
         shooterTop.restoreFactoryDefaults();
-        shooterTop.setIdleMode(IdleMode.kBrake);
+        shooterTop.setIdleMode(IdleMode.kCoast);
         shooterTop.enableVoltageCompensation(11);
         shooterTop.burnFlash();
 
         shooterBot = new CANSparkMax(Constants.shooterBotID, MotorType.kBrushless);
         shooterBot.restoreFactoryDefaults();
-        shooterBot.setIdleMode(IdleMode.kBrake);
+        shooterBot.setIdleMode(IdleMode.kCoast);
         shooterBot.enableVoltageCompensation(11);
         shooterBot.burnFlash();
 
@@ -55,10 +56,9 @@ public class Shooter extends SubsystemBase{
         shooterTop.set(topSpeed);
 
     }
-    public void setVelocity(double velocityTop, double velocityBot) {
-        System.out.println(velocityTop);
-        botPID.setReference(velocityBot, CANSparkMax.ControlType.kVelocity);
-        topPID.setReference(velocityTop, CANSparkMax.ControlType.kVelocity);
+    public void setVelocity() {
+        botPID.setReference(-0.7 * 5676, CANSparkMax.ControlType.kVelocity);
+        topPID.setReference(-0.6 * 5676, CANSparkMax.ControlType.kVelocity);
 
         
         //Inputs RPMs into the PID loop rather than voltage, should account for error 

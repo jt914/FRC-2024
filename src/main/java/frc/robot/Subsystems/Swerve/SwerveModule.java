@@ -6,6 +6,7 @@ package frc.robot.Subsystems.Swerve;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
@@ -88,6 +89,8 @@ public class SwerveModule {
     turnPIDController.enableContinuousInput(-180,  180);
     driveMotor.setInverted(true);
     turnMotor.setInverted(true);
+    turnMotor.setIdleMode(IdleMode.kCoast);
+    driveMotor.setIdleMode(IdleMode.kCoast);
 
     driveMotor.burnFlash();
     turnMotor.burnFlash();
