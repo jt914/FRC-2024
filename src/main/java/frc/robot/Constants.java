@@ -30,8 +30,8 @@ public final class Constants {
     /* Mechanisms */
     public static final Gyro m_gyro = new Gyro(90);
     public static final Drivetrain m_swerve = null;
-    public static final Arm arm = new Arm();
-    public static final Intake intake = new Intake();
+    public static final Arm arm = null;
+    public static final Intake intake = null;
     public static final Shooter shooter = new Shooter();
     public static final Camera camera = null;
     
@@ -67,11 +67,11 @@ public final class Constants {
 
     /* - - - OTHER CONSTANTS - - - */
 
-    public static final int intakeID = 13; 
-    public static final int shooterTopID = 11; 
-    public static final int shooterBotID = 12; 
+    public static final int intakeID = 10; 
+    public static final int shooterTopID = 10; 
+    public static final int shooterBotID = 10; 
     public static final int armLeftID = 10; 
-    public static final int armRightID = 9; 
+    public static final int armRightID = 10; 
 
 
 

@@ -27,16 +27,30 @@ public class ArmCommand extends Command {
     public void execute(){
 
     
-        if(Constants.alternateController.getRightTriggerAxis() > 0.2){
-            System.out.println("working");
-            arm.forward();
+        // if(Constants.alternateController.getRightTriggerAxis() > 0.2){
+        //     System.out.println("working");
+        //     arm.forward();
+        // }
+        // else if (Constants.alternateController.getLeftTriggerAxis() > 0.2){
+        //     arm.backward();
+        // }
+        // else{
+        //     arm.stall();
+        // }
+
+        if(Constants.alternateController.leftBumper().getAsBoolean()){
+            Constants.arm.setDesired(Constants.arm.desiredAngle + 0.01);
+
         }
-        else if (Constants.alternateController.getLeftTriggerAxis() > 0.2){
-            arm.backward();
+
+
+        if(Constants.alternateController.rightBumper().getAsBoolean()){
+            Constants.arm.setDesired(Constants.arm.desiredAngle - 0.01);
         }
-        else{
-            arm.stall();
-        }
+
+
+        Constants.arm.updateAngle();
+        Constants.arm.moveArm();
         
 
     }

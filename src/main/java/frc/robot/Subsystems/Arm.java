@@ -25,7 +25,7 @@ public class Arm extends SubsystemBase{
     private SparkLimitSwitch limitSwitch;
     private double kP, kI, kD;
     public double desiredAngle;
-    public ProfiledPIDController controller = new ProfiledPIDController(0.01, 0, 0, null);
+    public PIDController controller = new PIDController(0.01, 0, 0);
 
 
     public Arm() {
@@ -35,12 +35,14 @@ public class Arm extends SubsystemBase{
         armLeft.enableVoltageCompensation(11);
         armLeft.burnFlash();
 
-        armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
-        armRight.restoreFactoryDefaults();
-        armRight.setIdleMode(IdleMode.kBrake);
-        armRight.enableVoltageCompensation(11);
-        armRight.setInverted(true);
-        armRight.burnFlash();
+        armRight = armLeft;
+
+        // armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
+        // armRight.restoreFactoryDefaults();
+        // armRight.setIdleMode(IdleMode.kBrake);
+        // armRight.enableVoltageCompensation(11);
+        // armRight.setInverted(true);
+        // armRight.burnFlash();
 
 
         // limitSwitch = armRight.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
@@ -97,6 +99,10 @@ public class Arm extends SubsystemBase{
 
         armLeft.set(controller.calculate(armEnc.getDistance(), desiredAngle)/100);
         armRight.set(controller.calculate(armEnc.getDistance(), desiredAngle)/100);
+
+        SmartDashboard.putNumber("current Arm Position", currentPos);
+        SmartDashboard.putNumber("desired Angle", desiredAngle);
+
 
 
 

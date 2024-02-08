@@ -55,9 +55,9 @@ public class ShooterCommand extends Command{
         // }
 
 
-        // Constants.shooter.setVelocity();
+        Constants.shooter.setVelocity();
 
-        Constants.shooter.setSpeed(-0.7, -0.85);
+        // Constants.shooter.setSpeed(-0.7, -0.85);
 
 
 
