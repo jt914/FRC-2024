@@ -28,12 +28,12 @@ public class ArmCommand extends Command {
 
     
         if(Constants.alternateController.getRightTriggerAxis() > 0.2){
-            System.out.println("working");
             arm.forward();
         }
         else if (Constants.alternateController.getLeftTriggerAxis() > 0.2){
             arm.backward();
         }
+
         else{
             arm.stall();
         }

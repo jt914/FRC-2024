@@ -22,12 +22,18 @@ public class SwerveCommand extends Command{
     public void execute(){
         // Constants.m_swerve.updateOdometry();
 
-        Constants.swerveController.back().onTrue(new FieldRelativeCommand());
+        if(Constants.swerveController.back().getAsBoolean()){
+          Constants.fieldRelative = !Constants.fieldRelative;
+        }
+
         if(driving){
             SmartDashboard.putBoolean("fieldRelative", Constants.fieldRelative);
             driveWithJoystick(Constants.fieldRelative);
         }
-        Constants.swerveController.a().onTrue(new CalibrateGyroCommand());
+
+        if(Constants.swerveController.povRight().getAsBoolean()){
+          Constants.m_gyro.calibrateGyro();
+        }
         
         SmartDashboard.putBoolean("Field Relative", Constants.fieldRelative);
       }

@@ -74,13 +74,25 @@ public class Arm extends SubsystemBase{
     }
 
     public void forward(){
-        armLeft.set(-0.2);
-        armRight.set(-0.2);
+        armLeft.set(-0.4);
+        armRight.set(-0.4);
 
     }
+    public void forwardSlow(){
+        armLeft.set(-0.4);
+        armRight.set(-0.4);
+
+    }
+    public void backwardSlow(){
+        armLeft.set(-0.4);
+        armRight.set(-0.4);
+
+    }
+
+
     public void backward(){
-        armLeft.set(0.2);
-        armRight.set(0.2);
+        armLeft.set(0.4);
+        armRight.set(0.4);
 
     }
     public void climbUp(){

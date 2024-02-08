@@ -5,7 +5,7 @@ import frc.robot.Constants;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Intake;
 
-public class IntakeCommand extends Command {
+public class IntakeSlowCommand extends Command {
     private Arm arm;
     private Intake intake;
     private boolean isFinished = false;
@@ -22,7 +22,7 @@ public class IntakeCommand extends Command {
 
     @Override
     public void execute(){
-        intake.run();
+        intake.runSlow();
     }
     @Override
     public boolean isFinished(){

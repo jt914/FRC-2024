@@ -52,8 +52,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
     (Constants.alternateController.start()).onTrue(new SwerveCommand());
     (Constants.alternateController.b()).toggleOnTrue(new ShooterCommand());
-    (Constants.alternateController.a()).toggleOnTrue(new IntakeCommand());
+    (Constants.alternateController.y()).whileTrue(new IntakeCommand());
     (Constants.alternateController.x()).toggleOnTrue(new ArmCommand());
+    (Constants.alternateController.rightBumper()).whileTrue(new IntakeSlowCommand());
+    (Constants.alternateController.leftBumper()).whileTrue(new IntakeReverseCommand());
 
     //Press x to turn the arm on. If something goes wrong, just press X again and it will turn the arm off
 

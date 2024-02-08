@@ -23,11 +23,18 @@ public class Intake extends SubsystemBase{
 
     public void run() {
         intake.set(0.85);
+        // intake.set(0.4);
+        running = true;
+    }
+    public void runSlow() {
+        // intake.set(0.85);
+        intake.set(0.25);
         running = true;
     }
 
+
     public void reverse() {
-        intake.set(-0.1);
+        intake.set(-0.25);
         running = true;
 
     }
