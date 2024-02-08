@@ -38,14 +38,22 @@ public class ArmCommand extends Command {
         //     arm.stall();
         // }
 
-        if(Constants.alternateController.leftBumper().getAsBoolean()){
+        if(Constants.alternateController.rightBumper().getAsBoolean()){
             Constants.arm.setDesired(Constants.arm.desiredAngle + 0.01);
 
         }
 
 
-        if(Constants.alternateController.rightBumper().getAsBoolean()){
+        if(Constants.alternateController.leftBumper().getAsBoolean()){
             Constants.arm.setDesired(Constants.arm.desiredAngle - 0.01);
+        }
+
+        if(Constants.swerveController.rightTrigger().getAsBoolean()){
+            Constants.arm.currentPos += 0.01;
+        }
+
+        if(Constants.swerveController.leftTrigger().getAsBoolean()){
+            Constants.arm.currentPos -= 0.01;
         }
 
 

@@ -8,6 +8,7 @@ import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.PIDController;
@@ -19,13 +20,14 @@ import frc.robot.Constants;
 
 public class Arm extends SubsystemBase{
 
-    private double currentPos;
+    public double currentPos;
     private CANSparkMax armLeft,armRight;
     public DutyCycleEncoder armEnc;
     private SparkLimitSwitch limitSwitch;
     private double kP, kI, kD;
     public double desiredAngle;
-    public PIDController controller = new PIDController(0.01, 0, 0);
+    public PIDController controller = new PIDController(0.0000013, 0, 0);
+    private final ArmFeedforward feedforward  = new ArmFeedforward(0.000009, 0.5, 0);
 
 
     public Arm() {
@@ -50,8 +52,8 @@ public class Arm extends SubsystemBase{
 
         // armEnc = new DutyCycleEncoder(1); //idk what goes here
 
-        armEnc = new DutyCycleEncoder(9); 
-        armEnc.reset();
+        // armEnc = new DutyCycleEncoder(9); 
+        // armEnc.reset();
 
 
         kP = .05;
@@ -65,7 +67,6 @@ public class Arm extends SubsystemBase{
      * @return updates and returns updated position of arm
      */
     public double updateAngle(){
-        currentPos = armEnc.getDistance(); //need to put some conversion factor here (??)
         return currentPos;
     }
 
@@ -97,8 +98,12 @@ public class Arm extends SubsystemBase{
 
     public void moveArm() {
 
-        armLeft.set(controller.calculate(armEnc.getDistance(), desiredAngle)/100);
-        armRight.set(controller.calculate(armEnc.getDistance(), desiredAngle)/100);
+
+
+
+
+        armLeft.setVoltage(controller.calculate(desiredAngle, currentPos) + feedforward.calculate(desiredAngle, currentPos));
+        armRight.setVoltage(controller.calculate(desiredAngle, currentPos) + feedforward.calculate(desiredAngle, currentPos));
 
         SmartDashboard.putNumber("current Arm Position", currentPos);
         SmartDashboard.putNumber("desired Angle", desiredAngle);
