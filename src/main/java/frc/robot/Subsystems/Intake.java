@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -18,10 +19,10 @@ public class Intake extends SubsystemBase{
     public Intake() {
         intake = new CANSparkMax(Constants.intakeID, MotorType.kBrushless);
         intake.restoreFactoryDefaults();
-        intake.setIdleMode(IdleMode.kCoast);
+        intake.setIdleMode(IdleMode.kBrake);
         intake.enableVoltageCompensation(11);
         intake.burnFlash();
-        intakeSensor = new AnalogInput(8);
+        intakeSensor = new AnalogInput(0);
     }
 
     public void run() {

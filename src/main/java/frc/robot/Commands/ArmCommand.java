@@ -1,5 +1,6 @@
 package frc.robot.Commands;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Arm;
@@ -12,6 +13,7 @@ public class ArmCommand extends Command {
     private boolean forward;
 
     public ArmCommand(){
+        
 
     }
 
@@ -20,45 +22,50 @@ public class ArmCommand extends Command {
     public void initialize(){
         arm = Constants.arm;
 
-
     }
-
     @Override
     public void execute(){
+        SmartDashboard.putBoolean("ArmSwitch", arm.armSwitch.get());
 
     
-        // if(Constants.alternateController.getRightTriggerAxis() > 0.2){
-        //     System.out.println("working");
-        //     arm.forward();
+        if(Constants.alternateController.getRightTriggerAxis() > 0.2){
+            arm.forward();
+        }
+
+        else if(arm.armSwitch.get() == true){
+            arm.stall();
+            return;
+            
+        }
+
+        else if (Constants.alternateController.getLeftTriggerAxis() > 0.2){
+            arm.backward();
+        }
+        else {
+            arm.stall();
+        }
+
+        // if(Constants.alternateController.rightBumper().getAsBoolean()){
+        //     Constants.arm.setDesired(Constants.arm.desiredAngle + 0.01);
+
         // }
-        // else if (Constants.alternateController.getLeftTriggerAxis() > 0.2){
-        //     arm.backward();
+
+
+        // if(Constants.alternateController.leftBumper().getAsBoolean()){
+        //     Constants.arm.setDesired(Constants.arm.desiredAngle - 0.01);
         // }
-        // else{
-        //     arm.stall();
+
+        // if(Constants.swerveController.rightTrigger().getAsBoolean()){
+        //     Constants.arm.currentPos += 0.01;
         // }
 
-        if(Constants.alternateController.rightBumper().getAsBoolean()){
-            Constants.arm.setDesired(Constants.arm.desiredAngle + 0.01);
-
-        }
-
-
-        if(Constants.alternateController.leftBumper().getAsBoolean()){
-            Constants.arm.setDesired(Constants.arm.desiredAngle - 0.01);
-        }
-
-        if(Constants.swerveController.rightTrigger().getAsBoolean()){
-            Constants.arm.currentPos += 0.01;
-        }
-
-        if(Constants.swerveController.leftTrigger().getAsBoolean()){
-            Constants.arm.currentPos -= 0.01;
-        }
+        // if(Constants.swerveController.leftTrigger().getAsBoolean()){
+        //     Constants.arm.currentPos -= 0.01;
+        // }
 
 
-        Constants.arm.updateAngle();
-        Constants.arm.moveArm();
+        // Constants.arm.updateAngle();
+        // Constants.arm.moveArm();
         
 
     }

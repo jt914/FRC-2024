@@ -28,11 +28,13 @@ public final class Constants {
     public static double[] randomDesired = new double[]{5,0.1,0.1};
 
     /* Mechanisms */
-    public static final Gyro m_gyro = new Gyro(90);
+    // public static final Gyro m_gyro = new Gyro(90);
+    public static final Gyro m_gyro = null;
+
     public static final Drivetrain m_swerve = null;
-    public static final Arm arm = null;
+    public static final Arm arm = new Arm();
     public static final Intake intake = null;
-    public static final Shooter shooter = new Shooter();
+    public static final Shooter shooter = null;
     public static final Camera camera = null;
     
 

@@ -10,6 +10,8 @@ public class IntakeCommand extends Command {
     private Arm arm;
     private Intake intake;
     private boolean isFinished = false;
+    public int elapsed = 0;
+    public boolean triggered = false;
 
 
 
@@ -17,33 +19,34 @@ public class IntakeCommand extends Command {
     @Override
     public void initialize(){
         intake = Constants.intake;
-        
+        triggered = false;
+        elapsed = 0;
     }
 
     @Override
     public void execute(){
         intake.run();
         SmartDashboard.putNumber("Voltage" , Constants.intake.intakeSensor.getVoltage());
+        SmartDashboard.putNumber("Elapsed" , elapsed);
+        if(Constants.intake.intakeSensor.getVoltage()<.5) {
+            triggered = true;
+        }
+        if(triggered == true) {
+            elapsed++;
+        }
+ 
     }
     @Override
     public boolean isFinished(){
-        return isFinished;
+        return elapsed>8;
 
     }
 
     @Override
     public void end(boolean interrupted) {
-    // Constants.intakeStatus = false;
-        intake.reverse();
-        intake.stop();
-
+        Constants.intake.stop();
     }
-
-
-
-
-
-    
+ 
 }
 
 

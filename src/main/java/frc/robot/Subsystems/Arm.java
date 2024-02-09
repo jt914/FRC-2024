@@ -12,6 +12,7 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,6 +29,7 @@ public class Arm extends SubsystemBase{
     public double desiredAngle;
     public PIDController controller = new PIDController(0.0000013, 0, 0);
     private final ArmFeedforward feedforward  = new ArmFeedforward(0.000009, 0.5, 0);
+    public DigitalInput armSwitch;
 
 
     public Arm() {
@@ -38,6 +40,7 @@ public class Arm extends SubsystemBase{
         armLeft.burnFlash();
 
         armRight = armLeft;
+        armSwitch = new DigitalInput(9);
 
         // armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
         // armRight.restoreFactoryDefaults();
