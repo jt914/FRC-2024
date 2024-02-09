@@ -93,7 +93,7 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    // Constants.m_swerve.updateOdometry();
+    Constants.m_swerve.updateOdometry();
   }
   
   public void teleopInit() {
@@ -115,7 +115,6 @@ public class Robot extends LoggedRobot {
 
 
 
-    m_field.setRobotPose(Constants.m_swerve.m_odometry.getPoseMeters());
 
   }
 

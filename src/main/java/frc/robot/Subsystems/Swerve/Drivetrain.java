@@ -4,11 +4,16 @@
 
 package frc.robot.Subsystems.Swerve;
 
+import java.util.Optional;
+
 import org.littletonrobotics.junction.Logger;
+import org.photonvision.EstimatedRobotPose;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Twist2d;
@@ -44,7 +49,7 @@ public class Drivetrain {
 
 
   private final SwerveDriveKinematics m_kinematics;
-  public final SwerveDriveOdometry m_odometry;
+  public final SwerveDrivePoseEstimator poseEstimator;
 
 
 
@@ -69,16 +74,16 @@ public class Drivetrain {
           m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation);
 
 
-    m_odometry = 
-      new SwerveDriveOdometry(
+    poseEstimator = 
+      new SwerveDrivePoseEstimator(
         m_kinematics, 
         Rotation2d.fromDegrees(m_gyro.getTotalAngleDegrees()), 
         new SwerveModulePosition[] {
         m_frontLeft.getPosition(),
         m_frontRight.getPosition(),
         m_backLeft.getPosition(),
-        m_backRight.getPosition() }
-        );
+        m_backRight.getPosition() },
+        new Pose2d());
 
   }
 
@@ -117,6 +122,18 @@ public class Drivetrain {
 
   /** Updates the field relative position of the robot. */
   public void updateOdometry() {
+
+        // Compute the robot's field-relative position exclusively from vision measurements.
+
+    if(Constants.camera.getPose() != null){
+      EstimatedRobotPose visionMeasurement3d = Constants.camera.getPose().get();
+      Pose2d visionMeasurement2d = visionMeasurement3d.estimatedPose.toPose2d();
+      poseEstimator.addVisionMeasurement(visionMeasurement2d,visionMeasurement3d.timestampSeconds);
+
+
+    }
+    // Convert robot pose from Pose3d to Pose2d needed to apply vision measurements.
+    
     // SwerveDriveWheelPositions wheelPositions = new SwerveDriveWheelPositions(new SwerveModulePosition[] {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_backLeft.getPosition(), m_backRight.getPosition()});
     // Rotation2d angle = new Rotation2d(Constants.m_gyro.getTotalAngleDegrees());
 
@@ -131,7 +148,7 @@ public class Drivetrain {
 
 
     //CHECK IF ROTATING CORRECT AMT
-    m_odometry.update(
+    poseEstimator.update(
         Rotation2d.fromDegrees(m_gyro.getTotalAngleDegrees()),
         new SwerveModulePosition[] {
           m_frontLeft.getPosition(),
@@ -145,9 +162,6 @@ public class Drivetrain {
     SmartDashboard.putNumber("frontLeft", m_frontLeft.getPosition().distanceMeters);
     SmartDashboard.putNumber("frontRight", m_frontRight.getPosition().distanceMeters);
 
-    SmartDashboard.putNumber("yDist", m_odometry.getPoseMeters().getY()/12);
-    SmartDashboard.putNumber("XDist", m_odometry.getPoseMeters().getX());
-    SmartDashboard.putNumber("deg", m_odometry.getPoseMeters().getRotation().getDegrees());
 
 
   }

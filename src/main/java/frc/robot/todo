@@ -1,7 +1,3 @@
-Fix PID Control for Shooter code
-Fix swerve drive encoder + wire up arm encoder
-Test arm pid control
-Test swerve, arm and shooter
 
 
 Calculating arm, shooter, and swerve rotation based on april tags for hood shooting
