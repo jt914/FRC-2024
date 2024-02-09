@@ -41,7 +41,7 @@ public class ShooterCommand extends Command{
 
         // if(Constants.alternateController.rightBumper().getAsBoolean()){
         //     Constants.RPMBot = Constants.RPMBot + 100;
-        // }
+        // }%
         // if(Constants.alternateController.leftBumper().getAsBoolean()){
         //     Constants.RPMBot = Constants.RPMBot - 100;
         // }
@@ -57,7 +57,7 @@ public class ShooterCommand extends Command{
 
         // Constants.shooter.setVelocity();
 
-        Constants.shooter.setSpeed(-0.7, -0.85);
+        Constants.shooter.setSpeed(-0.60, -0.9);
 
 
 
