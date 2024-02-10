@@ -28,7 +28,7 @@ public class Arm extends SubsystemBase{
     private double kP, kI, kD;
     public double desiredAngle;
     public PIDController controller = new PIDController(0.0000013, 0, 0);
-    private final ArmFeedforward feedforward  = new ArmFeedforward(0.000009, 0.5, 0);
+    private final ArmFeedforward feedforward  = new ArmFeedforward(0.000009, 0.01, 0);
     public DigitalInput armSwitch;
 
 
@@ -101,12 +101,14 @@ public class Arm extends SubsystemBase{
 
     public void moveArm() {
 
+        SmartDashboard.putNumber("armVoltage", controller.calculate(desiredAngle, currentPos) + feedforward.calculate(desiredAngle, currentPos));
 
 
 
 
-        armLeft.setVoltage(controller.calculate(desiredAngle, currentPos) + feedforward.calculate(desiredAngle, currentPos));
-        armRight.setVoltage(controller.calculate(desiredAngle, currentPos) + feedforward.calculate(desiredAngle, currentPos));
+
+        // armLeft.setVoltage(controller.calculate(desiredAngle, currentPos) + feedforward.calculate(desiredAngle, currentPos));
+        // armRight.setVoltage(controller.calculate(desiredAngle, currentPos) + feedforward.calculate(desiredAngle, currentPos));
 
         SmartDashboard.putNumber("current Arm Position", currentPos);
         SmartDashboard.putNumber("desired Angle", desiredAngle);

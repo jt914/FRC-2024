@@ -54,6 +54,8 @@ public class RobotContainer {
     (Constants.alternateController.b()).toggleOnTrue(new ShooterCommand());
     (Constants.alternateController.a()).toggleOnTrue(new IntakeCommand());
     (Constants.alternateController.x()).toggleOnTrue(new ArmCommand());
+    (Constants.alternateController.y()).whileTrue(new IntakeReverse());
+    (Constants.alternateController.leftBumper()).whileTrue(new IntakeShootCommand());
 
     //Press x to turn the arm on. If something goes wrong, just press X again and it will turn the arm off
 

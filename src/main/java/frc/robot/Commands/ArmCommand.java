@@ -29,20 +29,19 @@ public class ArmCommand extends Command {
 
     
         if(Constants.alternateController.getRightTriggerAxis() > 0.2){
-            arm.forward();
+            arm.desiredAngle += 0.1;
         }
 
         else if(arm.armSwitch.get() == true){
-            arm.stall();
-            return;
-            
+            // arm.stall();
+            return;   
         }
 
         else if (Constants.alternateController.getLeftTriggerAxis() > 0.2){
-            arm.backward();
+            arm.desiredAngle -= 0.1;
         }
         else {
-            arm.stall();
+            // arm.stall();
         }
 
         // if(Constants.alternateController.rightBumper().getAsBoolean()){
@@ -64,8 +63,8 @@ public class ArmCommand extends Command {
         // }
 
 
-        // Constants.arm.updateAngle();
-        // Constants.arm.moveArm();
+        Constants.arm.updateAngle();
+        Constants.arm.moveArm();
         
 
     }

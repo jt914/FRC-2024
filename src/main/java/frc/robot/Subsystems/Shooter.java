@@ -21,7 +21,9 @@ public class Shooter extends SubsystemBase{
     private CANSparkMax shooterTop;
     private CANSparkMax shooterBot;
     private double targetVelocity;
-    public SparkPIDController controller;
+    public SparkPIDController controllerTop;
+    public SparkPIDController controllerBot;
+
     Double botMultiplier = NetworkTableInstance.getDefault().getTable("/datatable").getEntry("Bottom Multiplier").getDouble(0);
     Double topMultiplier = NetworkTableInstance.getDefault().getTable("/datatable").getEntry("Top Multiplier").getDouble(0);
     
@@ -33,29 +35,47 @@ public class Shooter extends SubsystemBase{
         shooterTop.restoreFactoryDefaults();
         shooterTop.setIdleMode(IdleMode.kCoast);
         shooterTop.enableVoltageCompensation(11);
+        shooterTop.setInverted(false);
+
+        
+        shooterBot = new CANSparkMax(Constants.shooterBotID, MotorType.kBrushless);
+        shooterBot.restoreFactoryDefaults();
+        shooterBot.setIdleMode(IdleMode.kCoast);
+        shooterBot.setInverted(true);
+        shooterBot.enableVoltageCompensation(11);
+
+        shooterTop.follow(shooterBot);
+
+        shooterBot.burnFlash();
         shooterTop.burnFlash();
 
-        shooterBot = shooterTop;
+        
 
-        controller = shooterTop.getPIDController();
+        controllerTop = shooterTop.getPIDController();
+        controllerBot = shooterBot.getPIDController();
 
-        double kP = 0.001;
-        double kI = 0.00001;
+
+        double kP = 0.000000001;
+        double kI = 0;
         double kD = 0; 
         double kIz = 0; 
-        double kFF = 0.000015; 
+        double kFF = 0.0001968; 
         double kMaxOutput = 1; 
         double kMinOutput = -1;
         double maxRPM = 5700;
     
         // set PID coefficients
-        controller.setP(kP);
-        controller.setI(kI);
-        controller.setD(kD);
-        controller.setIZone(kIz);
-        controller.setFF(kFF);
-        controller.setOutputRange(kMinOutput, kMaxOutput);
-    
+        controllerTop.setP(kP);
+        controllerTop.setI(kI);
+        controllerTop.setD(kD);
+        controllerTop.setIZone(kIz);
+        controllerTop.setFF(kFF);
+
+        controllerBot.setP(kP);
+        controllerBot.setI(kI);
+        controllerBot.setD(kD);
+        controllerBot.setIZone(kIz);
+        controllerBot.setFF(kFF);
 
         // shooterBot = new CANSparkMax(Constants.shooterBotID, MotorType.kBrushless);
         // shooterBot.restoreFactoryDefaults();
@@ -80,9 +100,14 @@ public class Shooter extends SubsystemBase{
 
     }
     public void setVelocity() {
-        System.out.println(shooterTop.getEncoder().getVelocity());
-        controller.setReference(600, ControlType.kVelocity);
+        controllerTop.setReference(1000, ControlType.kVelocity);
+
+        controllerBot.setReference(1000, ControlType.kVelocity);
         
+        
+        // shooterBot.set(0.2);
+        // shooterTop.set(0.2);
+
 
         
         //Inputs RPMs into the PID loop rather than voltage, should account for error 
