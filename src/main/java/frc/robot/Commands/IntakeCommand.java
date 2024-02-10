@@ -38,7 +38,7 @@ public class IntakeCommand extends Command {
     }
     @Override
     public boolean isFinished(){
-        return elapsed>4;
+        return triggered;
 
     }
 

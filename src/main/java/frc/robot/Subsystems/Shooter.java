@@ -100,9 +100,9 @@ public class Shooter extends SubsystemBase{
 
     }
     public void setVelocity() {
-        controllerTop.setReference(1000, ControlType.kVelocity);
+        // controllerTop.setReference(1000, ControlType.kVelocity);
 
-        controllerBot.setReference(1000, ControlType.kVelocity);
+        controllerBot.setReference(4000, ControlType.kVelocity);
         
         
         // shooterBot.set(0.2);
