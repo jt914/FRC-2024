@@ -69,8 +69,10 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    System.out.println("workingComand");
+
     // An ExampleCommand will run in autonomous
     double routine = NetworkTableInstance.getDefault().getTable("/datatable").getEntry("routine").getDouble(0);
-    return null;
+    return new AutoCommand();
   }
 }

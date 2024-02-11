@@ -36,14 +36,17 @@ import edu.wpi.first.wpilibj.SPI;
 public class Robot extends LoggedRobot {
     Field2d m_field = new Field2d();
     private boolean startedSwerve = false;
-    private RobotContainer robot;
+    private RobotContainer m_robotContainer;
+    private Command m_autonomousCommand;
+
+
 
 
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
 
   @Override
   public void robotInit() {
-    robot = new RobotContainer();
+    m_robotContainer = new RobotContainer();
 
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
@@ -89,6 +92,12 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousInit() {
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
+
   }
 
   @Override
