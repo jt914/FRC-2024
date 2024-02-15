@@ -38,15 +38,21 @@ public class SwerveModule {
   public RelativeEncoder driveEncoder;
   public RelativeEncoder turnEncoder;
 
+  
+
+
+
   // Gains are for example purposes only - must be determined for your own robot!
-  // private final PIDController drivePIDController = new PIDController(0.025, 0, 0);
 
   // Gains are for example purposes only - must be determined for your own robot!
   private final PIDController turnPIDController = new PIDController(0.006, 0.000, 0.00001);
-      
+  private final PIDController drivePIDController = new PIDController(0.025, 0, 0);
   // Gains are for example purposes only - must be determined for your own robot!
   // private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(0.55493, 2.3014, 0.51488);
   // private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(0, 2.3014, 0.51488);
+
+  public SimpleMotorFeedforward turnFeedforward = new SimpleMotorFeedforward(.00001, 0, 0);
+  public SimpleMotorFeedforward driveFeedforward = new SimpleMotorFeedforward(.00001, 0, 0);
 
   private double turnEncoder180;
   
@@ -115,7 +121,7 @@ public class SwerveModule {
       // SmartDashboard.putNumber("optimizedVelocity "+ module, optimizedModuleOutput[1]);
 
 
-    double driveOutput = optimizedModuleOutput[1];
+    double driveOutput = drivePIDController.calculate(0, 0) + driveFeedforward.calculate(0, 0);
     driveMotor.setVoltage(driveOutput);
       // SmartDashboard.putNumber("driveOutput" + module, driveOutput);
 
