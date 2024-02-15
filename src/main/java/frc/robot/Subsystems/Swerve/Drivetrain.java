@@ -7,7 +7,6 @@ package frc.robot.Subsystems.Swerve;
 import org.littletonrobotics.junction.Logger;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -46,17 +45,12 @@ public class Drivetrain {
 
   private final SwerveDriveKinematics m_kinematics;
   public final SwerveDriveOdometry m_odometry;
-  public AutoBuilder builder = new AutoBuilder();
+
 
 
   public Gyro m_gyro;
 
   public Drivetrain() {
-    builder.configureHolonomic(m_odometry.getPoseMeters(), m_odometry.resetPosition(m_gyro.getTotalAngleDegrees(), SwerveModulePosition, ));
-
-
-
-
     m_gyro = Constants.m_gyro;
     m_gyro.resetGyroYaw();
 
