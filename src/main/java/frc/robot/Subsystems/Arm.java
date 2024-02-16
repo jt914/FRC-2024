@@ -101,9 +101,12 @@ public class Arm extends SubsystemBase{
         SmartDashboard.putNumber("voltage", controller.calculate(armEnc.getDistance(), desiredAngle) + feedforward.calculate(desiredAngle* Math.PI / 180, Math.PI/180));
         SmartDashboard.putNumber("current Arm Position", armEnc.getDistance());
         SmartDashboard.putNumber("desired Angle", desiredAngle);
+    }
+    public double getArmEncoder() {
+        return armEnc.getDistance();
+    }
 
 
-        
 
 
 
@@ -125,7 +128,7 @@ public class Arm extends SubsystemBase{
 
         // SmartDashboard.putNumber("speed", speed);
 
-    }
+    
 
     public void stop() {
         armLeft.set(0);
