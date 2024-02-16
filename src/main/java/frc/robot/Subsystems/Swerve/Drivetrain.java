@@ -5,11 +5,16 @@
 package frc.robot.Subsystems.Swerve;
 
 import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.Logger;
 import org.photonvision.EstimatedRobotPose;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -44,6 +49,7 @@ public class Drivetrain extends SubsystemBase {
   private final SwerveModule m_frontRight;
   public final SwerveModule m_backLeft;
   private final SwerveModule m_backRight;
+  private ChassisSpeeds speeds;
 
   public SwerveModuleState[] states = new SwerveModuleState[4];
 
@@ -86,6 +92,65 @@ public class Drivetrain extends SubsystemBase {
         m_backRight.getPosition() },
         new Pose2d(new Translation2d(14.700758, 8.2042), new Rotation2d(3* Math.PI / 4)));
 
+    //     AutoBuilder.configureHolonomic(
+    //     this::getPose, // Robot pose supplier
+    //     this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+    //     this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+    //     this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+    //     new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+    //         new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+    //         new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+    //         4.5, // Max module speed, in m/s
+    //         0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+    //         new ReplanningConfig() // Default path replanning config. See the API for the options here
+    //     ),
+    //     new BooleanSupplier() {
+        
+    //     },
+    //     this // Reference to this subsystem to set requirements
+    // );
+  }
+
+  public ChassisSpeeds getRobotRelativeSpeeds(){
+    return speeds;
+  }
+
+  public void driveRobotRelative(ChassisSpeeds speeds){
+
+    
+    var swerveModuleStates = m_kinematics.toSwerveModuleStates(speeds);
+    // states = swerveModuleStates;
+
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, 12);
+    m_frontLeft.setModuleState(swerveModuleStates[0], 0);
+    m_frontRight.setModuleState(swerveModuleStates[1], 1);
+    m_backLeft.setModuleState(swerveModuleStates[2], 2);
+    m_backRight.setModuleState(swerveModuleStates[3], 3);
+
+
+    
+    // SmartDashboard.putNumber("xSpeed", xSpeed);
+    // SmartDashboard.putNumber("ySpeed", ySpeed);
+    // SmartDashboard.putNumber("rotation", yaw);
+
+  }
+
+
+
+  public Pose2d getPose(){
+    return poseEstimator.getEstimatedPosition();
+  }
+
+  public void resetPose(Pose2d pose){
+
+    poseEstimator.resetPosition(
+          new Rotation2d(Constants.m_gyro.getTotalAngleDegrees()),
+          new SwerveModulePosition[] {
+          m_frontLeft.getPosition(),
+          m_frontRight.getPosition(),
+          m_backLeft.getPosition(),
+          m_backRight.getPosition()}, 
+          pose);
   }
 
   /**
@@ -97,6 +162,8 @@ public class Drivetrain extends SubsystemBase {
    * @param fieldRelative Whether the provided x and y speeds are relative to the field.
    */
   public void drive(double xSpeed, double ySpeed, double yaw) {
+
+    speeds = new ChassisSpeeds(xSpeed, ySpeed, yaw);
 
     // var swerveModuleStates = m_kinematics.toSwerveModuleStates(
     //         fieldRelative
