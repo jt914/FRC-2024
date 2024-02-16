@@ -30,9 +30,9 @@ public class AmpCommand extends Command {
         arm.setDesired(100);
         arm.moveArm();
         shooter.setSpeed(-.4, -0.55);
-        if(shooter.getSpeedBottom() > 2000 && arm.armEnc.getDistance() > 95) {
-            intake.run(.5);
-        }
+        // if(shooter.getSpeedBottom() > 2000 && arm.armEnc.getDistance() > 95) {
+        //     intake.run(.5);
+        // }
         
     }
 
