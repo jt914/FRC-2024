@@ -70,13 +70,13 @@ public class Robot extends LoggedRobot {
     double xSpeed = -1 * Constants.m_xspeedLimiter.calculate(Constants.swerveController.getLeftY()) * Drivetrain.kMaxVoltage;
     double yaw = -1 * Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
 
-    // SmartDashboard.putNumber("xSpeed ", xSpeed);
-    // SmartDashboard.putNumber("ySpeed ", ySpeed);
-    // SmartDashboard.putNumber("yaw ", yaw);
-    // SmartDashboard.putNumber("gyro angle ", Constants.m_gyro.getTotalAngleDegrees());
+    SmartDashboard.putNumber("xSpeed ", xSpeed);
+    SmartDashboard.putNumber("ySpeed ", ySpeed);
+    SmartDashboard.putNumber("yaw ", yaw);
+    SmartDashboard.putNumber("gyro angle ", Constants.m_gyro.getTotalAngleDegrees());
 
-    // SmartDashboard.putNumber("current pos", Constants.arm.updateAngle());
-    // SmartDashboard.putNumber("desired", Constants.arm.desiredAngle);
+    SmartDashboard.putNumber("current pos", Constants.arm.updateAngle());
+    SmartDashboard.putNumber("desired", Constants.arm.desiredAngle);
 
 
     // if(Constants.alternateController.getXButtonPressed()){
@@ -93,7 +93,7 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    // Constants.m_swerve.updateOdometry();
+    Constants.m_swerve.updateOdometry();
   }
   
   public void teleopInit() {
@@ -112,10 +112,10 @@ public class Robot extends LoggedRobot {
   boolean fieldRelative = false;
   @Override
   public void teleopPeriodic() {
+    Constants.m_swerve.updateOdometry();
 
 
-
-    // m_field.setRobotPose(Constants.m_swerve.m_odometry.getPoseMeters());
+    m_field.setRobotPose(Constants.m_swerve.m_odometry.getPoseMeters());
 
   }
 
@@ -124,7 +124,7 @@ public class Robot extends LoggedRobot {
   }
 
   public void disabledPeriodic(){
-    // Constants.arm.stall();
+    Constants.arm.stall();
   }
 
 }
