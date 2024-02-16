@@ -56,7 +56,8 @@ public class ShooterCommand extends Command{
 
 
         // Constants.shooter.setVelocity();
-
+        SmartDashboard.putNumber("Shooter Top Speed", Constants.shooter.getSpeedTop());
+        SmartDashboard.putNumber("Shooter Bot Speed", Constants.shooter.getSpeedBottom());
         Constants.shooter.setSpeed(-0.60, -0.9);
 
 
@@ -89,7 +90,7 @@ public class ShooterCommand extends Command{
 
 
 
-        // Constants.m_swerve.drive(0,0, desiredAngle);
+        // Constants.swerve.drive(0,0, desiredAngle);
         
     }
 

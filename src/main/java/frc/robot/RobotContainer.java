@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Subsystems.*;
+import frc.Autos.AutoCommand;
 import frc.robot.Commands.*;
 
 /**
@@ -56,6 +57,7 @@ public class RobotContainer {
     (Constants.alternateController.x()).toggleOnTrue(new ArmCommand());
     (Constants.alternateController.rightBumper()).whileTrue(new IntakeSlowCommand());
     (Constants.alternateController.leftBumper()).whileTrue(new IntakeReverseCommand());
+    (Constants.alternateController.a()).onTrue(new AutoCommand());
 
     //Press x to turn the arm on. If something goes wrong, just press X again and it will turn the arm off
 

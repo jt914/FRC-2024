@@ -30,13 +30,12 @@ public final class Constants {
     public static SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(5);
     public static SlewRateLimiter m_rotLimiter = new SlewRateLimiter(5);
     public static double[] randomDesired = new double[]{5,0.1,0.1};
-    public static HolonomicPathFollowerConfig pathFollow = new HolonomicPathFollowerConfig(new PIDConstants(0, 0, 0), new PIDConstants(0, 0, 0), 1, .413, new ReplanningConfig());
     /* Mechanisms */
     public static final Gyro m_gyro = new Gyro(90);
-    public static final Drivetrain m_swerve = new Drivetrain();
+    public static final Drivetrain swerve = new Drivetrain();
     public static final Arm arm = new Arm();
-    public static final Intake intake = new Intake();
-    public static final Shooter shooter = new Shooter();
+    public static final Intake intake = null;
+    public static final Shooter shooter = null;
     public static final Camera camera = null;
     
 

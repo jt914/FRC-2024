@@ -20,7 +20,7 @@ public class SwerveCommand extends Command{
     
     @Override
     public void execute(){
-        // Constants.m_swerve.updateOdometry();
+        // Constants.swerve.updateOdometry();
 
         if(Constants.swerveController.back().getAsBoolean()){
           Constants.fieldRelative = !Constants.fieldRelative;
@@ -84,7 +84,7 @@ public class SwerveCommand extends Command{
       SmartDashboard.putNumber("LeftX", Constants.swerveController.getLeftX());
       SmartDashboard.putNumber("LeftY", Constants.swerveController.getLeftY());
 
-      Constants.m_swerve.drive(xSpeed, ySpeed, yaw);
+      Constants.swerve.drive(xSpeed, ySpeed, yaw);
     }
   
 }

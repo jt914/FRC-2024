@@ -89,6 +89,7 @@ public class Drivetrain {
    * @param ySpeed Speed of the robot in the y direction (sideways).
    * @param rot Angular rate of the robot.
    * @param fieldRelative Whether the provided x and y speeds are relative to the field.
+   * @param yaw Angle of the robot.
    */
   public void drive(double xSpeed, double ySpeed, double yaw) {
 

@@ -54,14 +54,18 @@ public class Shooter extends SubsystemBase{
     public void setSpeed(double botSpeed, double topSpeed) {
         shooterBot.set(botSpeed);
         shooterTop.set(topSpeed);
-
     }
     public void setVelocity() {
         botPID.setReference(-0.7 * 5676, CANSparkMax.ControlType.kVelocity);
         topPID.setReference(-0.6 * 5676, CANSparkMax.ControlType.kVelocity);
-
         
         //Inputs RPMs into the PID loop rather than voltage, should account for error 
+    }
+    public double getSpeedTop() {
+        return shooterTop.getEncoder().getVelocity();
+    }
+    public double getSpeedBottom() {
+        return shooterBot.getEncoder().getVelocity();
     }
 
     public void stop() {

@@ -121,7 +121,8 @@ public class SwerveModule {
       // SmartDashboard.putNumber("optimizedVelocity "+ module, optimizedModuleOutput[1]);
 
 
-    double driveOutput = drivePIDController.calculate(0, 0) + driveFeedforward.calculate(0, 0);
+    double driveOutput = optimizedModuleOutput[1];
+    // drivePIDController.calculate(0, 0) + driveFeedforward.calculate(0, 0);
     driveMotor.setVoltage(driveOutput);
       // SmartDashboard.putNumber("driveOutput" + module, driveOutput);
 
@@ -189,11 +190,11 @@ public class SwerveModule {
    * @return The current position of the module.
    */
   public SwerveModulePosition getPosition() {
-    // if(Constants.m_swerve != null && Constants.m_swerve.states != null && Constants.m_swerve.states[id] != null && Constants.m_swerve.states[id].angle != null){
+    // if(Constants.swerve != null && Constants.swerve.states != null && Constants.swerve.states[id] != null && Constants.swerve.states[id].angle != null){
     //   if(id == 0)
-    //     System.out.println(Constants.m_swerve.states[id].angle);
+    //     System.out.println(Constants.swerve.states[id].angle);
 
-    //   return new SwerveModulePosition(driveEncoder.getPosition()/20, Constants.m_swerve.states[id].angle);
+    //   return new SwerveModulePosition(driveEncoder.getPosition()/20, Constants.swerve.states[id].angle);
     // }
 
 
