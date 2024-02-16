@@ -38,7 +38,7 @@ public final class Constants {
     public static final Arm arm = new Arm();
     public static final Intake intake = new Intake();
     public static final Shooter shooter = new Shooter();
-    public static final Camera camera = null;
+    public static final Camera camera = new Camera();
 
 
 

@@ -50,12 +50,13 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    (Constants.alternateController.start()).onTrue(new SwerveCommand());
-    (Constants.alternateController.b()).toggleOnTrue(new ShooterCommand());
+    (Constants.alternateController.start()).toggleOnTrue(new SwerveCommand());
+    // (Constants.alternateController.b()).onTrue(new AutoAimCommand());
     (Constants.alternateController.y()).whileTrue(new IntakeCommand());
-    (Constants.alternateController.x()).toggleOnTrue(new ArmCommand());
+    // (Constants.alternateController.start()).toggleOnTrue(new ArmCommand());
     (Constants.alternateController.rightBumper()).whileTrue(new IntakeSlowCommand());
     (Constants.alternateController.leftBumper()).whileTrue(new IntakeReverseCommand());
+    
 
     //Press x to turn the arm on. If something goes wrong, just press X again and it will turn the arm off
 

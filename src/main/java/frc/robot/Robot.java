@@ -17,6 +17,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -66,17 +68,17 @@ public class Robot extends LoggedRobot {
   public void robotPeriodic(){
     CommandScheduler.getInstance().run();
 
-    double ySpeed = -1 * Constants.m_yspeedLimiter.calculate(Constants.swerveController.getLeftX()) * Drivetrain.kMaxVoltage;
-    double xSpeed = -1 * Constants.m_xspeedLimiter.calculate(Constants.swerveController.getLeftY()) * Drivetrain.kMaxVoltage;
-    double yaw = -1 * Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
+    // double ySpeed = -1 * Constants.m_yspeedLimiter.calculate(Constants.swerveController.getLeftX()) * Drivetrain.kMaxVoltage;
+    // double xSpeed = -1 * Constants.m_xspeedLimiter.calculate(Constants.swerveController.getLeftY()) * Drivetrain.kMaxVoltage;
+    // double yaw = -1 * Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
 
-    SmartDashboard.putNumber("xSpeed ", xSpeed);
-    SmartDashboard.putNumber("ySpeed ", ySpeed);
-    SmartDashboard.putNumber("yaw ", yaw);
-    SmartDashboard.putNumber("gyro angle ", Constants.m_gyro.getTotalAngleDegrees());
+    // SmartDashboard.putNumber("xSpeed ", xSpeed);
+    // SmartDashboard.putNumber("ySpeed ", ySpeed);
+    // SmartDashboard.putNumber("yaw ", yaw);
+    // SmartDashboard.putNumber("gyro angle ", Constants.m_gyro.getTotalAngleDegrees());
 
-    SmartDashboard.putNumber("current pos", Constants.arm.updateAngle());
-    SmartDashboard.putNumber("desired", Constants.arm.desiredAngle);
+    // SmartDashboard.putNumber("current pos", Constants.arm.updateAngle());
+    // SmartDashboard.putNumber("desired", Constants.arm.desiredAngle);
 
 
     // if(Constants.alternateController.getXButtonPressed()){
@@ -93,7 +95,6 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    Constants.m_swerve.updateOdometry();
   }
   
   public void teleopInit() {
@@ -104,7 +105,8 @@ public class Robot extends LoggedRobot {
     // if (m_autonomousCommand != null) {
     //   m_autonomousCommand.cancel();
 
-    SmartDashboard.putData("Field", m_field);
+    // SmartDashboard.putData("Field", m_field);
+
 
 
   }
@@ -112,6 +114,10 @@ public class Robot extends LoggedRobot {
   boolean fieldRelative = false;
   @Override
   public void teleopPeriodic() {
+    Constants.m_swerve.updateOdometry();
+    SmartDashboard.putNumber("PoseX", Constants.m_swerve.poseEstimator.getEstimatedPosition().getX());
+    SmartDashboard.putNumber("PoseY", Constants.m_swerve.poseEstimator.getEstimatedPosition().getY());
+
 
 
 
@@ -123,7 +129,6 @@ public class Robot extends LoggedRobot {
   }
 
   public void disabledPeriodic(){
-    Constants.arm.stall();
   }
 
 }
