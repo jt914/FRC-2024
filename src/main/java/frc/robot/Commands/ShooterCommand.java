@@ -41,7 +41,7 @@ public class ShooterCommand extends Command{
 
         // if(Constants.alternateController.rightBumper().getAsBoolean()){
         //     Constants.RPMBot = Constants.RPMBot + 100;
-        // }%
+        // }
         // if(Constants.alternateController.leftBumper().getAsBoolean()){
         //     Constants.RPMBot = Constants.RPMBot - 100;
         // }
@@ -55,10 +55,9 @@ public class ShooterCommand extends Command{
         // }
 
 
-        // Constants.shooter.setVelocity();
-        SmartDashboard.putNumber("Shooter Top Speed", Constants.shooter.getSpeedTop());
-        SmartDashboard.putNumber("Shooter Bot Speed", Constants.shooter.getSpeedBottom());
-        Constants.shooter.setSpeed(-0.60, -0.9);
+        Constants.shooter.setVelocity();
+
+        // Constants.shooter.setSpeed(-0.7, -0.85);
 
 
 
@@ -90,7 +89,7 @@ public class ShooterCommand extends Command{
 
 
 
-        // Constants.swerve.drive(0,0, desiredAngle);
+        // Constants.m_swerve.drive(0,0, desiredAngle);
         
     }
 

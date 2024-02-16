@@ -115,7 +115,7 @@ public class Robot extends LoggedRobot {
 
 
 
-    m_field.setRobotPose(Constants.swerve.m_odometry.getPoseMeters());
+    m_field.setRobotPose(Constants.swerve.poseEstimator.getEstimatedPosition());
 
   }
 

@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Gyro {
   // private AHRS m_gyro;
   private Drivetrain drivetrain;
-  public static ADIS16470_IMU m_gyro;
+  public static AHRS m_gyro;
   private double gyroAngleOffset = 0;
 
 
@@ -25,7 +25,7 @@ public class Gyro {
     
     /* Create a gyro */
     try {
-      m_gyro = new ADIS16470_IMU();
+      m_gyro = new AHRS();
     } 
     catch (RuntimeException ex) {
         System.out.println("--------------");
@@ -38,7 +38,7 @@ public class Gyro {
   /* Returns the total angle (goes past 360) */
   /* ANGLE ADJUSTMENT DOES EFFECT THIS VALUE */
   public double getTotalAngleDegrees() {
-    return m_gyro.getAngle(IMUAxis.kYaw) + gyroAngleOffset;
+    return m_gyro.getAngle() + gyroAngleOffset;
   }
 
   /* Returns an angle from -180 to 180 */
@@ -56,7 +56,7 @@ public class Gyro {
   /* Calibrates the gyro */
   /* ROBOT MUST BE STILL WHILE CALIBRATING */
   public void calibrateGyro() {
-    m_gyro.calibrate();
+    m_gyro.reset();
   }
 
   // public boolean isCalibrating() {
