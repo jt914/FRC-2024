@@ -1,6 +1,5 @@
 package frc.robot.Commands;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Arm;
@@ -10,8 +9,6 @@ public class IntakeCommand extends Command {
     private Arm arm;
     private Intake intake;
     private boolean isFinished = false;
-    public int elapsed = 0;
-    public boolean triggered = false;
 
 
 
@@ -19,34 +16,32 @@ public class IntakeCommand extends Command {
     @Override
     public void initialize(){
         intake = Constants.intake;
-        triggered = false;
-        elapsed = 0;
+
+        
     }
 
     @Override
     public void execute(){
-        intake.run();
-        SmartDashboard.putNumber("Voltage" , Constants.intake.intakeSensor.getVoltage());
-        SmartDashboard.putNumber("Elapsed" , elapsed);
-        if(Constants.intake.intakeSensor.getVoltage()<.5) {
-            triggered = true;
-        }
-        if(triggered == true) {
-            elapsed++;
-        }
- 
+        intake.run(.85);
     }
     @Override
     public boolean isFinished(){
-        return elapsed>8;
+        return isFinished;
 
     }
 
     @Override
     public void end(boolean interrupted) {
-        Constants.intake.stop();
+    // Constants.intakeStatus = false;
+        intake.stop();
+
     }
- 
+
+
+
+
+
+    
 }
 
 
