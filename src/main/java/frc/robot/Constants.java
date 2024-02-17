@@ -17,8 +17,8 @@ import frc.robot.Subsystems.Swerve.Gyro;
 public final class Constants {
 
     /* Controller Constants */
-    public static final CommandXboxController swerveController = new CommandXboxController(1);
-    public static final CommandXboxController alternateController = swerveController;
+    public static final CommandXboxController swerveController = new CommandXboxController(0);
+    public static final CommandXboxController alternateController = new CommandXboxController(1);
 
     public static boolean intakeRunning = false;
     public static boolean fieldRelative = false;
@@ -34,9 +34,9 @@ public final class Constants {
     public static final Gyro m_gyro = new Gyro(90);
     public static final Drivetrain swerve = new Drivetrain();
     public static final Arm arm = new Arm();
-    public static final Intake intake = null;
-    public static final Shooter shooter = null;
-    public static final Camera camera = null;
+    public static final Intake intake = new Intake();
+    public static final Shooter shooter = new Shooter();
+    public static final Camera camera = new Camera();
     
 
 

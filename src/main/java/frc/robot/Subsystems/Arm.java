@@ -27,8 +27,8 @@ public class Arm extends SubsystemBase{
     private SparkLimitSwitch limitSwitch;
     private double kP, kI, kD;
     public double desiredAngle;
-    public PIDController controller = new PIDController(0.0000013, 0, 0);
-    private final ArmFeedforward feedforward  = new ArmFeedforward(0.000009, 0.5, 0);
+    public PIDController controller = new PIDController(.5, 0.001, 0.000001);
+    private final ArmFeedforward feedforward  = new ArmFeedforward(0.09, 0.05, 0);
     public DigitalInput armSwitch;
 
 
@@ -39,8 +39,20 @@ public class Arm extends SubsystemBase{
         armLeft.enableVoltageCompensation(11);
         armLeft.burnFlash();
 
-        armRight = armLeft;
-        armSwitch = new DigitalInput(9);
+        armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
+        armRight.restoreFactoryDefaults();
+        armRight.setIdleMode(IdleMode.kBrake);
+        armRight.enableVoltageCompensation(11);
+        armRight.setInverted(true);
+
+        armRight.burnFlash();
+
+        armSwitch = new DigitalInput(8);
+        armEnc = new DutyCycleEncoder(9); 
+        armEnc.setPositionOffset(0.513);
+        armEnc.setDistancePerRotation(-360);
+
+        // armEnc.reset();
 
         // armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
         // armRight.restoreFactoryDefaults();
@@ -53,51 +65,34 @@ public class Arm extends SubsystemBase{
         // limitSwitch = armRight.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
         // limitSwitch.enableLimitSwitch(true);
 
-        // armEnc = new DutyCycleEncoder(1); //idk what goes here
-
-        // armEnc = new DutyCycleEncoder(9); 
         // armEnc.reset();
-
 
         kP = .05;
         kI = 0;
         kD = 0;
-
-    }
-
-    /**
-     * 
-     * @return updates and returns updated position of arm
-     */
-    public double updateAngle(){
-        return currentPos;
     }
 
     public void stall(){
         armLeft.set(0.013);
         armRight.set(0.013);
-
     }
 
     public void forward(){
         armLeft.set(-0.2);
         armRight.set(-0.2);
-
     }
+
     public void backward(){
         armLeft.set(0.2);
         armRight.set(0.2);
-
     }
+
     public void climbUp(){
     }
-
 
     public void setDesired(double desired){
         desiredAngle = desired;
     }
-
-
 
     public void moveArm() {
 
@@ -105,11 +100,14 @@ public class Arm extends SubsystemBase{
 
 
 
-        armLeft.setVoltage(controller.calculate(desiredAngle, currentPos) + feedforward.calculate(desiredAngle, currentPos));
-        armRight.setVoltage(controller.calculate(desiredAngle, currentPos) + feedforward.calculate(desiredAngle, currentPos));
+        armLeft.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + feedforward.calculate(desiredAngle* Math.PI / 180, Math.PI/10));
+        armRight.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + feedforward.calculate(desiredAngle * Math.PI / 180, Math.PI/10));
 
-        SmartDashboard.putNumber("current Arm Position", currentPos);
-        SmartDashboard.putNumber("desired Angle", desiredAngle);
+    }
+    public double getArmEncoder() {
+        return armEnc.getDistance();
+    }
+
 
 
 
@@ -132,7 +130,7 @@ public class Arm extends SubsystemBase{
 
         // SmartDashboard.putNumber("speed", speed);
 
-    }
+    
 
     public void stop() {
         armLeft.set(0);
