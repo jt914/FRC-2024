@@ -16,6 +16,8 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -59,7 +61,13 @@ public class Drivetrain extends SubsystemBase {
 
   public double xSpeed, ySpeed;
 
+  public final PIDController drivePIDController = new PIDController(1.2, 0.001, 0);
 
+  // Gains are for example purposes only - must be determined for your own robot!
+  public final PIDController turnPIDController = new PIDController(0.006, 0.000, 0.00001);
+
+
+  public final SimpleMotorFeedforward driveSimpleMotorFeedforward = new SimpleMotorFeedforward(.00001, 0);
   public Gyro m_gyro;
 
   public Drivetrain() {
@@ -90,7 +98,8 @@ public class Drivetrain extends SubsystemBase {
         m_frontRight.getPosition(),
         m_backLeft.getPosition(),
         m_backRight.getPosition() },
-        new Pose2d(new Translation2d(14.700758, 8.2042), new Rotation2d(3* Math.PI / 4)));
+        // new Pose2d(new Translation2d(14.700758, 8.2042), new Rotation2d(3* Math.PI / 4)));
+        new Pose2d());
 
     //     AutoBuilder.configureHolonomic(
     //     this::getPose, // Robot pose supplier

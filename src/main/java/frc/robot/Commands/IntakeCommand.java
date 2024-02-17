@@ -26,8 +26,8 @@ public class IntakeCommand extends Command {
     @Override
     public void execute(){
         intake.run();
-        SmartDashboard.putNumber("Voltage" , Constants.intake.intakeSensor.getVoltage());
-        SmartDashboard.putNumber("Elapsed" , elapsed);
+        // SmartDashboard.putNumber("Voltage" , Constants.intake.intakeSensor.getVoltage());
+        // SmartDashboard.putNumber("Elapsed" , elapsed);
         if(Constants.intake.intakeSensor.getVoltage()<.5) {
             triggered = true;
         }

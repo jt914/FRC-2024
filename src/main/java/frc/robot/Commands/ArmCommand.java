@@ -29,7 +29,7 @@ public class ArmCommand extends Command {
     @Override
     public void execute(){
         // SmartDashboard.putBoolean("ArmSwitch", arm.armSwitch.get());
-        // SmartDashboard.putNumber("Arm Encoder: ", arm.armEnc.getDistance());
+        SmartDashboard.putNumber("Arm Encoder: ", arm.armEnc.getDistance());
         // SmartDashboard.putNumber("Raw Arm Encoder", arm.armEnc.get());
         // SmartDashboard.putNumber("Absolute Distance", arm.armEnc.getAbsolutePosition());
 

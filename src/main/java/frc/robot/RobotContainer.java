@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Subsystems.*;
+import frc.robot.Autos.AutoCommand;
 // import frc.robot.Autos.AutoCommand;
 import frc.robot.Commands.*;
 
@@ -58,7 +59,7 @@ public class RobotContainer {
     (Constants.swerveController.x()).toggleOnTrue(new ArmCommand());
     (Constants.swerveController.rightBumper()).whileTrue(new IntakeSlowCommand());
     (Constants.swerveController.leftBumper()).whileTrue(new IntakeReverseCommand());
-    // (Constants.alternateController.a()).onTrue(new AutoCommand());
+    (Constants.alternateController.a()).toggleOnTrue(new AmpCommand());
 
     //Press x to turn the arm on. If something goes wrong, just press X again and it will turn the arm off
 
@@ -73,7 +74,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    double routine = NetworkTableInstance.getDefault().getTable("/datatable").getEntry("routine").getDouble(0);
-    return null;
+    return new AutoCommand();
   }
 }

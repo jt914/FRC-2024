@@ -40,14 +40,14 @@ public class SwerveModule {
   public RelativeEncoder turnEncoder;
 
   // Gains are for example purposes only - must be determined for your own robot!
-  // private final PIDController drivePIDController = new PIDController(0.025, 0, 0);
+  public final PIDController drivePIDController = new PIDController(0, 0, 0);
 
   // Gains are for example purposes only - must be determined for your own robot!
-  private final PIDController turnPIDController = new PIDController(0.006, 0.000, 0.00001);
+  public final PIDController turnPIDController = new PIDController(0.006, 0.000, 0.00001);
       
   // Gains are for example purposes only - must be determined for your own robot!
-  // private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(0.55493, 2.3014, 0.51488);
-  // private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(0, 2.3014, 0.51488);
+  private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(0.55493, 2.3014, 0.51488);
+  // private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(.5549, 0, 0);
   private double turnEncoder180;
   DigitalInput swerveLimitSwitch;
 
@@ -107,14 +107,17 @@ public class SwerveModule {
 
 
     double driveOutput = optimizedModuleOutput[1];
+
+    // double driveOutput = driveFeedForward.calculate(1, 0) * Math.sqrt(Math.pow(Constants.swerveController.getLeftX(),2) + Math.pow(Constants.swerveController.getLeftY(),2));
     driveMotor.setVoltage(driveOutput);
-      SmartDashboard.putNumber("driveOutput" + module, driveOutput);
+
+    SmartDashboard.putNumber("driveOutput", driveOutput);
 
     double turnOutput = MathUtil.clamp(turnPIDController.calculate(getTurn180Angle(), optimizedModuleOutput[0]), -0.4, 0.4);
     turnMotor.set(turnOutput);
-      SmartDashboard.putNumber("turnOutput " + module, turnOutput);
-      SmartDashboard.putNumber("getTurn180Angle " + module, getTurn180Angle());
-      SmartDashboard.putBoolean("Switch " + swerveLimitSwitch.getChannel(), swerveLimitSwitch.get());
+      // SmartDashboard.putNumber("turnOutput " + module, turnOutput);
+      // SmartDashboard.putNumber("getTurn180Angle " + module, getTurn180Angle());
+      // SmartDashboard.putBoolean("Switch " + swerveLimitSwitch.getChannel(), swerveLimitSwitch.get());
     if(swerveLimitSwitch.get() == false)
     {
       turnEncoder.setPosition(0);

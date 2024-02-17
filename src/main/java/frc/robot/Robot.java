@@ -70,6 +70,7 @@ public class Robot extends LoggedRobot {
     double xSpeed = -1 * Constants.m_xspeedLimiter.calculate(Constants.swerveController.getLeftY()) * Drivetrain.kMaxVoltage;
     double yaw = -1 * Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
 
+    Constants.swerve.updateOdometry();
 
 
     // if(Constants.alternateController.getXButtonPressed()){
@@ -82,11 +83,14 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousInit() {
+    Command autoCommand = robot.getAutonomousCommand();
+    if(autoCommand != null){
+      autoCommand.schedule();
+    }
   }
 
   @Override
   public void autonomousPeriodic() {
-    // Constants.swerve.updateOdometry();
   }
   
   public void teleopInit() {
@@ -105,6 +109,9 @@ public class Robot extends LoggedRobot {
   boolean fieldRelative = false;
   @Override
   public void teleopPeriodic() {
+
+    SmartDashboard.putNumber("xPOs", Constants.swerve.poseEstimator.getEstimatedPosition().getX());
+    SmartDashboard.putNumber("yPOs", Constants.swerve.poseEstimator.getEstimatedPosition().getY());
 
 
 
