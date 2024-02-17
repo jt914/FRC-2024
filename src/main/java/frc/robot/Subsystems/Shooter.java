@@ -35,7 +35,7 @@ public class Shooter extends SubsystemBase{
         shooterTop.restoreFactoryDefaults();
         shooterTop.setIdleMode(IdleMode.kCoast);
         shooterTop.enableVoltageCompensation(11);
-        shooterTop.setInverted(false);
+        shooterTop.setInverted(true);
 
         
         shooterBot = new CANSparkMax(Constants.shooterBotID, MotorType.kBrushless);
@@ -44,7 +44,8 @@ public class Shooter extends SubsystemBase{
         shooterBot.setInverted(true);
         shooterBot.enableVoltageCompensation(11);
 
-        shooterTop.follow(shooterBot);
+        SmartDashboard.putNumber("bottomRPM", 4000);
+        SmartDashboard.putNumber("topRPM", 4000);
 
         shooterBot.burnFlash();
         shooterTop.burnFlash();
@@ -102,7 +103,16 @@ public class Shooter extends SubsystemBase{
     public void setVelocity() {
         // controllerTop.setReference(1000, ControlType.kVelocity);
 
-        controllerBot.setReference(4000, ControlType.kVelocity);
+        // System.out.println(SmartDashboard.getNumber("bottomRPM", targetVelocity));
+
+        shooterBot.set(0.6);
+        shooterTop.set(0.9);
+        // System.out.println(shooterBot.getEncoder().getVelocity());
+        // System.out.println(shooterTop.getEncoder().getVelocity());
+
+
+        // controllerBot.setReference(SmartDashboard.getNumber("bottomRPM", 4000), ControlType.kVelocity);
+        // controllerTop.setReference(SmartDashboard.getNumber("topRPM", 2000), ControlType.kVelocity);
         
         
         // shooterBot.set(0.2);
@@ -111,6 +121,10 @@ public class Shooter extends SubsystemBase{
 
         
         //Inputs RPMs into the PID loop rather than voltage, should account for error 
+    }
+
+    public void setLowVelocity(){
+        controllerBot.setReference(2000, ControlType.kVelocity);
     }
 
     public void stop() {

@@ -171,7 +171,7 @@ public class Drivetrain extends SubsystemBase {
     //             : new ChassisSpeeds(xSpeed, ySpeed, rot));
 
     var swerveModuleStates = m_kinematics.toSwerveModuleStates(new ChassisSpeeds(xSpeed, ySpeed, yaw));
-    System.out.println(Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2)));
+    // System.out.println(Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2)));
     
     Logger.recordOutput("MyStates", swerveModuleStates);
     // states = swerveModuleStates;
@@ -198,12 +198,12 @@ public class Drivetrain extends SubsystemBase {
 
         // Compute the robot's field-relative position exclusively from vision measurements.
 
-        try{
-          EstimatedRobotPose visionMeasurement3d = Constants.camera.getPose().get();
-          Pose2d visionMeasurement2d = visionMeasurement3d.estimatedPose.toPose2d();
-          poseEstimator.addVisionMeasurement(visionMeasurement2d,visionMeasurement3d.timestampSeconds);
-        }catch (Exception e){
-        }
+        // try{
+        //   EstimatedRobotPose visionMeasurement3d = Constants.camera.getPose().get();
+        //   Pose2d visionMeasurement2d = visionMeasurement3d.estimatedPose.toPose2d();
+        //   poseEstimator.addVisionMeasurement(visionMeasurement2d,visionMeasurement3d.timestampSeconds);
+        // }catch (Exception e){
+        // }
 
         // System.out.println(Constants.camera.getLatestResult().getBestTarget().getFiducialId());
 

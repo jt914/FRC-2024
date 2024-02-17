@@ -77,8 +77,8 @@ public class AutoAimCommand extends Command {
                 }
 
                 if(Math.abs(Math.abs(desiredOffset) - Math.abs(desired[0])) > 1){
-                    SmartDashboard.putNumber("Desired Offset", desiredOffset); 
-                    SmartDashboard.putNumber("curretPos", Math.abs(desired[0]));                
+                    // SmartDashboard.putNumber("Desired Offset", desiredOffset); 
+                    // SmartDashboard.putNumber("curretPos", Math.abs(desired[0]));                
                
                     Constants.swerve.drive(0, 0, -1.5 * Math.signum(desired[0]) );
                 }

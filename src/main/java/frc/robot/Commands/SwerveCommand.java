@@ -18,7 +18,8 @@ public class SwerveCommand extends Command{
     boolean isFinished = false;
     double desiredOffset;
     boolean setDesired;
-    PIDController aimController;
+    PIDController aimController = new PIDController(.50, 0.000001, 0);
+
 
 
     public SwerveCommand(){
@@ -28,7 +29,6 @@ public class SwerveCommand extends Command{
 
     @Override
     public void initialize(){
-          aimController = new PIDController(.55, 0.0001, 0);
 
 
 
@@ -44,10 +44,15 @@ public class SwerveCommand extends Command{
         }
 
         if(Constants.swerveController.b().getAsBoolean()){
-          driving = false;
-          autoAim = true;
+          if (autoAim){
+            driving = false;
+            autoAim = true;
+          }
+          else{
+            autoAim = false;
+            driving = true;
+          }
         }
-
         if(driving){
             SmartDashboard.putBoolean("fieldRelative", Constants.fieldRelative);
             driveWithJoystick(Constants.fieldRelative);
@@ -107,20 +112,29 @@ public class SwerveCommand extends Command{
         ySpeed = 0;
         xSpeed = 0;
       }
-  
+
+
+        yaw = -1 * Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
+
       // SmartDashboard.putNumber("xSpeed ", xSpeed);
       // SmartDashboard.putNumber("ySpeed ", ySpeed);
       // SmartDashboard.putNumber("yaw ", yaw);
       // SmartDashboard.putNumber("gyro angle ", Constants.m_gyro.getTotalAngleDegrees());
 
       desired = Constants.camera.getDesiredShoot(xSpeed,ySpeed);
-      System.out.println("running autoaim");
-      if(desired == null && desired[0] == 0){
+      // desired = null;
+      if(desired == null || desired[0] == 0){
         Constants.swerve.drive(xSpeed,ySpeed,yaw);
       }
     
 
       if(desired != null){
+              System.out.println("running autoaim");
+        System.out.println(desired[1] * 20 / 2.75);
+        Constants.arm.setDesired(desired[1] * 20 / 2.75); //ARM CONSTANT
+        Constants.arm.moveArm(); 
+
+
         // if(desired[0] > 0){
         // desiredOffset = 2 * Math.asin(desired[1]/(Math.sqrt(0.169 + desired[1] *desired[1])));
         // setDesired = true;
@@ -179,7 +193,7 @@ public class SwerveCommand extends Command{
       // SmartDashboard.putNumber("gyro angle ", Constants.m_gyro.getTotalAngleDegrees());
       SmartDashboard.putNumber("LeftX", Constants.swerveController.getLeftX());
       SmartDashboard.putNumber("LeftY", Constants.swerveController.getLeftY());
-      System.out.println("xSpeed" + xSpeed + "ySpeed" + ySpeed);
+      // System.out.println("xSpeed" + xSpeed + "ySpeed" + ySpeed);
 
       Constants.swerve.drive(xSpeed, ySpeed, yaw);
     }

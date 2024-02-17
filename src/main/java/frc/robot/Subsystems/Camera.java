@@ -66,6 +66,7 @@ public class Camera {
         PhotonTrackedTarget shooterTarget = null;
         // PhotonUtils.calculateDistanceToTargetMeters(0, );
 
+
         boolean seesShooter = false;
         for(PhotonTrackedTarget target: getLatestResult().getTargets()){
             if(target.getFiducialId() == 7 || target.getFiducialId() == 4){
@@ -78,9 +79,10 @@ public class Camera {
  
         if(seesShooter){
             // retVal[0] = shooterTarget.getYaw() * (1 + );
-                retVal[0] = shooterTarget.getYaw() + Math.signum(retVal[0]) *  72* Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
+                retVal[0] = -15 + shooterTarget.getYaw() + Math.signum(retVal[0]) *  20* Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
             //18
 
+            
             retVal[1] =
             PhotonUtils.calculateDistanceToTargetMeters(
                     .35,
