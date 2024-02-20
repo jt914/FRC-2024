@@ -35,6 +35,8 @@ public class AmpCommand extends Command {
 
     @Override
     public void initialize(){
+        arm.setDesired(110);
+
         // PhotonTrackedTarget shooterTarget = null;
         // distanceTarget = PhotonUtils.calculateDistanceToTargetMeters(.35, 1.36525, 35 * Math.PI / 180, Units.degreesToRadians(shooterTarget.getPitch()));
         // for(PhotonTrackedTarget target: cam.getLatestResult().getTargets()){
@@ -52,19 +54,17 @@ public class AmpCommand extends Command {
     public void execute(){
         // SmartDashboard.putNumber("distanceTarget", distanceTarget);
         // SmartDashboard.putNumber("distanceWall", distanceWall);
-        if(ampStep == 0) {
-            arm.setDesired(90);
-            arm.moveArm();
+        if(arm.armEnc.getDistance() > 45) {
+            shooter.setLowVelocity();
             ampStep++;
         }
-        else if(ampStep == 1 && (arm.getArmEncoder() > 45)) {
-            shooter.setLowVelocity();
-        }
-        
+        arm.moveArm();
+
     }
 
     @Override
     public void end(boolean interrupted) {
+        new IntakeCommand();
 
     }
 

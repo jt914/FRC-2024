@@ -8,6 +8,7 @@ import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -27,10 +28,11 @@ public class Arm extends SubsystemBase{
     private SparkLimitSwitch limitSwitch;
     private double kP, kI, kD;
     public double desiredAngle;
-    public PIDController controller = new PIDController(.5, 0.001, 0.000001);
-    private final ArmFeedforward feedforward  = new ArmFeedforward(0.09, 0.05, 0);
+    // public PIDController controller = new PIDController(.6, .05, .165);
+    public PIDController controller = new PIDController(.1, 0.003, .01);
+    // public PIDController controller = new PIDController(.2, .13, 0);
+    private final ArmFeedforward feedforward  = new ArmFeedforward(0, .45, .5);
     public DigitalInput armSwitch;
-
 
     public Arm() {
         armLeft = new CANSparkMax(Constants.armLeftID, MotorType.kBrushless);
@@ -95,14 +97,26 @@ public class Arm extends SubsystemBase{
     }
 
     public void moveArm() {
-
-
-
-
-
-        armLeft.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + feedforward.calculate(desiredAngle* Math.PI / 180, Math.PI/10));
-        armRight.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + feedforward.calculate(desiredAngle * Math.PI / 180, Math.PI/10));
-
+        SmartDashboard.putNumber("Brake", armLeft.getBusVoltage()*armLeft.getAppliedOutput());
+        
+        double k = Math.signum(desiredAngle - armEnc.getDistance());
+        if(Math.abs(desiredAngle-armEnc.getDistance()) < 2)
+        {
+            k = 0;
+        }
+        SmartDashboard.putNumber("pid", controller.calculate(armEnc.getDistance(),desiredAngle) );
+        SmartDashboard.putNumber("ff", feedforward.calculate(desiredAngle* Math.PI / 180, Math.PI/10));
+        SmartDashboard.putNumber("k", k);
+        // armLeft.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + MathUtil.clamp(feedforward.calculate(desiredAngle* Math.PI / 180, k), -2, 2));
+        // armRight.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + MathUtil.clamp(feedforward.calculate(desiredAngle * Math.PI / 180, k), -2, 2));
+        armLeft.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + (feedforward.calculate(armEnc.getDistance()* Math.PI / 180, k * .3)));
+        armRight.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + (feedforward.calculate(armEnc.getDistance() * Math.PI / 180, k * .3)));
+        SmartDashboard.putNumber("Left PID", controller.calculate(armEnc.getDistance(), desiredAngle));
+        SmartDashboard.putNumber("Left FF", MathUtil.clamp(feedforward.calculate(desiredAngle * Math.PI / 180, k), -2, 2));
+        SmartDashboard.putNumber("p", controller.getPositionError() * controller.getP());
+        SmartDashboard.putNumber("i", controller.getIZone()* controller.getI());
+        SmartDashboard.putNumber("d", controller.getVelocityError()* controller.getD());
+        SmartDashboard.putData("pidControl", controller);
     }
     public double getArmEncoder() {
         return armEnc.getDistance();

@@ -56,7 +56,7 @@ public class RobotContainer {
     (Constants.alternateController.b()).toggleOnTrue(new ShooterCommand());
 
     (Constants.alternateController.y()).whileTrue(new IntakeCommand());
-    (Constants.swerveController.x()).toggleOnTrue(new ArmCommand());
+    (Constants.alternateController.x()).toggleOnTrue(new ArmCommand());
     (Constants.swerveController.rightBumper()).whileTrue(new IntakeSlowCommand());
     (Constants.swerveController.leftBumper()).whileTrue(new IntakeReverseCommand());
     (Constants.alternateController.a()).toggleOnTrue(new AmpCommand());
