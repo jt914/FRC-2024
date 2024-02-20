@@ -50,7 +50,7 @@ public class Drivetrain extends SubsystemBase {
   private final SwerveModule m_frontRight;
   public final SwerveModule m_backLeft;
   private final SwerveModule m_backRight;
-  private ChassisSpeeds speeds;
+  private ChassisSpeeds speeds = new ChassisSpeeds(0,0,0);
 
   public SwerveModuleState[] states = new SwerveModuleState[4];
 
@@ -91,7 +91,7 @@ public class Drivetrain extends SubsystemBase {
         m_frontRight.getPosition(),
         m_backLeft.getPosition(),
         m_backRight.getPosition() },
-        new Pose2d(new Translation2d(14.700758, 8.2042), new Rotation2d(3* Math.PI / 4)));
+        new Pose2d());
 
         AutoBuilder.configureHolonomic(
         this::getPose, // Robot pose supplier
@@ -99,8 +99,8 @@ public class Drivetrain extends SubsystemBase {
         this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-            new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-            new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+            new PIDConstants(1.2, 0.0, 0.0), // Translation PID constants
+            new PIDConstants(1.2, 0.0, 0.0), // Rotation PID constants
             4.5, // Max module speed, in m/s
             0.4, // Drive base radius in meters. Distance from robot center to furthest module.
             new ReplanningConfig() // Default path replanning config. See the API for the options here
@@ -124,7 +124,8 @@ public class Drivetrain extends SubsystemBase {
     return speeds;
   }
 
-  public void driveRobotRelative(ChassisSpeeds speeds){
+  public void driveRobotRelative(ChassisSpeeds chassisSpeeds){
+    speeds = chassisSpeeds;
 
     
     var swerveModuleStates = m_kinematics.toSwerveModuleStates(speeds);

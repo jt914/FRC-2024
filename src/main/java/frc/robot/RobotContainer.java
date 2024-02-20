@@ -4,7 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -63,7 +65,7 @@ public class RobotContainer {
     (Constants.alternateController.y()).whileTrue(new IntakeCommand());
     (Constants.swerveController.x()).toggleOnTrue(new ArmCommand());
     (Constants.swerveController.rightBumper()).whileTrue(new IntakeSlowCommand());
-    (Constants.swerveController.leftBumper()).whileTrue(new IntakeReverseCommand());
+    (Constants.alternateController.x()).whileTrue(new IntakeReverseCommand());
     // (Constants.alternateController.a()).onTrue(new AutoCommand());
 
     //Press x to turn the arm on. If something goes wrong, just press X again and it will turn the arm off
@@ -77,9 +79,11 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    double routine = NetworkTableInstance.getDefault().getTable("/datatable").getEntry("routine").getDouble(0);
-    return null;
-  }
+public Command getAutonomousCommand(){
+    // Load the path you want to follow using its name in the GUI
+    PathPlannerPath path = PathPlannerPath.fromPathFile("one");
+    System.out.println("working");
+    // Create a path following command using AutoBuilder. This will also trigger event markers.
+    return AutoBuilder.followPath(path);
+}
 }

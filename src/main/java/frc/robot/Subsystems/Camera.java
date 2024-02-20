@@ -13,8 +13,7 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 
 import frc.robot.Constants;
 import frc.robot.Constants.*;
-
-
+import frc.robot.Subsystems.Swerve.Gyro;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -54,17 +53,9 @@ public class Camera {
     //if null the command to get desired shoot should just do nothing
     public double[] getDesiredShoot(double xSpeed, double ySpeed){
 
-        double[] retVal = new double[3];
-
-        /*
-        1. use Camera to get pose from hood
-        2. calculate optimal arm angle and shooter speed for camera
-        might need to do testing
-        
-        */
+        double[] retVal = null;
 
         PhotonTrackedTarget shooterTarget = null;
-        // PhotonUtils.calculateDistanceToTargetMeters(0, );
 
 
         boolean seesShooter = false;
@@ -78,9 +69,10 @@ public class Camera {
 
  
         if(seesShooter){
-            // retVal[0] = shooterTarget.getYaw() * (1 + );
-                retVal[0] = -15 + shooterTarget.getYaw() + Math.signum(retVal[0]) *  20* Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
-            //18
+
+            retVal = new double[3];
+
+            retVal[0] = -10 + shooterTarget.getYaw();
 
             
             retVal[1] =

@@ -26,19 +26,19 @@ public class IntakeCommand extends Command {
     @Override
     public void execute(){
         intake.run();
-        SmartDashboard.putNumber("Voltage" , Constants.intake.intakeSensor.getVoltage());
-        SmartDashboard.putNumber("Elapsed" , elapsed);
-        if(Constants.intake.intakeSensor.getVoltage()<.5) {
-            triggered = true;
-        }
-        if(triggered == true) {
-            elapsed++;
-        }
+        // SmartDashboard.putNumber("Voltage" , Constants.intake.intakeSensor.getVoltage());
+        // SmartDashboard.putNumber("Elapsed" , elapsed);
+        // if(Constants.intake.intakeSensor.getVoltage()<.5) {
+        //     triggered = true;
+        // }
+        // if(triggered == true) {
+        //     elapsed++;
+        // }
  
     }
     @Override
     public boolean isFinished(){
-        return triggered;
+        return false;
 
     }
 

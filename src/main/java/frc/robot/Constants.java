@@ -37,6 +37,7 @@ public final class Constants {
     public static final Intake intake = new Intake();
     public static final Shooter shooter = new Shooter();
     public static final Camera camera = new Camera();
+    public static final Climber climber = new Climber();
     
 
 
@@ -75,6 +76,8 @@ public final class Constants {
     public static final int shooterBotID = 12; 
     public static final int armLeftID = 10; 
     public static final int armRightID = 9; 
+    public static final int climberRightID = 15;
+    public static final int climberLeftID = 14;
 
 
 

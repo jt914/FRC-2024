@@ -43,6 +43,8 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotInit() {
+        Constants.m_gyro.calibrateGyro();
+
     robot = new RobotContainer();
 
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
@@ -82,6 +84,11 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousInit() {
+    Command autonomousCommand = robot.getAutonomousCommand();
+
+    if(autonomousCommand != null){
+      autonomousCommand.schedule();
+    }
   }
 
   @Override
