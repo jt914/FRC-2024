@@ -18,27 +18,38 @@ public class IntakeCommand extends Command {
         intake = Constants.intake;
         triggered = false;
         elapsed = 0;
+        arm = Constants.arm;
+        arm.setDesired(4.89);
     }
 
     @Override
     public void execute(){
-        intake.run();
+        intake.runSlow();
+        SmartDashboard.putNumber("IntakeSens", Constants.intake.intakeSensor.getVoltage());
+        SmartDashboard.putBoolean("Intake Trigger", triggered);
         if(Constants.intake.intakeSensor.getVoltage()<.5) {
             triggered = true;
         }
         if(triggered == true) {
             elapsed++;
         }
+        if(elapsed > 10) {
+            isFinished = true;
+            elapsed = 0;
+        }
+        arm.moveArm();
  
     }
     @Override
     public boolean isFinished(){
-        return triggered;
+         
+        return isFinished;
 
     }
 
     @Override
     public void end(boolean interrupted) {
+        
         Constants.intake.stop();
     }
  

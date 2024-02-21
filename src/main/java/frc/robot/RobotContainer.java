@@ -53,15 +53,15 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     (Constants.swerveController.start()).onTrue(new SwerveCommand());
-    (Constants.alternateController.b()).toggleOnTrue(new ShooterCommand());
+    (Constants.swerveController.b()).whileTrue(new IntakeShootCommand());
 
-    (Constants.alternateController.y()).whileTrue(new IntakeCommand());
+    (Constants.swerveController.rightBumper()).toggleOnTrue(new IntakeCommand());
     (Constants.alternateController.x()).toggleOnTrue(new ArmCommand());
     (Constants.swerveController.leftBumper()).whileTrue(new IntakeReverseCommand());
     (Constants.alternateController.a()).toggleOnTrue(new AmpCommand());
 
     //Press x to turn the arm on. If something goes wrong, just press X again and it will turn the arm off
-    
+
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

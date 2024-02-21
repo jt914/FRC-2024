@@ -39,7 +39,7 @@ public class SwerveCommand extends Command{
 
         }
 
-        if(Constants.swerveController.b().getAsBoolean()){
+        if(Constants.swerveController.y().getAsBoolean()){
           autoAim = !autoAim;
 
         }
@@ -54,6 +54,8 @@ public class SwerveCommand extends Command{
     }
 
     public void driveWithJoystick(boolean fieldRelative, boolean autoAim) {
+
+      Constants.shooter.stop();
 
       double xSpeed = 0;
       double ySpeed = 0;
@@ -87,7 +89,7 @@ public class SwerveCommand extends Command{
             if(desired != null && desired[0] != 0){
             yaw = aimController.calculate(desired[0], 0);
             Constants.arm.setDesired(desired[1] * 20 / 2.75);
-
+            Constants.shooter.setVelocity();
             }
            }
         Constants.swerve.drive(xSpeed, ySpeed, yaw);

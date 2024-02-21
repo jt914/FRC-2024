@@ -50,7 +50,7 @@ public class AmpCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        new IntakeCommand();
+        Constants.shooter.stop();
 
     }
 }

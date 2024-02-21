@@ -37,11 +37,13 @@ public class Robot extends LoggedRobot {
     Field2d m_field = new Field2d();
     private boolean startedSwerve = false;
     private RobotContainer robot;
-    Command autoCommand = robot.getAutonomousCommand();
+    Command autoCommand;
 
   @Override
   public void robotInit() {
     robot = new RobotContainer();
+    autoCommand = robot.getAutonomousCommand();
+
 
   }
 
@@ -63,6 +65,7 @@ public class Robot extends LoggedRobot {
   }
   
   public void teleopInit() {
+    Constants.arm.setDesired(Constants.arm.getAngle());
     if (autoCommand != null) {
       autoCommand.cancel();
       
