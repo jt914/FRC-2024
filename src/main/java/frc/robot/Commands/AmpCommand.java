@@ -36,8 +36,7 @@ public class AmpCommand extends Command {
     @Override
     public void initialize(){
         arm.setDesired(110);
-
-        
+   
     }
     @Override
     public void execute(){
@@ -54,10 +53,4 @@ public class AmpCommand extends Command {
         new IntakeCommand();
 
     }
-
-
-
-
-
-
 }

@@ -20,15 +20,12 @@ public class AutoCommand extends Command {
     private int intakeStep;
     private int armStep;
 
-
     public AutoCommand(){
         swerve = Constants.swerve;
     }
 
-
     @Override
     public void initialize(){
-
 
     }
 
@@ -39,22 +36,16 @@ public class AutoCommand extends Command {
         SmartDashboard.putNumber("x" , x);
         SmartDashboard.putNumber("y" , y);
 
-        swerve.drive(-1 * swerve.drivePIDController.calculate(x, -2), -swerve.drivePIDController.calculate(y, 0), swerve.turnPIDController.calculate(0,0));
+        swerve.drive(-1 * swerve.drivePIDController.calculate(x, -2), 
+        -swerve.drivePIDController.calculate(y, 0), 
+        swerve.turnPIDController.calculate(0,0));
         // swerve.drive(swerve.driveSimpleMotorFeedforward.calculate(1, 0), swerve.drivePIDController.calculate(y, 0), swerve.turnPIDController.calculate(0,0));
 
-    
-       
     }
 
     @Override
     public void end(boolean interrupted) {
 
     }
-
-
-
-
-
-
 }
 

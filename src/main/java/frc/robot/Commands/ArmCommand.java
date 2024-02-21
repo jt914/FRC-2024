@@ -22,14 +22,12 @@ public class ArmCommand extends Command {
         arm = Constants.arm;
         Constants.arm.desiredAngle = Constants.arm.armEnc.getDistance();
 
-
     }
     @Override
     public void execute(){
 
         Constants.arm.desiredAngle = MathUtil.clamp(Constants.arm.desiredAngle, 0,120);
         
-
         if(Constants.alternateController.leftTrigger().getAsBoolean()){
             Constants.arm.setDesired(Constants.arm.getAngle() - 0.01);
         }
