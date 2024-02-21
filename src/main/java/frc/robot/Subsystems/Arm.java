@@ -59,24 +59,6 @@ public class Arm extends SubsystemBase{
         kD = 0;
     }
 
-    public void stall(){
-        armLeft.set(0.013);
-        armRight.set(0.013);
-    }
-
-    public void forward(){
-        armLeft.set(-0.2);
-        armRight.set(-0.2);
-    }
-
-    public void backward(){
-        armLeft.set(0.2);
-        armRight.set(0.2);
-    }
-
-    public void climbUp(){
-    }
-
     public void setDesired(double desired){
         desiredAngle = desired;
     }
@@ -105,38 +87,9 @@ public class Arm extends SubsystemBase{
         return armEnc.getDistance();
     }
     
-
-
-
-
-
-
-        // if(forward){
-        //     speed = - 1 * kP * Math.abs(currentPos - desiredAngle); //speed is from -1.0 to 1.0
-        // }
-        // else{
-        //     speed = 1 * kP * Math.abs(desiredAngle - currentPos); //speed is from -1.0 to 1.0
-        // }
-
-        // if(speed > 0.3){
-        //     return;
-        // }
-        
-        
-        // armLeft.set(speed);
-        // armRight.set(speed);
-
-        // SmartDashboard.putNumber("speed", speed);
-
-    
-
     public void stop() {
         armLeft.set(0);
         armRight.set(0);
 
     }
-
-
-
-    
 }

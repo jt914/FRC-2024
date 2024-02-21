@@ -61,10 +61,7 @@ public class RobotContainer {
     (Constants.alternateController.a()).toggleOnTrue(new AmpCommand());
 
     //Press x to turn the arm on. If something goes wrong, just press X again and it will turn the arm off
-
     
-
-
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

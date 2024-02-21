@@ -75,8 +75,6 @@ public class SwerveModule {
     driveEncoder.setPositionConversionFactor(Constants.driveEncoderPositionConversion);
     turnEncoder.setPositionConversionFactor(Constants.turnEncoderPositionConversion);
 
-    
-
     // Set the distance (in this case, angle) in radians per pulse for the turning encoder.
     // This is the the angle through an entire rotation (2 * pi) divided by the
     // encoder resolution.
@@ -151,7 +149,6 @@ public class SwerveModule {
         driveEncoder.getVelocity()/40.5, new Rotation2d(turnEncoder.getPosition()*23.684));
         
       }
-
   /**
    * Returns the current position of the module.
    *z
@@ -162,7 +159,6 @@ public class SwerveModule {
         driveEncoder.getPosition()/26.5, new Rotation2d(turnEncoder.getPosition()/15.2 * 2 * Math.PI));
 
   }
-
   /**
    * Converts the motor's encoder from an absolute angle to a limited range between -180 to 180
    * 

@@ -39,9 +39,6 @@ public class Robot extends LoggedRobot {
     private RobotContainer robot;
     Command autoCommand = robot.getAutonomousCommand();
 
-
-
-
   @Override
   public void robotInit() {
     robot = new RobotContainer();
@@ -51,8 +48,6 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotPeriodic(){
     CommandScheduler.getInstance().run();
-
-
 
   }
 
@@ -75,7 +70,6 @@ public class Robot extends LoggedRobot {
 
     SmartDashboard.putData("Field", m_field);
 
-
   }
 
   boolean fieldRelative = false;
@@ -91,7 +85,6 @@ public class Robot extends LoggedRobot {
   }
 
   public void disabledPeriodic(){
-    Constants.arm.stall();
   }
 
 }

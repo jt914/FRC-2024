@@ -32,7 +32,6 @@ public class Camera {
     public AprilTagFieldLayout fieldLayout;
     Transform3d robotToCam = new Transform3d(new Translation3d(0.13, 0.33, 0.35), new Rotation3d(0,35,Math.PI)); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
 
-
     public Camera(){
         cam = new PhotonCamera("photonvision");
         photonPoseEstimator = new PhotonPoseEstimator(AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(), PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cam, robotToCam);
@@ -65,8 +64,6 @@ public class Camera {
 
         PhotonTrackedTarget shooterTarget = null;
         // PhotonUtils.calculateDistanceToTargetMeters(0, );
-
-
         boolean seesShooter = false;
         for(PhotonTrackedTarget target: getLatestResult().getTargets()){
             if(target.getFiducialId() == 7 || target.getFiducialId() == 4){
@@ -75,8 +72,6 @@ public class Camera {
             }
         }
 
-
- 
         if(seesShooter){
                 retVal[0] = -15 + shooterTarget.getYaw();
             //18
@@ -93,8 +88,6 @@ public class Camera {
         }
 
         return null;
-
-
     }
 
     public double getDriveOffset(){
@@ -106,6 +99,5 @@ public class Camera {
         */
         return 90;
     }
-
 
 }

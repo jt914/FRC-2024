@@ -20,7 +20,6 @@ public class Intake extends SubsystemBase{
     public AnalogInput intakeSensor;
     public SparkPIDController intakePidController;
 
-
     public Intake() {
         intake = new CANSparkMax(Constants.intakeID, MotorType.kBrushless);
         intake.restoreFactoryDefaults();
@@ -50,9 +49,7 @@ public class Intake extends SubsystemBase{
         SmartDashboard.putNumber("intake", intake.getEncoder().getVelocity());
         running = true;
 
-
     }
-
 
     public void reverse() {
         intake.set(-0.4);
@@ -65,8 +62,4 @@ public class Intake extends SubsystemBase{
         running = false;
 
     }
-
-
-
-    
 }

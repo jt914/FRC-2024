@@ -55,7 +55,6 @@ public class Drivetrain extends SubsystemBase {
 
   public SwerveModuleState[] states = new SwerveModuleState[4];
 
-
   private final SwerveDriveKinematics m_kinematics;
   public final SwerveDrivePoseEstimator poseEstimator;
 
@@ -65,7 +64,6 @@ public class Drivetrain extends SubsystemBase {
 
   // Gains are for example purposes only - must be determined for your own robot!
   public final PIDController turnPIDController = new PIDController(0.006, 0.000, 0.00001);
-
 
   public final SimpleMotorFeedforward driveSimpleMotorFeedforward = new SimpleMotorFeedforward(.00001, 0);
   public Gyro m_gyro;
@@ -87,7 +85,6 @@ public class Drivetrain extends SubsystemBase {
     m_kinematics =
       new SwerveDriveKinematics(
           m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation);
-
 
     poseEstimator = 
       new SwerveDrivePoseEstimator(
@@ -136,8 +133,6 @@ public class Drivetrain extends SubsystemBase {
     m_backLeft.setModuleState(swerveModuleStates[2], 2);
     m_backRight.setModuleState(swerveModuleStates[3], 3);
 
-
-    
     // SmartDashboard.putNumber("xSpeed", xSpeed);
     // SmartDashboard.putNumber("ySpeed", ySpeed);
     // SmartDashboard.putNumber("rotation", yaw);
@@ -232,8 +227,6 @@ public class Drivetrain extends SubsystemBase {
 
     // SmartDashboard.putString("previous", m_previousWheelPositions.toString());
     // SmartDashboard.putString("current", wheelPositions.toString());
-
-
     //CHECK IF ROTATING CORRECT AMT
     poseEstimator.update(
         Rotation2d.fromDegrees(m_gyro.getTotalAngleDegrees()),
@@ -248,8 +241,6 @@ public class Drivetrain extends SubsystemBase {
 
     SmartDashboard.putNumber("frontLeft", m_frontLeft.getPosition().distanceMeters);
     SmartDashboard.putNumber("frontRight", m_frontRight.getPosition().distanceMeters);
-
-
 
   }
 

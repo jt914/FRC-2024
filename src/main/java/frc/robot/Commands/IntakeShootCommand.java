@@ -10,19 +10,16 @@ public class IntakeShootCommand extends Command {
     private Intake intake;
     private boolean isFinished = false;
 
-
-
-
     @Override
     public void initialize(){
         intake = Constants.intake;
 
-        
     }
 
     @Override
     public void execute(){
         intake.runFast();
+
     }
     @Override
     public boolean isFinished(){
@@ -36,10 +33,5 @@ public class IntakeShootCommand extends Command {
         intake.stop();
 
     }
-
-
-
-
-
     
 }

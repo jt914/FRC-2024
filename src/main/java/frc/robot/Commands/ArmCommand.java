@@ -14,10 +14,8 @@ public class ArmCommand extends Command {
     private boolean forward;
 
     public ArmCommand(){
-        
-
+    
     }
-
 
     @Override
     public void initialize(){
@@ -46,10 +44,5 @@ public class ArmCommand extends Command {
         arm.stop();
 
     }
-
-
-
-
-
 
 }

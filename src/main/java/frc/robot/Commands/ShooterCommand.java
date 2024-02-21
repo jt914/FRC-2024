@@ -11,24 +11,15 @@ import frc.robot.Constants;
 
 public class ShooterCommand extends Command{
 
-    
-
-
-
     @Override
     public void initialize(){
  
-
     }
 
-    
     @Override
     public void execute(){
-
-
         Constants.shooter.setVelocity();
 
-        
     }
 
     
@@ -38,14 +29,9 @@ public class ShooterCommand extends Command{
         
     }
 
-
     @Override
     public boolean isFinished() {
         return false;
     }
-
-
-
-
-    
+  
 }

@@ -20,21 +20,16 @@ public class SwerveCommand extends Command{
     boolean setDesired;
     PIDController aimController = new PIDController(.50, 0.000001, 0);
 
-
-
     public SwerveCommand(){
       addRequirements(Constants.swerve);
-    }
 
+    }
 
     @Override
     public void initialize(){
 
-
-
     }
 
-    
     @Override
     public void execute(){
 
@@ -46,22 +41,17 @@ public class SwerveCommand extends Command{
 
         if(Constants.swerveController.b().getAsBoolean()){
           autoAim = !autoAim;
-        }
 
+        }
 
         driveWithJoystick(Constants.fieldRelative, autoAim);
 
       }
     
-    
-
-    
     @Override
     public void end(boolean interrupted){
         
     }
-
-
 
     public void driveWithJoystick(boolean fieldRelative, boolean autoAim) {
 
@@ -91,9 +81,6 @@ public class SwerveCommand extends Command{
       }
       yaw = -1 * Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
 
-
-
-
       if(autoAim){
           desired = Constants.camera.getDesiredShoot();
 
@@ -103,12 +90,10 @@ public class SwerveCommand extends Command{
 
             }
            }
-                  Constants.swerve.drive(xSpeed, ySpeed, yaw);
+        Constants.swerve.drive(xSpeed, ySpeed, yaw);
 
       }
 
-    
-  
 }
     
     

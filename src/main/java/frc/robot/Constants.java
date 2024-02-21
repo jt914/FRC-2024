@@ -38,8 +38,6 @@ public final class Constants {
     public static final Shooter shooter = new Shooter();
     public static final Camera camera = new Camera();
     
-
-
     /* - - - SWERVE DRIVE CONSTANTS - - - */
 
     public static final int frontLeftDriveID = 4;
@@ -75,8 +73,5 @@ public final class Constants {
     public static final int shooterBotID = 12; 
     public static final int armLeftID = 10; 
     public static final int armRightID = 9; 
-
-
-
-
+    
 }

@@ -26,9 +26,6 @@ public class Shooter extends SubsystemBase{
 
     Double botMultiplier = NetworkTableInstance.getDefault().getTable("/datatable").getEntry("Bottom Multiplier").getDouble(0);
     Double topMultiplier = NetworkTableInstance.getDefault().getTable("/datatable").getEntry("Top Multiplier").getDouble(0);
-    
-
-    
 
     public Shooter() {
         shooterTop = new CANSparkMax(Constants.shooterTopID, MotorType.kBrushless);
@@ -37,7 +34,6 @@ public class Shooter extends SubsystemBase{
         shooterTop.enableVoltageCompensation(11);
         shooterTop.setInverted(true);
 
-        
         shooterBot = new CANSparkMax(Constants.shooterBotID, MotorType.kBrushless);
         shooterBot.restoreFactoryDefaults();
         shooterBot.setIdleMode(IdleMode.kCoast);
@@ -50,11 +46,8 @@ public class Shooter extends SubsystemBase{
         shooterBot.burnFlash();
         shooterTop.burnFlash();
 
-        
-
         controllerTop = shooterTop.getPIDController();
         controllerBot = shooterBot.getPIDController();
-
 
         double kP = 0.000000001;
         double kI = 0;
@@ -80,10 +73,6 @@ public class Shooter extends SubsystemBase{
         SmartDashboard.putNumber("shooterBot", 0.6);
         SmartDashboard.putNumber("shooterTop", 0.9);
 
-
-        
-        
-
     }
 
     public void setSpeed(double botSpeed, double topSpeed) {
@@ -108,8 +97,4 @@ public class Shooter extends SubsystemBase{
         shooterBot.set(0);
 
     }
-
-
-
-    
 }

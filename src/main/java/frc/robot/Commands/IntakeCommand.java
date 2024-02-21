@@ -13,9 +13,6 @@ public class IntakeCommand extends Command {
     public int elapsed = 0;
     public boolean triggered = false;
 
-
-
-
     @Override
     public void initialize(){
         intake = Constants.intake;

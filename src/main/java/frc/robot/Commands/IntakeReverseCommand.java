@@ -9,14 +9,10 @@ public class IntakeReverseCommand extends Command {
     private Arm arm;
     private Intake intake;
     private boolean isFinished = false;
-
-
-
-
+    
     @Override
     public void initialize(){
         intake = Constants.intake;
-
         
     }
 
@@ -36,10 +32,5 @@ public class IntakeReverseCommand extends Command {
         intake.stop();
 
     }
-
-
-
-
-
     
 }
