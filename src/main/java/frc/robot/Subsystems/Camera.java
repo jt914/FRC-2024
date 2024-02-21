@@ -52,7 +52,7 @@ public class Camera {
     }
 
     //if null the command to get desired shoot should just do nothing
-    public double[] getDesiredShoot(double xSpeed, double ySpeed){
+    public double[] getDesiredShoot(){
 
         double[] retVal = new double[3];
 
@@ -78,8 +78,7 @@ public class Camera {
 
  
         if(seesShooter){
-            // retVal[0] = shooterTarget.getYaw() * (1 + );
-                retVal[0] = -15 + shooterTarget.getYaw() + Math.signum(retVal[0]) *  20* Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
+                retVal[0] = -15 + shooterTarget.getYaw();
             //18
 
             
@@ -95,16 +94,7 @@ public class Camera {
 
         return null;
 
-        
-        
 
-
-        
-
-
-        // double[] ret = new double[]{Math.random()* 50, Math.random(), Math.random()};
-        //index 0 is optimal arm angle, index 1 is bot speed, index 2 is top speed, 
-        
     }
 
     public double getDriveOffset(){

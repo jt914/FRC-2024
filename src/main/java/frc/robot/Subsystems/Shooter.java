@@ -77,18 +77,9 @@ public class Shooter extends SubsystemBase{
         controllerBot.setD(kD);
         controllerBot.setIZone(kIz);
         controllerBot.setFF(kFF);
+        SmartDashboard.putNumber("shooterBot", 0.6);
+        SmartDashboard.putNumber("shooterTop", 0.9);
 
-        // shooterBot = new CANSparkMax(Constants.shooterBotID, MotorType.kBrushless);
-        // shooterBot.restoreFactoryDefaults();
-        // shooterBot.setIdleMode(IdleMode.kCoast);
-        // shooterBot.enableVoltageCompensation(11);
-        // shooterBot.burnFlash();
-
-        
-
-
-        // botPid = new SparkPIDController(new CanSpark);
-        // topPid = new SparkPIDController()
 
         
         
@@ -101,26 +92,9 @@ public class Shooter extends SubsystemBase{
 
     }
     public void setVelocity() {
-        // controllerTop.setReference(1000, ControlType.kVelocity);
 
-        // System.out.println(SmartDashboard.getNumber("bottomRPM", targetVelocity));
-
-        shooterBot.set(0.6);
-        shooterTop.set(0.9);
-        // System.out.println(shooterBot.getEncoder().getVelocity());
-        // System.out.println(shooterTop.getEncoder().getVelocity());
-
-
-        // controllerBot.setReference(SmartDashboard.getNumber("bottomRPM", 4000), ControlType.kVelocity);
-        // controllerTop.setReference(SmartDashboard.getNumber("topRPM", 2000), ControlType.kVelocity);
-        
-        
-        // shooterBot.set(0.2);
-        // shooterTop.set(0.2);
-
-
-        
-        //Inputs RPMs into the PID loop rather than voltage, should account for error 
+        shooterBot.set(SmartDashboard.getNumber("shooterBot", 0.6));
+        shooterTop.set(SmartDashboard.getNumber("shooterTop", 0.9));
     }
 
     public void setLowVelocity(){

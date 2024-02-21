@@ -98,13 +98,6 @@ public class SwerveModule {
     double moduleVelocity = desiredState.speedMetersPerSecond;
     double moduleAngle = desiredState.angle.getDegrees();
     double optimizedModuleOutput[] = glacierOptimized(moduleAngle, getTurn180Angle(), moduleVelocity);
-      // SmartDashboard.putNumber("moduleVelocity " + module, moduleVelocity);
-      // SmartDashboard.putNumber("moduleAngle " + module, moduleAngle);
-      // SmartDashboard.putNumber("turnPosition " + module, turnEncoder.getPosition());
-      // SmartDashboard.putNumber("turn180Angle " + module, getTurn180Angle());
-      // SmartDashboard.putNumber("optimizedAngle " + module, optimizedModuleOutput[0]);
-      // SmartDashboard.putNumber("optimizedVelocity "+ module, optimizedModuleOutput[1]);
-
 
     double driveOutput = optimizedModuleOutput[1];
 
@@ -115,9 +108,6 @@ public class SwerveModule {
 
     double turnOutput = MathUtil.clamp(turnPIDController.calculate(getTurn180Angle(), optimizedModuleOutput[0]), -0.4, 0.4);
     turnMotor.set(turnOutput);
-      // SmartDashboard.putNumber("turnOutput " + module, turnOutput);
-      // SmartDashboard.putNumber("getTurn180Angle " + module, getTurn180Angle());
-      // SmartDashboard.putBoolean("Switch " + swerveLimitSwitch.getChannel(), swerveLimitSwitch.get());
     if(swerveLimitSwitch.get() == false)
     {
       turnEncoder.setPosition(0);

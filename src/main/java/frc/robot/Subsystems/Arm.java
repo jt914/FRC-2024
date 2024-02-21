@@ -54,21 +54,6 @@ public class Arm extends SubsystemBase{
         armEnc.setPositionOffset(0.513);
         armEnc.setDistancePerRotation(-360);
 
-        // armEnc.reset();
-
-        // armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
-        // armRight.restoreFactoryDefaults();
-        // armRight.setIdleMode(IdleMode.kBrake);
-        // armRight.enableVoltageCompensation(11);
-        // armRight.setInverted(true);
-        // armRight.burnFlash();
-
-
-        // limitSwitch = armRight.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
-        // limitSwitch.enableLimitSwitch(true);
-
-        // armEnc.reset();
-
         kP = .05;
         kI = 0;
         kD = 0;
@@ -107,8 +92,6 @@ public class Arm extends SubsystemBase{
         SmartDashboard.putNumber("pid", controller.calculate(armEnc.getDistance(),desiredAngle) );
         SmartDashboard.putNumber("ff", feedforward.calculate(desiredAngle* Math.PI / 180, Math.PI/10));
         SmartDashboard.putNumber("k", k);
-        // armLeft.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + MathUtil.clamp(feedforward.calculate(desiredAngle* Math.PI / 180, k), -2, 2));
-        // armRight.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + MathUtil.clamp(feedforward.calculate(desiredAngle * Math.PI / 180, k), -2, 2));
         armLeft.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + (feedforward.calculate(armEnc.getDistance()* Math.PI / 180, k * .3)));
         armRight.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + (feedforward.calculate(armEnc.getDistance() * Math.PI / 180, k * .3)));
         SmartDashboard.putNumber("Left PID", controller.calculate(armEnc.getDistance(), desiredAngle));
@@ -118,9 +101,10 @@ public class Arm extends SubsystemBase{
         SmartDashboard.putNumber("d", controller.getVelocityError()* controller.getD());
         SmartDashboard.putData("pidControl", controller);
     }
-    public double getArmEncoder() {
+    public double getAngle() {
         return armEnc.getDistance();
     }
+    
 
 
 

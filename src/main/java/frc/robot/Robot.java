@@ -37,28 +37,14 @@ public class Robot extends LoggedRobot {
     Field2d m_field = new Field2d();
     private boolean startedSwerve = false;
     private RobotContainer robot;
+    Command autoCommand = robot.getAutonomousCommand();
 
 
-  // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
+
 
   @Override
   public void robotInit() {
     robot = new RobotContainer();
-
-    Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
-
-    if (isReal()) {
-        Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-    } else {
-        setUseTiming(false); // Run as fast as possible
-        Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-
-        // String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
-        // Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
-    }
-
-    // Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
-    Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
 
   }
 
@@ -66,24 +52,12 @@ public class Robot extends LoggedRobot {
   public void robotPeriodic(){
     CommandScheduler.getInstance().run();
 
-    double ySpeed = -1 * Constants.m_yspeedLimiter.calculate(Constants.swerveController.getLeftX()) * Drivetrain.kMaxVoltage;
-    double xSpeed = -1 * Constants.m_xspeedLimiter.calculate(Constants.swerveController.getLeftY()) * Drivetrain.kMaxVoltage;
-    double yaw = -1 * Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
-
-    Constants.swerve.updateOdometry();
 
 
-    // if(Constants.alternateController.getXButtonPressed()){
-    //   Constants.randomDesired = new double[]{Math.random() * 50, 0.2, 0.2};
-    // }
-
-    
-  
   }
 
   @Override
   public void autonomousInit() {
-    Command autoCommand = robot.getAutonomousCommand();
     if(autoCommand != null){
       autoCommand.schedule();
     }
@@ -94,12 +68,10 @@ public class Robot extends LoggedRobot {
   }
   
   public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.cancel();
+    if (autoCommand != null) {
+      autoCommand.cancel();
+      
+    }
 
     SmartDashboard.putData("Field", m_field);
 
@@ -109,13 +81,8 @@ public class Robot extends LoggedRobot {
   boolean fieldRelative = false;
   @Override
   public void teleopPeriodic() {
-
-    SmartDashboard.putNumber("xPOs", Constants.swerve.poseEstimator.getEstimatedPosition().getX());
-    SmartDashboard.putNumber("yPOs", Constants.swerve.poseEstimator.getEstimatedPosition().getY());
-
-
-
-    m_field.setRobotPose(Constants.swerve.poseEstimator.getEstimatedPosition());
+    Constants.arm.moveArm(); 
+    Constants.swerve.updateOdometry();
 
   }
 

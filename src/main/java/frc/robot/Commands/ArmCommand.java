@@ -28,46 +28,16 @@ public class ArmCommand extends Command {
     }
     @Override
     public void execute(){
-        // SmartDashboard.putBoolean("ArmSwitch", arm.armSwitch.get());
-        SmartDashboard.putNumber("Arm Encoder: ", arm.armEnc.getDistance());
-        SmartDashboard.putNumber("Desire Arm", Constants.arm.desiredAngle);
-        // SmartDashboard.putNumber("Raw Arm Encoder", arm.armEnc.get());
-        // SmartDashboard.putNumber("Absolute Distance", arm.armEnc.getAbsolutePosition());
-
-        // if(Constants.alternateController.getRightTriggerAxis() > 0.2){
-        //     arm.forward();
-        // }
-
-        // else if(arm.armSwitch.get() == true){
-        //     arm.stall();
-        //     return;
-            
-        // }
-
-        // else if (Constants.alternateController.getLeftTriggerAxis() > 0.2){
-        //     arm.backward();
-        // }
-        // else {
-        //     arm.stall();
-        // }
 
         Constants.arm.desiredAngle = MathUtil.clamp(Constants.arm.desiredAngle, 0,120);
         
 
         if(Constants.alternateController.leftTrigger().getAsBoolean()){
-            Constants.arm.setDesired(10);
+            Constants.arm.setDesired(Constants.arm.getAngle() - 0.01);
         }
         else if(Constants.alternateController.rightTrigger().getAsBoolean()){
-            Constants.arm.setDesired(30);
-
-            System.out.println("Moving Up");
+            Constants.arm.setDesired(Constants.arm.getAngle() + 0.01);
         }
-        else if(Constants.alternateController.leftBumper().getAsBoolean()){
-            Constants.arm.setDesired(35);
-
-        }
-
-        Constants.arm.moveArm();
 
     }
 
