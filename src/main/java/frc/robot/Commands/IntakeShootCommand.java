@@ -5,7 +5,7 @@ import frc.robot.Constants;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Intake;
 
-public class IntakeReverseCommand extends Command {
+public class IntakeShootCommand extends Command {
     private Arm arm;
     private Intake intake;
     private boolean isFinished = false;
@@ -22,7 +22,7 @@ public class IntakeReverseCommand extends Command {
 
     @Override
     public void execute(){
-        intake.reverse();
+        intake.runFast();
     }
     @Override
     public boolean isFinished(){

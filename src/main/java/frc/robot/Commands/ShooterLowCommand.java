@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 
-public class ShooterCommand extends Command{
+public class ShooterLowCommand extends Command{
     /*
      * actions needed:
      * 1st button, should run 'aim' command, then run shooter. Maybe use synchronized commands to speed up execution    

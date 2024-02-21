@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.PathPlannerPath;
+
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -17,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Subsystems.*;
-import frc.Autos.AutoCommand;
+// import frc.robot.Autos.AutoCommand;
 import frc.robot.Commands.*;
 
 /**
@@ -39,6 +43,10 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
+    NamedCommands.registerCommand("intake", new IntakeCommand());
+    NamedCommands.registerCommand("shoot", new ShooterCommand());
+
+
     configureButtonBindings();
   }
 
@@ -51,13 +59,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    (Constants.alternateController.start()).onTrue(new SwerveCommand());
+    (Constants.swerveController.start()).onTrue(new SwerveCommand());
     (Constants.alternateController.b()).toggleOnTrue(new ShooterCommand());
+
     (Constants.alternateController.y()).whileTrue(new IntakeCommand());
-    (Constants.alternateController.x()).toggleOnTrue(new ArmCommand());
-    (Constants.alternateController.rightBumper()).whileTrue(new IntakeSlowCommand());
-    (Constants.alternateController.leftBumper()).whileTrue(new IntakeReverseCommand());
-    (Constants.alternateController.a()).onTrue(new AutoCommand());
+    (Constants.swerveController.x()).toggleOnTrue(new ArmCommand());
+    (Constants.swerveController.rightBumper()).whileTrue(new IntakeSlowCommand());
+    (Constants.alternateController.x()).whileTrue(new IntakeReverseCommand());
+    // (Constants.alternateController.a()).onTrue(new AutoCommand());
 
     //Press x to turn the arm on. If something goes wrong, just press X again and it will turn the arm off
 
@@ -70,9 +79,11 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    double routine = NetworkTableInstance.getDefault().getTable("/datatable").getEntry("routine").getDouble(0);
-    return null;
-  }
+public Command getAutonomousCommand(){
+    // Load the path you want to follow using its name in the GUI
+    PathPlannerPath path = PathPlannerPath.fromPathFile("one");
+    System.out.println("working");
+    // Create a path following command using AutoBuilder. This will also trigger event markers.
+    return AutoBuilder.followPath(path);
+}
 }

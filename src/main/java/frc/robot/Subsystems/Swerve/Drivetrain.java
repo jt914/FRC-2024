@@ -4,11 +4,21 @@
 
 package frc.robot.Subsystems.Swerve;
 
+import java.util.Optional;
+import java.util.function.BooleanSupplier;
+
 import org.littletonrobotics.junction.Logger;
+import org.photonvision.EstimatedRobotPose;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Twist2d;
@@ -19,13 +29,14 @@ import edu.wpi.first.math.kinematics.SwerveDriveWheelPositions;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 /** Represents a swerve drive style drivetrain. */
-public class Drivetrain {
+public class Drivetrain extends SubsystemBase {
   public static final double kMaxVelocity = 1; // meters/second (m/s)
   public static final double kMaxVoltage = kMaxVelocity / (((473 / 9.25) * 0.103 * Math.PI) / 60); /* THIS CANNOT GO OVER 12 VOLTS */
   public static final double kMaxAngularSpeed = 2 * Math.PI; // 1/2 rotation per second
@@ -39,13 +50,15 @@ public class Drivetrain {
   private final SwerveModule m_frontRight;
   public final SwerveModule m_backLeft;
   private final SwerveModule m_backRight;
+  private ChassisSpeeds speeds = new ChassisSpeeds(0,0,0);
 
   public SwerveModuleState[] states = new SwerveModuleState[4];
 
 
   private final SwerveDriveKinematics m_kinematics;
-  public final SwerveDriveOdometry m_odometry;
+  public final SwerveDrivePoseEstimator poseEstimator;
 
+  public double xSpeed, ySpeed;
 
 
   public Gyro m_gyro;
@@ -59,27 +72,95 @@ public class Drivetrain {
     m_backLeftLocation = new Translation2d(-Constants.drivetrainModuleOffset, Constants.drivetrainModuleOffset);
     m_backRightLocation = new Translation2d(-Constants.drivetrainModuleOffset, -Constants.drivetrainModuleOffset);
 
-    m_frontLeft = new SwerveModule(Constants.frontLeftDriveID, Constants.frontLeftTurnID,0);
-    m_frontRight = new SwerveModule(Constants.frontRightDriveID, Constants.frontRightTurnID,1);
-    m_backLeft = new SwerveModule(Constants.backLeftDriveID, Constants.backLeftTurnID,2);
-    m_backRight = new SwerveModule(Constants.backRightDriveID, Constants.backRightTurnID,3);
+    m_frontLeft = new SwerveModule(Constants.frontLeftDriveID, Constants.frontLeftTurnID);
+    m_frontRight = new SwerveModule(Constants.frontRightDriveID, Constants.frontRightTurnID);
+    m_backLeft = new SwerveModule(Constants.backLeftDriveID, Constants.backLeftTurnID);
+    m_backRight = new SwerveModule(Constants.backRightDriveID, Constants.backRightTurnID);
 
     m_kinematics =
       new SwerveDriveKinematics(
           m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation);
 
 
-    m_odometry = 
-      new SwerveDriveOdometry(
+    poseEstimator = 
+      new SwerveDrivePoseEstimator(
         m_kinematics, 
         Rotation2d.fromDegrees(m_gyro.getTotalAngleDegrees()), 
         new SwerveModulePosition[] {
         m_frontLeft.getPosition(),
         m_frontRight.getPosition(),
         m_backLeft.getPosition(),
-        m_backRight.getPosition() }
-        );
+        m_backRight.getPosition() },
+        new Pose2d());
 
+        AutoBuilder.configureHolonomic(
+        this::getPose, // Robot pose supplier
+        this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+        this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+        this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+        new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+            new PIDConstants(1.2, 0.0, 0.0), // Translation PID constants
+            new PIDConstants(1.2, 0.0, 0.0), // Rotation PID constants
+            4.5, // Max module speed, in m/s
+            0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+            new ReplanningConfig() // Default path replanning config. See the API for the options here
+        ),
+               () -> {
+                // Boolean supplier that controls when the path will be mirrored for the red alliance
+                // This will flip the path being followed to the red side of the field.
+                // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+            },
+        this // Reference to this subsystem to set requirements
+    );
+  }
+
+  public ChassisSpeeds getRobotRelativeSpeeds(){
+    return speeds;
+  }
+
+  public void driveRobotRelative(ChassisSpeeds chassisSpeeds){
+    speeds = chassisSpeeds;
+
+    
+    var swerveModuleStates = m_kinematics.toSwerveModuleStates(speeds);
+    // states = swerveModuleStates;
+
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, 12);
+    m_frontLeft.setModuleState(swerveModuleStates[0], 0);
+    m_frontRight.setModuleState(swerveModuleStates[1], 1);
+    m_backLeft.setModuleState(swerveModuleStates[2], 2);
+    m_backRight.setModuleState(swerveModuleStates[3], 3);
+
+
+    
+    // SmartDashboard.putNumber("xSpeed", xSpeed);
+    // SmartDashboard.putNumber("ySpeed", ySpeed);
+    // SmartDashboard.putNumber("rotation", yaw);
+
+  }
+
+
+
+  public Pose2d getPose(){
+    return poseEstimator.getEstimatedPosition();
+  }
+
+  public void resetPose(Pose2d pose){
+
+    poseEstimator.resetPosition(
+          new Rotation2d(Constants.m_gyro.getTotalAngleDegrees()),
+          new SwerveModulePosition[] {
+          m_frontLeft.getPosition(),
+          m_frontRight.getPosition(),
+          m_backLeft.getPosition(),
+          m_backRight.getPosition()}, 
+          pose);
   }
 
   /**
@@ -89,9 +170,10 @@ public class Drivetrain {
    * @param ySpeed Speed of the robot in the y direction (sideways).
    * @param rot Angular rate of the robot.
    * @param fieldRelative Whether the provided x and y speeds are relative to the field.
-   * @param yaw Angle of the robot.
    */
   public void drive(double xSpeed, double ySpeed, double yaw) {
+
+    speeds = new ChassisSpeeds(xSpeed, ySpeed, yaw);
 
     // var swerveModuleStates = m_kinematics.toSwerveModuleStates(
     //         fieldRelative
@@ -99,8 +181,8 @@ public class Drivetrain {
     //             : new ChassisSpeeds(xSpeed, ySpeed, rot));
 
     var swerveModuleStates = m_kinematics.toSwerveModuleStates(new ChassisSpeeds(xSpeed, ySpeed, yaw));
-
-
+    // System.out.println(Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2)));
+    
     Logger.recordOutput("MyStates", swerveModuleStates);
     // states = swerveModuleStates;
 
@@ -110,14 +192,36 @@ public class Drivetrain {
     m_backLeft.setModuleState(swerveModuleStates[2], 2);
     m_backRight.setModuleState(swerveModuleStates[3], 3);
 
+
     
     // SmartDashboard.putNumber("xSpeed", xSpeed);
     // SmartDashboard.putNumber("ySpeed", ySpeed);
     // SmartDashboard.putNumber("rotation", yaw);
   }
 
+  public double getSpeed(){
+    return 0;
+  }
+
   /** Updates the field relative position of the robot. */
   public void updateOdometry() {
+
+        // Compute the robot's field-relative position exclusively from vision measurements.
+
+        // try{
+        //   EstimatedRobotPose visionMeasurement3d = Constants.camera.getPose().get();
+        //   Pose2d visionMeasurement2d = visionMeasurement3d.estimatedPose.toPose2d();
+        //   poseEstimator.addVisionMeasurement(visionMeasurement2d,visionMeasurement3d.timestampSeconds);
+        // }catch (Exception e){
+        // }
+
+        // System.out.println(Constants.camera.getLatestResult().getBestTarget().getFiducialId());
+
+
+
+  
+    // Convert robot pose from Pose3d to Pose2d needed to apply vision measurements.
+    
     // SwerveDriveWheelPositions wheelPositions = new SwerveDriveWheelPositions(new SwerveModulePosition[] {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_backLeft.getPosition(), m_backRight.getPosition()});
     // Rotation2d angle = new Rotation2d(Constants.m_gyro.getTotalAngleDegrees());
 
@@ -132,7 +236,7 @@ public class Drivetrain {
 
 
     //CHECK IF ROTATING CORRECT AMT
-    m_odometry.update(
+    poseEstimator.update(
         Rotation2d.fromDegrees(m_gyro.getTotalAngleDegrees()),
         new SwerveModulePosition[] {
           m_frontLeft.getPosition(),
@@ -146,9 +250,6 @@ public class Drivetrain {
     SmartDashboard.putNumber("frontLeft", m_frontLeft.getPosition().distanceMeters);
     SmartDashboard.putNumber("frontRight", m_frontRight.getPosition().distanceMeters);
 
-    SmartDashboard.putNumber("yDist", m_odometry.getPoseMeters().getY()/12);
-    SmartDashboard.putNumber("XDist", m_odometry.getPoseMeters().getX());
-    SmartDashboard.putNumber("deg", m_odometry.getPoseMeters().getRotation().getDegrees());
 
 
   }

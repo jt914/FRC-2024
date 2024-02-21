@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 
-public class Arm extends SubsystemBase{
+public class Climber extends SubsystemBase{
 
     public double currentPos;
     private CANSparkMax armLeft,armRight;
@@ -29,28 +29,24 @@ public class Arm extends SubsystemBase{
     public double desiredAngle;
     public PIDController controller = new PIDController(.5, 0.001, 0.000001);
     private final ArmFeedforward feedforward  = new ArmFeedforward(0.09, 0.05, 0);
-    public DigitalInput armSwitch;
 
 
-    public Arm() {
-        armLeft = new CANSparkMax(Constants.armLeftID, MotorType.kBrushless);
+    public Climber() {
+        armLeft = new CANSparkMax(Constants.climberLeftID, MotorType.kBrushless);
         armLeft.restoreFactoryDefaults();
         armLeft.setIdleMode(IdleMode.kBrake);
         armLeft.enableVoltageCompensation(11);
         armLeft.burnFlash();
 
-        armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
+        armRight = new CANSparkMax(Constants.climberRightID, MotorType.kBrushless);
         armRight.restoreFactoryDefaults();
         armRight.setIdleMode(IdleMode.kBrake);
         armRight.enableVoltageCompensation(11);
         armRight.setInverted(true);
 
         armRight.burnFlash();
+        armLeft.burnFlash();
 
-        armSwitch = new DigitalInput(8);
-        armEnc = new DutyCycleEncoder(9); 
-        armEnc.setPositionOffset(0.513);
-        armEnc.setDistancePerRotation(-360);
 
         // armEnc.reset();
 
@@ -67,9 +63,6 @@ public class Arm extends SubsystemBase{
 
         // armEnc.reset();
 
-        kP = .05;
-        kI = 0;
-        kD = 0;
     }
 
     public void stall(){
@@ -78,12 +71,12 @@ public class Arm extends SubsystemBase{
     }
 
     public void forward(){
-        armLeft.set(-0.2);
+        armLeft.set(0.2);
         armRight.set(-0.2);
     }
 
     public void backward(){
-        armLeft.set(0.2);
+        armLeft.set(-0.2);
         armRight.set(0.2);
     }
 
@@ -103,9 +96,6 @@ public class Arm extends SubsystemBase{
         armLeft.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + feedforward.calculate(desiredAngle* Math.PI / 180, Math.PI/10));
         armRight.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + feedforward.calculate(desiredAngle * Math.PI / 180, Math.PI/10));
 
-    }
-    public double getArmEncoder() {
-        return armEnc.getDistance();
     }
 
 
