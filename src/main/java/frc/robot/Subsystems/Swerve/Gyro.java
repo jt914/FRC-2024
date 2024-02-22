@@ -46,5 +46,5 @@ public class Gyro {
   public void setGyroAngleOffset(double adjustment) {
     gyroAngleOffset = adjustment;
   }
-  
+
 }

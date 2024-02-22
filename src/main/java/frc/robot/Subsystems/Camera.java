@@ -73,7 +73,7 @@ public class Camera {
         }
 
         if(seesShooter){
-                retVal[0] = -15 + shooterTarget.getYaw();
+                retVal[0] = shooterTarget.getYaw();
             //18
 
             

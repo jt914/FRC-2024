@@ -31,7 +31,7 @@ public final class Constants {
     public static SlewRateLimiter m_rotLimiter = new SlewRateLimiter(5);
     public static double[] randomDesired = new double[]{5,0.1,0.1};
     /* Mechanisms */
-    public static final Gyro m_gyro = new Gyro(90);
+    public static final Gyro m_gyro = new Gyro(-90);
     public static final Drivetrain swerve = new Drivetrain();
     public static final Arm arm = new Arm();
     public static final Intake intake = new Intake();
@@ -73,5 +73,5 @@ public final class Constants {
     public static final int shooterBotID = 12; 
     public static final int armLeftID = 10; 
     public static final int armRightID = 9; 
-    
+
 }

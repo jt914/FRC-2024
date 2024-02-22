@@ -82,8 +82,8 @@ public class Shooter extends SubsystemBase{
     }
     public void setVelocity() {
 
-        shooterBot.set(SmartDashboard.getNumber("shooterBot", 0.6));
-        shooterTop.set(SmartDashboard.getNumber("shooterTop", 0.9));
+        shooterBot.set(0.7);
+        shooterTop.set(0.9);
     }
 
     public void setLowVelocity(){

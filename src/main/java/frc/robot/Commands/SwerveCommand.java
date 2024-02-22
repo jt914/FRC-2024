@@ -18,7 +18,7 @@ public class SwerveCommand extends Command{
     boolean isFinished = false;
     double desiredOffset;
     boolean setDesired;
-    PIDController aimController = new PIDController(.50, 0.000001, 0);
+    PIDController aimController = new PIDController(.20, 0.000001, 0);
 
     public SwerveCommand(){
       addRequirements(Constants.swerve);
@@ -32,16 +32,16 @@ public class SwerveCommand extends Command{
 
     @Override
     public void execute(){
+      SmartDashboard.putBoolean("field", Constants.fieldRelative);
 
         if(Constants.swerveController.back().getAsBoolean()){
-          Constants.fieldRelative = !Constants.fieldRelative;
+          Constants.fieldRelative = true;
           Constants.m_gyro.calibrateGyro();
 
         }
 
         if(Constants.swerveController.y().getAsBoolean()){
-          autoAim = !autoAim;
-
+          autoAim = true;
         }
 
         driveWithJoystick(Constants.fieldRelative, autoAim);
@@ -65,8 +65,8 @@ public class SwerveCommand extends Command{
       if (Math.abs(Math.sqrt(Math.pow(Constants.swerveController.getLeftX(), 2) + Math.pow(Constants.swerveController.getLeftY(), 2))) > Constants.swerveControllerLeftStickDeadband) {
         aboveDeadband = true;
         if (fieldRelative == true) {
-          ySpeed = -1* (Constants.m_yspeedLimiter.calculate(Constants.swerveController.getLeftY() * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) - (Constants.swerveController.getLeftX()) * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage);
-          xSpeed = -1 * Constants.m_xspeedLimiter.calculate(Constants.swerveController.getLeftY() * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) + (Constants.swerveController.getLeftX()) * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage;
+          ySpeed = -1 * (Constants.m_yspeedLimiter.calculate(Constants.swerveController.getLeftY() * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) - (Constants.swerveController.getLeftX()) * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage);
+          xSpeed = Constants.m_xspeedLimiter.calculate(Constants.swerveController.getLeftY() * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) + (Constants.swerveController.getLeftX()) * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage;
         }
         else {
           ySpeed = -1 * Constants.m_yspeedLimiter.calculate(Constants.swerveController.getLeftX()) * Drivetrain.kMaxVoltage;
@@ -85,13 +85,13 @@ public class SwerveCommand extends Command{
 
       if(autoAim){
           desired = Constants.camera.getDesiredShoot();
-
             if(desired != null && desired[0] != 0){
             yaw = aimController.calculate(desired[0], 0);
+            SmartDashboard.putNumber("desiredwasd" , desired[0]);
             Constants.arm.setDesired(desired[1] * 20 / 2.75);
             Constants.shooter.setVelocity();
             }
-           }
+        }
         Constants.swerve.drive(xSpeed, ySpeed, yaw);
 
       }

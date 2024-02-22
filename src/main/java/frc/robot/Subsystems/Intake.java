@@ -52,7 +52,7 @@ public class Intake extends SubsystemBase{
     }
 
     public void reverse() {
-        intake.set(-0.4);
+        intake.set(-0.2);
         running = true;
 
     }

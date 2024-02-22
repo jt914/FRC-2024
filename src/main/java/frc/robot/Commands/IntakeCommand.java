@@ -33,7 +33,7 @@ public class IntakeCommand extends Command {
         if(triggered == true) {
             elapsed++;
         }
-        if(elapsed > 10) {
+        if(elapsed > 4) {
             isFinished = true;
             elapsed = 0;
         }
@@ -51,6 +51,7 @@ public class IntakeCommand extends Command {
     public void end(boolean interrupted) {
         
         Constants.intake.stop();
+        isFinished = false;
     }
  
 }

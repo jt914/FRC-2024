@@ -43,6 +43,7 @@ public class Robot extends LoggedRobot {
   public void robotInit() {
     robot = new RobotContainer();
     autoCommand = robot.getAutonomousCommand();
+    Constants.m_gyro.calibrateGyro();
 
 
   }
@@ -50,6 +51,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotPeriodic(){
     CommandScheduler.getInstance().run();
+    SmartDashboard.putNumber("gyroswasd", Constants.m_gyro.getTotalAngleDegrees());
 
   }
 
