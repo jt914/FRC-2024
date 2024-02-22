@@ -33,6 +33,10 @@ public class Intake extends SubsystemBase{
         intakeSensor = new AnalogInput(0);
     }
 
+    public boolean hasNote(){
+        return intakeSensor.getVoltage() < 0.5;
+    }
+
     public void runFast() {
         intakePidController.setReference(4700, ControlType.kVelocity);
         SmartDashboard.putNumber("intake", intake.getEncoder().getVelocity());

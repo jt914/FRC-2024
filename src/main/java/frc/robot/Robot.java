@@ -64,6 +64,8 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousPeriodic() {
+        Constants.arm.moveArm(); 
+
   }
   
   public void teleopInit() {

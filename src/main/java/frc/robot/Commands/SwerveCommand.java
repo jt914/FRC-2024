@@ -84,13 +84,13 @@ public class SwerveCommand extends Command{
       if(autoAim){
           desired = Constants.camera.getDesiredShoot(0.4 * xSpeed);
             if(desired != null && desired[0] != 0){
-            yaw = aimController.calculate(desired[0], 0);
-            SmartDashboard.putNumber("desiredwasd" , desired[0]);
-            Constants.arm.setDesired(desired[1] * 3.29 + 14.3);
-            Constants.shooter.setVelocity();
-            SmartDashboard.putNumber("xSpeed", xSpeed);
-            xSpeed = 0.4 * xSpeed;
-            ySpeed = 0.4 * ySpeed;
+              yaw = aimController.calculate(desired[0], 0);
+              SmartDashboard.putNumber("desiredwasd" , desired[0]);
+              Constants.arm.setDesired(desired[1] * 3.29 + 14.3);
+              Constants.shooter.setVelocity();
+              SmartDashboard.putNumber("xSpeed", xSpeed);
+              xSpeed = 0.4 * xSpeed;
+              ySpeed = 0.4 * ySpeed;
             }
         }
         Constants.swerve.drive(xSpeed, ySpeed, yaw);
