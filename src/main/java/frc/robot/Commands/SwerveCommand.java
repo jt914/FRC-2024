@@ -18,7 +18,7 @@ public class SwerveCommand extends Command{
     boolean isFinished = false;
     double desiredOffset;
     boolean setDesired;
-    PIDController aimController = new PIDController(.20, 0.000001, 0);
+    PIDController aimController = new PIDController(.23, 0.000001, 0);
 
     public SwerveCommand(){
       addRequirements(Constants.swerve);
@@ -40,11 +40,9 @@ public class SwerveCommand extends Command{
 
         }
 
-        if(Constants.swerveController.y().getAsBoolean()){
-          autoAim = true;
-        }
+        SmartDashboard.putBoolean("autoAim", Constants.autoAim);
 
-        driveWithJoystick(Constants.fieldRelative, autoAim);
+        driveWithJoystick(Constants.fieldRelative, Constants.autoAim);
 
       }
     
@@ -84,12 +82,15 @@ public class SwerveCommand extends Command{
       yaw = -1 * Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
 
       if(autoAim){
-          desired = Constants.camera.getDesiredShoot();
+          desired = Constants.camera.getDesiredShoot(0.4 * xSpeed);
             if(desired != null && desired[0] != 0){
             yaw = aimController.calculate(desired[0], 0);
             SmartDashboard.putNumber("desiredwasd" , desired[0]);
-            Constants.arm.setDesired(desired[1] * 20 / 2.75);
+            Constants.arm.setDesired(desired[1] * 3.29 + 14.3);
             Constants.shooter.setVelocity();
+            SmartDashboard.putNumber("xSpeed", xSpeed);
+            xSpeed = 0.4 * xSpeed;
+            ySpeed = 0.4 * ySpeed;
             }
         }
         Constants.swerve.drive(xSpeed, ySpeed, yaw);

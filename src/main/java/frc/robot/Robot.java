@@ -82,6 +82,7 @@ public class Robot extends LoggedRobot {
   public void teleopPeriodic() {
     Constants.arm.moveArm(); 
     Constants.swerve.updateOdometry();
+    SmartDashboard.putBoolean("wasdwasdwasd", Constants.autoAim);
 
   }
 

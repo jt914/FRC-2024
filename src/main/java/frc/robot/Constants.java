@@ -37,6 +37,8 @@ public final class Constants {
     public static final Intake intake = new Intake();
     public static final Shooter shooter = new Shooter();
     public static final Camera camera = new Camera();
+
+    public static boolean autoAim = false;
     
     /* - - - SWERVE DRIVE CONSTANTS - - - */
 

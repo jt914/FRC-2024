@@ -59,6 +59,7 @@ public class RobotContainer {
     (Constants.swerveController.x()).toggleOnTrue(new ArmCommand());
     (Constants.swerveController.leftBumper()).whileTrue(new IntakeReverseCommand());
     (Constants.swerveController.a()).toggleOnTrue(new AmpCommand());
+    Constants.swerveController.y().onTrue(new ToggleAutoAimCommand());
 
     //Press x to turn the arm on. If something goes wrong, just press X again and it will turn the arm off
 

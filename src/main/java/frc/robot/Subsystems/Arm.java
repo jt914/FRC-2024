@@ -29,7 +29,7 @@ public class Arm extends SubsystemBase{
     private double kP, kI, kD;
     public double desiredAngle;
     // public PIDController controller = new PIDController(.6, .05, .165);
-    public PIDController controller = new PIDController(.4, 0.003, .01);
+    public PIDController controller = new PIDController(.35, 0.001, .01);
     // public PIDController controller = new PIDController(.2, .13, 0);
     private final ArmFeedforward feedforward  = new ArmFeedforward(0, .22, 0);
     public DigitalInput armSwitch;

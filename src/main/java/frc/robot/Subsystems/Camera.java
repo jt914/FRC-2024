@@ -51,7 +51,7 @@ public class Camera {
     }
 
     //if null the command to get desired shoot should just do nothing
-    public double[] getDesiredShoot(){
+    public double[] getDesiredShoot(double ySpeed){
 
         double[] retVal = new double[3];
 
@@ -73,13 +73,13 @@ public class Camera {
         }
 
         if(seesShooter){
-                retVal[0] = shooterTarget.getYaw();
+                retVal[0] = shooterTarget.getYaw() + 7 * ySpeed;
             //18
 
             
             retVal[1] =
             PhotonUtils.calculateDistanceToTargetMeters(
-                    .35,
+                    .1,
                     1.778,
                     35 * Math.PI / 180,
                     Units.degreesToRadians(shooterTarget.getPitch()));

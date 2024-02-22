@@ -14,6 +14,8 @@ public class ArmCommand extends Command {
     private boolean forward;
 
     public ArmCommand(){
+        addRequirements(Constants.arm);
+
     
     }
 
@@ -32,11 +34,12 @@ public class ArmCommand extends Command {
         SmartDashboard.putNumber("current", Constants.arm.armEnc.getDistance());
 
         if(Constants.alternateController.leftTrigger().getAsBoolean()){
-            Constants.arm.setDesired(Constants.arm.desiredAngle - 0.75);
+            Constants.arm.setDesired(Constants.arm.desiredAngle - 0.25);
         }
         else if(Constants.alternateController.rightTrigger().getAsBoolean()){
-            Constants.arm.setDesired(Constants.arm.desiredAngle + 0.75);
+            Constants.arm.setDesired(Constants.arm.desiredAngle + 0.25);
         }
+        Constants.arm.setDesired(Constants.arm.desiredAngle);
     }
 
     @Override

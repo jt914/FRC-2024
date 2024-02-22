@@ -20,11 +20,13 @@ public class IntakeCommand extends Command {
         elapsed = 0;
         arm = Constants.arm;
         arm.setDesired(4.89);
+        addRequirements(Constants.arm);
+
     }
 
     @Override
     public void execute(){
-        intake.runSlow();
+        intake.run();
         SmartDashboard.putNumber("IntakeSens", Constants.intake.intakeSensor.getVoltage());
         SmartDashboard.putBoolean("Intake Trigger", triggered);
         if(Constants.intake.intakeSensor.getVoltage()<.5) {

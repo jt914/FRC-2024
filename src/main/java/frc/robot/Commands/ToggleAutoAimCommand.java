@@ -14,43 +14,29 @@ import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Shooter;
 import frc.robot.Subsystems.Swerve.Drivetrain;
 
-public class AmpCommand extends Command {
-    private Arm arm;
-    private Shooter shooter;
-    private Drivetrain swerve;
-    private Camera cam;
-    private boolean isFinished = false;
-    private int ampStep = 0;
-    private double distanceTarget;
-    private double distanceWall;
-    public AmpCommand(){
-        arm = Constants.arm;
-        swerve = Constants.swerve;
-        shooter = Constants.shooter;
-        cam = Constants.camera;
-        addRequirements(arm);
-        addRequirements(shooter);
+public class ToggleAutoAimCommand extends Command {
+    public ToggleAutoAimCommand(){
     }
 
     @Override
     public void initialize(){
+        Constants.autoAim = !Constants.autoAim;
+
+        
    
     }
     @Override
     public void execute(){
-        arm.setDesired(110);
-
-        if(arm.armEnc.getDistance() > 45) {
-            shooter.setLowVelocity();
-            ampStep++;
-        }
-        arm.moveArm();
 
     }
 
     @Override
+    public boolean isFinished(){
+        return true;
+    }
+
+    @Override
     public void end(boolean interrupted) {
-        Constants.shooter.stop();
 
     }
 }
