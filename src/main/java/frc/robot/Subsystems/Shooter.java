@@ -81,9 +81,9 @@ public class Shooter extends SubsystemBase{
 
     }
     public void setVelocity() {
-
-        shooterBot.set(0.7);
-        shooterTop.set(0.9);
+        //7 and 9 before
+        shooterBot.set(0.8);
+        shooterTop.set(0.8);
     }
 
     public void setLowVelocity(){

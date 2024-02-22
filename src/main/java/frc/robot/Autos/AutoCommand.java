@@ -81,14 +81,21 @@ public class AutoCommand extends Command {
         }
 
         //intake should be running, this is driving to the note
+
+        //maybe add an xSpeed * 
         else if(step == 3){
             if(Constants.intake.hasNote()){
                 step = 4;
             }
             else{
                 target = Constants.camera.getTarget();
+                SmartDashboard.putNumber("xCurrent", target.getX());
+                SmartDashboard.putNumber("yCurrent", target.getY());
                 double xSpeed = drivePID.calculate(target.getX(), 1.44);
                 double ySpeed = drivePID.calculate(target.getY(), 1.77);
+                SmartDashboard.putNumber("xCalculated", xSpeed);
+                SmartDashboard.putNumber("yCalculated", ySpeed);
+
                 double yaw = 0;
 
                 double[] desired = Constants.camera.getDesiredShoot(ySpeed);
