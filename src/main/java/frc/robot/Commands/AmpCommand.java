@@ -35,7 +35,7 @@ public class AmpCommand extends Command {
 
     @Override
     public void initialize(){
-        arm.setDesired(110);
+        arm.setGoal(110);
 
         // PhotonTrackedTarget shooterTarget = null;
         // distanceTarget = PhotonUtils.calculateDistanceToTargetMeters(.35, 1.36525, 35 * Math.PI / 180, Units.degreesToRadians(shooterTarget.getPitch()));
@@ -58,7 +58,6 @@ public class AmpCommand extends Command {
             shooter.setLowVelocity();
             ampStep++;
         }
-        arm.moveArm();
 
     }
 

@@ -17,7 +17,7 @@ public class SwerveCommand extends Command{
     double[] desired;
     boolean isFinished = false;
     double desiredOffset;
-    boolean setDesired;
+    boolean setGoal;
     PIDController aimController = new PIDController(.50, 0.000001, 0);
 
 
@@ -131,13 +131,12 @@ public class SwerveCommand extends Command{
       if(desired != null){
               System.out.println("running autoaim");
         System.out.println(desired[1] * 20 / 2.75);
-        Constants.arm.setDesired(desired[1] * 20 / 2.75); //ARM CONSTANT
-        Constants.arm.moveArm(); 
+        Constants.arm.setGoal(desired[1] * 20 / 2.75); //ARM CONSTANT
 
 
         // if(desired[0] > 0){
         // desiredOffset = 2 * Math.asin(desired[1]/(Math.sqrt(0.169 + desired[1] *desired[1])));
-        // setDesired = true;
+        // setGoal = true;
         // }
         // else{
         //   desiredOffset = - 2 * Math.asin(desired[1]/(Math.sqrt(0.169 + desired[1] *desired[1] + desired[0] )));

@@ -36,8 +36,8 @@ public class Arm extends ProfiledPIDSubsystem{
     // public PIDController controller = new PIDController(.2, .13, 0);
     private final ArmFeedforward feedforward  = new ArmFeedforward(0, .45, .5);
     public DigitalInput armSwitch;
-    private static double maxVelocity = 90; // degrees per second
-    private static double maxAcceleration = 200; // degrees per seconds^2
+    private static double maxVelocity = 60; // degrees per second
+    private static double maxAcceleration = 100; // degrees per seconds^2
     private static ProfiledPIDController profiledPIDController = new ProfiledPIDController(
             .1,
             .003,
@@ -69,6 +69,7 @@ public class Arm extends ProfiledPIDSubsystem{
         armEnc.setPositionOffset(0.513);
         armEnc.setDistancePerRotation(-360);
 
+        setGoal(armEnc.getDistance());
         // armEnc.reset();
 
         // armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
@@ -85,25 +86,6 @@ public class Arm extends ProfiledPIDSubsystem{
         // armEnc.reset();
 
     }
-
-    public void stall(){
-        armLeft.set(0.013);
-        armRight.set(0.013);
-    }
-
-    public void forward(){
-        armLeft.set(-0.2);
-        armRight.set(-0.2);
-    }
-
-    public void backward(){
-        armLeft.set(0.2);
-        armRight.set(0.2);
-    }
-
-    public void climbUp(){
-    }
-
 
 
         
@@ -124,19 +106,15 @@ public class Arm extends ProfiledPIDSubsystem{
         {
             k = 0;
         }
-        SmartDashboard.putNumber("pid", controller.calculate(armEnc.getDistance(),output) );
-        SmartDashboard.putNumber("ff", feedforward.calculate(output* Math.PI / 180, Math.PI/10));
+ 
         SmartDashboard.putNumber("k", k);
         // armLeft.setVoltage(controller.calculate(armEnc.getDistance(), output) + MathUtil.clamp(feedforward.calculate(output* Math.PI / 180, k), -2, 2));
         // armRight.setVoltage(controller.calculate(armEnc.getDistance(), output) + MathUtil.clamp(feedforward.calculate(output * Math.PI / 180, k), -2, 2));
-        armLeft.setVoltage(controller.calculate(armEnc.getDistance(), output) + (feedforward.calculate(armEnc.getDistance()* Math.PI / 180, k * .3)));
-        armRight.setVoltage(controller.calculate(armEnc.getDistance(), output) + (feedforward.calculate(armEnc.getDistance() * Math.PI / 180, k * .3)));
-        SmartDashboard.putNumber("Left PID", controller.calculate(armEnc.getDistance(), output));
-        SmartDashboard.putNumber("Left FF", MathUtil.clamp(feedforward.calculate(output * Math.PI / 180, k), -2, 2));
-        SmartDashboard.putNumber("p", controller.getPositionError() * controller.getP());
-        SmartDashboard.putNumber("i", controller.getIZone()* controller.getI());
-        SmartDashboard.putNumber("d", controller.getVelocityError()* controller.getD());
-        SmartDashboard.putData("pidControl", controller);
+        double calcOutput = controller.calculate(desiredSetpoint.position, desiredSetpoint.velocity) 
+                        + (feedforward.calculate(desiredSetpoint.position * Math.PI / 180, k * .3));
+        armLeft.setVoltage(calcOutput);
+        armRight.setVoltage(calcOutput);
+        SmartDashboard.putNumber("Voltage Output", calcOutput);
     }
 
     public void stop() {

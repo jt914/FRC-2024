@@ -12,7 +12,7 @@ public class ClimbCommand extends Command{
 
     @Override
     public void execute(){
-       Constants.arm.climbUp();
+        
     }
     @Override
     public boolean isFinished(){

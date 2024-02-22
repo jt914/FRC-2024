@@ -124,7 +124,6 @@ public class Robot extends LoggedRobot {
   }
 
   public void disabledPeriodic(){
-    Constants.arm.stall();
   }
 
 }

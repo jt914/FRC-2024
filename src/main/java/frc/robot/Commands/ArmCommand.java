@@ -55,19 +55,18 @@ public class ArmCommand extends Command {
         
 
         if(Constants.alternateController.leftTrigger().getAsBoolean()){
-            Constants.arm.setDesired(10);
+            Constants.arm.setGoal(10);
         }
         else if(Constants.alternateController.rightTrigger().getAsBoolean()){
-            Constants.arm.setDesired(30);
+            Constants.arm.setGoal(30);
 
             System.out.println("Moving Up");
         }
         else if(Constants.alternateController.leftBumper().getAsBoolean()){
-            Constants.arm.setDesired(35);
+            Constants.arm.setGoal(35);
 
         }
 
-        Constants.arm.moveArm();
 
     }
 

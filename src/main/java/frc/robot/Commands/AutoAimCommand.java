@@ -20,7 +20,7 @@ public class AutoAimCommand extends Command {
     double[] desired;
     boolean isFinished = false;
     double desiredOffset;
-    boolean setDesired;
+    boolean setGoal;
 
 
     public AutoAimCommand(){
@@ -38,8 +38,8 @@ public class AutoAimCommand extends Command {
 
     @Override
     public void initialize(){
-        arm.setDesired(arm.desiredAngle + 5);
-        setDesired = false;
+        arm.setGoal(arm.desiredAngle + 5);
+        setGoal = false;
 
 
         
@@ -50,15 +50,15 @@ public class AutoAimCommand extends Command {
         desired = Constants.camera.getDesiredShoot(1,1);
 
         // SmartDashboard.putBoolean("Is Finished: ", isFinished);
-        if(!setDesired && desired != null ){
+        if(!setGoal && desired != null ){
 
             if(Constants.camera.getDesiredShoot(1,1)[0] > 0){
                 desiredOffset = 2 * Math.asin(desired[1]/(Math.sqrt(0.169 + desired[1] *desired[1])));
-                setDesired = true;
+                setGoal = true;
         }
             else{
                 desiredOffset = - 2 * Math.asin(desired[1]/(Math.sqrt(0.169 + desired[1] *desired[1])));
-                setDesired = true;
+                setGoal = true;
 
             }
         }
@@ -68,11 +68,11 @@ public class AutoAimCommand extends Command {
 
                 if(Constants.camera.getDesiredShoot(1,1)[0] > 0){
                 desiredOffset = 2 * Math.asin(desired[1]/(Math.sqrt(0.169 + desired[1] *desired[1])));
-                setDesired = true;
+                setGoal = true;
                 }
                     else{
                         desiredOffset = - 2 * Math.asin(desired[1]/(Math.sqrt(0.169 + desired[1] *desired[1])));
-                        setDesired = true;
+                        setGoal = true;
 
                 }
 
