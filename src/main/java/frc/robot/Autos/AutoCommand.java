@@ -50,10 +50,9 @@ public class AutoCommand extends Command {
             System.out.println("step 1 now");
 
             //when to move on to the next step
-            if(timer >= 50){
+            if(timer >= 200){
                 timer = 0;
                 step = 2;
-                System.out.println("step 2 now");
             }
             timer++;
 
@@ -68,8 +67,10 @@ public class AutoCommand extends Command {
         }
 
         else if(step == 2){
+        System.out.println("step 2 now");
+
             //wait 50 cycles of code for shooting, then move on.
-            if(timer >= 50){
+            if(timer >= 200){
                 timer = 0;
                 step = 3;
                 // Constants.arm.setDesired(4.89);
@@ -83,6 +84,8 @@ public class AutoCommand extends Command {
 
         //maybe add an xSpeed * 
         else if(step == 3){
+            System.out.println("step 3 now");
+
             if(Constants.intake.hasNote()){
                 Constants.intake.stop();
                 step = 4;
@@ -109,7 +112,7 @@ public class AutoCommand extends Command {
         //ramping up the shooter and autoaiming yaw for the first note
         else if (step == 4){
 
-            if(timer >= 50){
+            if(timer >= 200){
                 timer = 0;
                 step = 5;
                 System.out.println("step 5 now");
@@ -130,7 +133,7 @@ public class AutoCommand extends Command {
         //shooting, after 50 cycles it puts the intake back down
         else if(step == 5){
 
-            if(timer >= 50){
+            if(timer >= 200){
                 timer = 0;
                 step = 6;
                 // Constants.arm.setDesired(4.89);
@@ -175,8 +178,8 @@ public class AutoCommand extends Command {
 
             double[] desired = Constants.camera.getDesiredShoot(0);
             if(desired != null && desired[0] != 0){
-              Constants.arm.setDesired(desired[1] * 3.29 + 14.3);
-              Constants.shooter.setVelocity();
+            //   Constants.arm.setDesired(desired[1] * 3.29 + 14.3);
+            //   Constants.shooter.setVelocity();
               Constants.swerve.drive(0,0,aimController.calculate(desired[0], 0));
 
             }
