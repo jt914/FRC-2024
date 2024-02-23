@@ -45,6 +45,7 @@ public class Robot extends LoggedRobot {
     autoCommand = robot.getAutonomousCommand();
     Constants.m_gyro.calibrateGyro();
     SmartDashboard.putNumber("Auto Routine", 0);
+    Constants.arm.setDesired(Constants.arm.armEnc.getDistance());
 
 
   }
@@ -81,7 +82,7 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousPeriodic() {
-        Constants.arm.moveArm(); 
+        // Constants.arm.moveArm(); 
 
   }
   
