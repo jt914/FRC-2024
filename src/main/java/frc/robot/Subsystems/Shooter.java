@@ -70,8 +70,8 @@ public class Shooter extends SubsystemBase{
         controllerBot.setD(kD);
         controllerBot.setIZone(kIz);
         controllerBot.setFF(kFF);
-        SmartDashboard.putNumber("shooterBot", 0.6);
-        SmartDashboard.putNumber("shooterTop", 0.9);
+        SmartDashboard.putNumber("shooterBot", 0.79);
+        SmartDashboard.putNumber("shooterTop", 0.89);
 
     }
 
@@ -81,9 +81,12 @@ public class Shooter extends SubsystemBase{
 
     }
     public void setVelocity() {
+        //7 and 9 before
+        shooterBot.set(SmartDashboard.getNumber("shooterBot", 0.79));
+        shooterTop.set(SmartDashboard.getNumber("shooterTop", 0.89));
+        SmartDashboard.putNumber("rpmTop", shooterBot.getEncoder().getVelocity());
+        SmartDashboard.putNumber("rpmBot", shooterBot.getEncoder().getVelocity());
 
-        shooterBot.set(0.7);
-        shooterTop.set(0.9);
     }
 
     public void setLowVelocity(){

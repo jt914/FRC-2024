@@ -28,10 +28,8 @@ public class ArmCommand extends Command {
     @Override
     public void execute(){
 
-        Constants.arm.desiredAngle = MathUtil.clamp(Constants.arm.desiredAngle, 0,120);
+        // Constants.arm.desiredAngle = MathUtil.clamp(Constants.arm.desiredAngle, 0,120);
 
-        SmartDashboard.putNumber("desired", Constants.arm.desiredAngle);
-        SmartDashboard.putNumber("current", Constants.arm.armEnc.getDistance());
 
         if(Constants.alternateController.leftTrigger().getAsBoolean()){
             Constants.arm.setDesired(Constants.arm.desiredAngle - 0.25);

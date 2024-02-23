@@ -35,7 +35,7 @@ public class IntakeCommand extends Command {
         if(triggered == true) {
             elapsed++;
         }
-        if(elapsed > 4) {
+        if(elapsed > 3) {
             isFinished = true;
             elapsed = 0;
         }

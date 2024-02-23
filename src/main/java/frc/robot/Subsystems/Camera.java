@@ -73,16 +73,16 @@ public class Camera {
         }
 
         if(seesShooter){
-                retVal[0] = shooterTarget.getYaw() + 7 * ySpeed;
-            //18
+                retVal[0] = shooterTarget.getYaw() + 8 * ySpeed;
 
             
             retVal[1] =
             PhotonUtils.calculateDistanceToTargetMeters(
-                    .1,
-                    1.778,
-                    35 * Math.PI / 180,
+                    0.286,
+                    1.4478,
+                    Units.degreesToRadians(15),
                     Units.degreesToRadians(shooterTarget.getPitch()));
+
 
             return retVal;
         }

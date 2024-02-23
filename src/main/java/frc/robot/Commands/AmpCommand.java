@@ -1,4 +1,6 @@
 package frc.robot.Commands;
+import java.util.function.IntConsumer;
+
 import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
@@ -30,6 +32,7 @@ public class AmpCommand extends Command {
         cam = Constants.camera;
         addRequirements(arm);
         addRequirements(shooter);
+        addRequirements(Constants.intake);
     }
 
     @Override
