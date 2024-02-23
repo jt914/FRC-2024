@@ -55,7 +55,7 @@ public class Arm extends SubsystemBase{
         armEnc = new DutyCycleEncoder(9);
 
  
-        armEnc.setPositionOffset(.8);
+        armEnc.setPositionOffset(.266);
         armEnc.setDistancePerRotation(-360);
 
 
@@ -69,7 +69,7 @@ public class Arm extends SubsystemBase{
     }
 
     public void moveArm() {
-        desiredAngle = MathUtil.clamp(this.desiredAngle, 0,120);
+        // desiredAngle = MathUtil.clamp(this.desiredAngle, 0,120);
 
         SmartDashboard.putNumber("Brake", armLeft.getBusVoltage()*armLeft.getAppliedOutput());
         

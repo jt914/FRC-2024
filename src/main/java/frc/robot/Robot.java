@@ -69,7 +69,7 @@ public class Robot extends LoggedRobot {
   }
   
   public void teleopInit() {
-    Constants.arm.setDesired(Constants.arm.getAngle());
+    Constants.arm.setDesired(Constants.arm.armEnc.getDistance());
     if (autoCommand != null) {
       autoCommand.cancel();
       
@@ -84,7 +84,9 @@ public class Robot extends LoggedRobot {
   public void teleopPeriodic() {
     Constants.arm.moveArm(); 
     Constants.swerve.updateOdometry();
-    SmartDashboard.putBoolean("wasdwasdwasd", Constants.autoAim);
+    SmartDashboard.putNumber("currentPosition", Constants.arm.armEnc.getDistance());
+    SmartDashboard.putNumber("desiredAngle", Constants.arm.desiredAngle);
+
 
   }
 
