@@ -60,10 +60,9 @@ public class AutoCommand extends Command {
 
             double[] desired = Constants.camera.getDesiredShoot(0);
             if(desired != null && desired[0] != 0){
-              Constants.arm.setDesired(desired[1] * 3.29 + 14.3);
-              Constants.shooter.setVelocity();
+            //   Constants.arm.setDesired(desired[1] * 3.29 + 14.3);
+            //   Constants.shooter.setVelocity();
               Constants.swerve.drive(0,0,aimController.calculate(desired[0], 0));
-
             }
 
         }
@@ -73,11 +72,11 @@ public class AutoCommand extends Command {
             if(timer >= 50){
                 timer = 0;
                 step = 3;
-                Constants.arm.setDesired(4.89);
+                // Constants.arm.setDesired(4.89);
                 Constants.intake.run();
             }
             timer++;
-            Constants.intake.runFast();
+            // Constants.intake.runFast();
         }
 
         //intake should be running, this is driving to the note
@@ -85,6 +84,7 @@ public class AutoCommand extends Command {
         //maybe add an xSpeed * 
         else if(step == 3){
             if(Constants.intake.hasNote()){
+                Constants.intake.stop();
                 step = 4;
             }
             else{
@@ -119,8 +119,8 @@ public class AutoCommand extends Command {
 
             double[] desired = Constants.camera.getDesiredShoot(0);
             if(desired != null && desired[0] != 0){
-              Constants.arm.setDesired(desired[1] * 3.29 + 14.3);
-              Constants.shooter.setVelocity();
+            //   Constants.arm.setDesired(desired[1] * 3.29 + 14.3);
+            //   Constants.shooter.setVelocity();
               Constants.swerve.drive(0,0,aimController.calculate(desired[0], 0));
 
             }
@@ -133,11 +133,11 @@ public class AutoCommand extends Command {
             if(timer >= 50){
                 timer = 0;
                 step = 6;
-                Constants.arm.setDesired(4.89);
-                Constants.intake.run();
+                // Constants.arm.setDesired(4.89);
+                // Constants.intake.run();
             }
             timer++;
-            Constants.intake.runFast();
+            // Constants.intake.runFast();
 
         }
         
@@ -201,23 +201,7 @@ public class AutoCommand extends Command {
 
 
 
-        
 
-
-
-
-        
-
-
-        double x = swerve.poseEstimator.getEstimatedPosition().getX();
-        double y = swerve.poseEstimator.getEstimatedPosition().getY();
-        SmartDashboard.putNumber("x" , x);
-        SmartDashboard.putNumber("y" , y);
-
-        swerve.drive(-1 * swerve.drivePIDController.calculate(x, -2), 
-        -swerve.drivePIDController.calculate(y, 0), 
-        swerve.turnPIDController.calculate(0,0));
-        // swerve.drive(swerve.driveSimpleMotorFeedforward.calculate(1, 0), swerve.drivePIDController.calculate(y, 0), swerve.turnPIDController.calculate(0,0));
         
     }
 

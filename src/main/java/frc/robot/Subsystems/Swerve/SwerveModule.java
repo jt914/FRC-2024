@@ -102,7 +102,6 @@ public class SwerveModule {
     // double driveOutput = driveFeedForward.calculate(1, 0) * Math.sqrt(Math.pow(Constants.swerveController.getLeftX(),2) + Math.pow(Constants.swerveController.getLeftY(),2));
     driveMotor.setVoltage(driveOutput);
 
-    SmartDashboard.putNumber("driveOutput", driveOutput);
 
     double turnOutput = MathUtil.clamp(turnPIDController.calculate(getTurn180Angle(), optimizedModuleOutput[0]), -0.4, 0.4);
     turnMotor.set(turnOutput);

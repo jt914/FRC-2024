@@ -40,8 +40,6 @@ public class Shooter extends SubsystemBase{
         shooterBot.setInverted(true);
         shooterBot.enableVoltageCompensation(11);
 
-        SmartDashboard.putNumber("bottomRPM", 4000);
-        SmartDashboard.putNumber("topRPM", 4000);
 
         shooterBot.burnFlash();
         shooterTop.burnFlash();
@@ -70,10 +68,17 @@ public class Shooter extends SubsystemBase{
         controllerBot.setD(kD);
         controllerBot.setIZone(kIz);
         controllerBot.setFF(kFF);
-        SmartDashboard.putNumber("shooterBot", 0.6);
-        SmartDashboard.putNumber("shooterTop", 0.9);
 
     }
+
+    public double getBottomRPM(){
+        return shooterBot.getEncoder().getVelocity();
+    }
+
+    public double getTopRPM(){
+        return shooterTop.getEncoder().getVelocity();
+    }
+
 
     public void setSpeed(double botSpeed, double topSpeed) {
         shooterBot.set(botSpeed);

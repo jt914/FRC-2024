@@ -27,8 +27,6 @@ public class IntakeCommand extends Command {
     @Override
     public void execute(){
         intake.run();
-        SmartDashboard.putNumber("IntakeSens", Constants.intake.intakeSensor.getVoltage());
-        SmartDashboard.putBoolean("Intake Trigger", triggered);
         if(Constants.intake.intakeSensor.getVoltage()<.5) {
             triggered = true;
         }

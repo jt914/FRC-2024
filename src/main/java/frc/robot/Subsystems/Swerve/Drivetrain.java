@@ -133,9 +133,6 @@ public class Drivetrain extends SubsystemBase {
     m_backLeft.setModuleState(swerveModuleStates[2], 2);
     m_backRight.setModuleState(swerveModuleStates[3], 3);
 
-    // SmartDashboard.putNumber("xSpeed", xSpeed);
-    // SmartDashboard.putNumber("ySpeed", ySpeed);
-    // SmartDashboard.putNumber("rotation", yaw);
 
   }
 
@@ -190,9 +187,6 @@ public class Drivetrain extends SubsystemBase {
 
 
     
-    // SmartDashboard.putNumber("xSpeed", xSpeed);
-    // SmartDashboard.putNumber("ySpeed", ySpeed);
-    // SmartDashboard.putNumber("rotation", yaw);
   }
 
   public double getSpeed(){
@@ -223,9 +217,6 @@ public class Drivetrain extends SubsystemBase {
 
     // Twist2d twist = m_kinematics.toTwist2d(m_previousWheelPositions, wheelPositions);
     // twist.dtheta = angle.minus(m_previousAngle).getRadians();
-    // SmartDashboard.putNumber("twist", twist.dtheta);
-    // SmartDashboard.putNumber("twistX", twist.dx);
-    // SmartDashboard.putNumber("twistY", twist.dy);
 
     // SmartDashboard.putString("previous", m_previousWheelPositions.toString());
     // SmartDashboard.putString("current", wheelPositions.toString());
@@ -240,10 +231,6 @@ public class Drivetrain extends SubsystemBase {
 
 
         });
-
-    SmartDashboard.putNumber("frontLeft", m_frontLeft.getPosition().distanceMeters);
-    SmartDashboard.putNumber("frontRight", m_frontRight.getPosition().distanceMeters);
-
   }
 
   public void resetModules() {

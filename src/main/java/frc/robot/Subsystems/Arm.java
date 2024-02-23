@@ -64,24 +64,14 @@ public class Arm extends SubsystemBase{
     }
 
     public void moveArm() {
-        SmartDashboard.putNumber("Brake", armLeft.getBusVoltage()*armLeft.getAppliedOutput());
         
         double k = Math.signum(desiredAngle - armEnc.getDistance());
         if(Math.abs(desiredAngle-armEnc.getDistance()) < 2)
         {
             k = 0;
         }
-        SmartDashboard.putNumber("pid", controller.calculate(armEnc.getDistance(),desiredAngle) );
-        SmartDashboard.putNumber("ff", feedforward.calculate(desiredAngle* Math.PI / 180, Math.PI/10));
-        SmartDashboard.putNumber("k", k);
         armLeft.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + (feedforward.calculate(armEnc.getDistance()* Math.PI / 180, k * .3)));
         armRight.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + (feedforward.calculate(armEnc.getDistance() * Math.PI / 180, k * .3)));
-        SmartDashboard.putNumber("Left PID", controller.calculate(armEnc.getDistance(), desiredAngle));
-        SmartDashboard.putNumber("Left FF", MathUtil.clamp(feedforward.calculate(desiredAngle * Math.PI / 180, k), -2, 2));
-        SmartDashboard.putNumber("p", controller.getPositionError() * controller.getP());
-        SmartDashboard.putNumber("i", controller.getIZone()* controller.getI());
-        SmartDashboard.putNumber("d", controller.getVelocityError()* controller.getD());
-        SmartDashboard.putData("pidControl", controller);
     }
     public double getAngle() {
         return armEnc.getDistance();

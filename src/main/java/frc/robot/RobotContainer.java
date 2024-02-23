@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.simulation.XboxControllerSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -62,7 +63,7 @@ public class RobotContainer {
     Constants.swerveController.y().onTrue(new ToggleAutoAimCommand());
 
     //Press x to turn the arm on. If something goes wrong, just press X again and it will turn the arm off
-
+    
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -71,6 +72,14 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new AutoCommand();
+
+    switch((int)SmartDashboard.getNumber("Auto Routine", 0)){
+      case 0:
+        return new AutoCommand();
+      case 1:
+        return new AutoCommand();
+      default:
+        return new AutoCommand();
+    }
   }
 }

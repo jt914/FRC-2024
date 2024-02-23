@@ -44,6 +44,7 @@ public class Robot extends LoggedRobot {
     robot = new RobotContainer();
     autoCommand = robot.getAutonomousCommand();
     Constants.m_gyro.calibrateGyro();
+    SmartDashboard.putNumber("Auto Routine", 0);
 
 
   }
@@ -51,7 +52,23 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotPeriodic(){
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("gyroswasd", Constants.m_gyro.getTotalAngleDegrees());
+    SmartDashboard.putNumber("Desired Arm Position", Constants.arm.desiredAngle);
+    SmartDashboard.putNumber("Current Arm Position", Constants.arm.currentPos);
+
+    SmartDashboard.putBoolean("Has Note", Constants.intake.hasNote());
+    SmartDashboard.putNumber("Bottom Shooter RPM", Constants.shooter.getBottomRPM());
+    SmartDashboard.putNumber("Top Shooter RPM", Constants.shooter.getTopRPM());
+
+    SmartDashboard.putNumber("Swerve X Speed", Constants.swerve.xSpeed);
+    SmartDashboard.putNumber("Swerve Y Speed", Constants.swerve.ySpeed);
+
+    SmartDashboard.putBoolean("Intake Running?", Constants.intakeRunning);
+
+    SmartDashboard.putBoolean("Auto Aiming", Constants.autoAim);
+    SmartDashboard.putBoolean("Field Relative?", Constants.fieldRelative);
+    SmartDashboard.putNumber("Current Gyro", Constants.m_gyro.getTotalAngleDegrees());
+
+    
 
   }
 
