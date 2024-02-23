@@ -168,6 +168,8 @@ public class Drivetrain extends SubsystemBase {
   public void drive(double xSpeed, double ySpeed, double yaw) {
 
     speeds = new ChassisSpeeds(xSpeed, ySpeed, yaw);
+    SmartDashboard.putNumber("xSpeedSPEED", xSpeed);
+        SmartDashboard.putNumber("ySpeedSPEED", ySpeed);
 
     // var swerveModuleStates = m_kinematics.toSwerveModuleStates(
     //         fieldRelative

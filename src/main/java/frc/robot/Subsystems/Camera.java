@@ -73,7 +73,8 @@ public class Camera {
         }
 
         if(seesShooter){
-                retVal[0] = shooterTarget.getYaw() + 8 * ySpeed;
+            //8
+                retVal[0] = shooterTarget.getYaw() + 3 * ySpeed;
 
             
             retVal[1] =
@@ -83,6 +84,7 @@ public class Camera {
                     Units.degreesToRadians(15),
                     Units.degreesToRadians(shooterTarget.getPitch()));
 
+                    SmartDashboard.putNumber("DIstancetotarget", retVal[1]);
 
             return retVal;
         }

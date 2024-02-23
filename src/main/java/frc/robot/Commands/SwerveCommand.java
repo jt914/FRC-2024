@@ -19,7 +19,7 @@ public class SwerveCommand extends Command{
     boolean isFinished = false;
     double desiredOffset;
     boolean setDesired;
-    PIDController aimController = new PIDController(.24, 0.000001, 0);
+    PIDController aimController = new PIDController(.19, 0.000001, 0);
       InterpolatingDoubleTreeMap tm = new InterpolatingDoubleTreeMap();
 
 
@@ -30,10 +30,10 @@ public class SwerveCommand extends Command{
 
     @Override
     public void initialize(){
-      tm.put(1.7, 13.5);
-      tm.put(2.33, 18.7);
-      tm.put(3.02, 22.2);
-      tm.put(3.96, 25.4);
+      tm.put(2.15, 13.5);
+      tm.put(3.3, 18.7);
+      tm.put(4.4, 22.2);
+      tm.put(6.6, 25.4);
 
     }
 
@@ -89,11 +89,11 @@ public class SwerveCommand extends Command{
       yaw = -1 * Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
 
       if(autoAim){
-          desired = Constants.camera.getDesiredShoot(0.4 * xSpeed);
+          desired = Constants.camera.getDesiredShoot(0.4 * -1 * ySpeed);
             if(desired != null && desired[0] != 0){
             yaw = aimController.calculate(desired[0], 0);
             SmartDashboard.putNumber("desired desired desired", desired[1]);
-            Constants.arm.setDesired(tm.get(desired[1]) - ySpeed * 0.1);
+            Constants.arm.setDesired(tm.get(desired[1]));
             Constants.shooter.setVelocity();
             SmartDashboard.putNumber("xSpeed", xSpeed);
             xSpeed = 0.4 * xSpeed;
