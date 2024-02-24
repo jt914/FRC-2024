@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Intake;
+import frc.robot.Subsystems.Lights;
 
 public class IntakeCommand extends Command {
     private Arm arm;
@@ -12,6 +13,7 @@ public class IntakeCommand extends Command {
     private boolean isFinished = false;
     public int elapsed = 0;
     public boolean triggered = false;
+    private Lights lights;
 
     @Override
     public void initialize(){
@@ -21,12 +23,14 @@ public class IntakeCommand extends Command {
         arm = Constants.arm;
         arm.setDesired(4.89);
         addRequirements(Constants.arm);
+        lights = Constants.lights;
 
     }
 
     @Override
     public void execute(){
         intake.run();
+        lights.setColor(0, 75, 255, 255, 50);
         SmartDashboard.putNumber("IntakeSens", Constants.intake.intakeSensor.getVoltage());
         SmartDashboard.putBoolean("Intake Trigger", triggered);
         if(Constants.intake.intakeSensor.getVoltage()<.5) {
@@ -38,6 +42,7 @@ public class IntakeCommand extends Command {
         if(elapsed > 3) {
             isFinished = true;
             elapsed = 0;
+            lights.setColor(0, 75, 56, 255, 50);
         }
         arm.moveArm();
  
@@ -54,6 +59,9 @@ public class IntakeCommand extends Command {
         
         Constants.intake.stop();
         isFinished = false;
+        if(interrupted) {
+            lights.setColor(0, 75, 0, 0, 0);
+        }
     }
  
 }

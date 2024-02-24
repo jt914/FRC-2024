@@ -28,6 +28,8 @@ import frc.robot.Commands.SwerveCommand;
 import frc.robot.Subsystems.Swerve.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
@@ -39,11 +41,14 @@ public class Robot extends LoggedRobot {
     private RobotContainer robot;
     Command autoCommand;
 
+
   @Override
   public void robotInit() {
     robot = new RobotContainer();
     autoCommand = robot.getAutonomousCommand();
     Constants.m_gyro.calibrateGyro();
+
+
 
 
   }

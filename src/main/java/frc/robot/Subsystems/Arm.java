@@ -35,18 +35,18 @@ public class Arm extends SubsystemBase{
     public DigitalInput armSwitch;
 
     public Arm() {
+        controller.setTolerance(1);
+        controller.atSetpoint();
         armLeft = new CANSparkMax(Constants.armLeftID, MotorType.kBrushless);
         armLeft.restoreFactoryDefaults();
         armLeft.setIdleMode(IdleMode.kBrake);
         armLeft.enableVoltageCompensation(11);
-        armLeft.setSmartCurrentLimit(7);
         armLeft.burnFlash();
 
         armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
         armRight.restoreFactoryDefaults();
         armRight.setIdleMode(IdleMode.kBrake);
         armRight.enableVoltageCompensation(11);
-        armRight.setSmartCurrentLimit(7);
         armRight.setInverted(true);
 
         armRight.burnFlash();
@@ -55,7 +55,7 @@ public class Arm extends SubsystemBase{
         armEnc = new DutyCycleEncoder(9);
 
  
-        armEnc.setPositionOffset(.266);
+        armEnc.setPositionOffset(.8);
         armEnc.setDistancePerRotation(-360);
 
 
@@ -69,8 +69,6 @@ public class Arm extends SubsystemBase{
     }
 
     public void moveArm() {
-        // desiredAngle = MathUtil.clamp(this.desiredAngle, 0,120);
-
         SmartDashboard.putNumber("Brake", armLeft.getBusVoltage()*armLeft.getAppliedOutput());
         
         double k = Math.signum(desiredAngle - armEnc.getDistance());

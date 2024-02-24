@@ -90,7 +90,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setLowVelocity(){
-        // controllerBot.setReference(2000, ControlType.kVelocity);
+        controllerBot.setReference(2000, ControlType.kVelocity);
         shooterBot.set(0.3);
         shooterTop.set(0.45);
     }

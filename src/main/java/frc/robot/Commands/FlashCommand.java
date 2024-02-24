@@ -6,22 +6,23 @@ import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Lights;
 
-public class IntakeReverseCommand extends Command {
-    private Arm arm;
-    private Intake intake;
-    private boolean isFinished = false;
-    public Lights lights;
-    
+public class FlashCommand extends Command {
+
+    boolean isFinished;
+    int time;
+    Lights lights = Constants.lights;
     @Override
     public void initialize(){
-        intake = Constants.intake;
-        lights = Constants.lights;
     }
-
     @Override
     public void execute(){
-        intake.reverse();
-        lights.setColor(0, 75, 0, 0, 0);
+        if(time % 40 == 0) {
+            lights.off();
+        }
+        else if (time % 40 == 20) {
+            lights.previous();
+        }
+        time++;
     }
     @Override
     public boolean isFinished(){
@@ -31,8 +32,7 @@ public class IntakeReverseCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        // Constants.intakeStatus = false;
-        intake.stop();
+
 
     }
     
