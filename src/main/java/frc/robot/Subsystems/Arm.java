@@ -41,6 +41,7 @@ public class Arm extends SubsystemBase{
         armLeft.restoreFactoryDefaults();
         armLeft.setIdleMode(IdleMode.kBrake);
         armLeft.enableVoltageCompensation(11);
+        armLeft.setSmartCurrentLimit(7);
         armLeft.burnFlash();
 
         armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
@@ -48,7 +49,7 @@ public class Arm extends SubsystemBase{
         armRight.setIdleMode(IdleMode.kBrake);
         armRight.enableVoltageCompensation(11);
         armRight.setInverted(true);
-
+        armRight.setSmartCurrentLimit(7);
         armRight.burnFlash();
 
         armSwitch = new DigitalInput(8);

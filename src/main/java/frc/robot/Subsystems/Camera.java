@@ -50,6 +50,20 @@ public class Camera {
         cam.close();
     }
 
+    public Transform3d getTarget(){
+        PhotonTrackedTarget shooterTarget = null;
+        for(PhotonTrackedTarget target: getLatestResult().getTargets()){
+            if(target.getFiducialId() == 7 || target.getFiducialId() == 4){
+                shooterTarget = target;
+            }
+        }
+        if(shooterTarget != null){
+            System.out.println("working");
+            return shooterTarget.getBestCameraToTarget();
+        }
+        return null;
+    }
+
     //if null the command to get desired shoot should just do nothing
     public double[] getDesiredShoot(double ySpeed){
 

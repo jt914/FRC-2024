@@ -15,6 +15,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -91,6 +92,12 @@ public class Robot extends LoggedRobot {
     Constants.swerve.updateOdometry();
     SmartDashboard.putNumber("currentPosition", Constants.arm.armEnc.getDistance());
     SmartDashboard.putNumber("desiredAngle", Constants.arm.desiredAngle);
+    Transform3d target = Constants.camera.getTarget();
+    System.out.println(target);
+        if(target != null){
+          SmartDashboard.putNumber("xCurrent", target.getX());
+          SmartDashboard.putNumber("yCurrent", target.getY());
+        }
 
 
   }

@@ -12,10 +12,14 @@ public class IntakeReverseCommand extends Command {
     private boolean isFinished = false;
     public Lights lights;
     
+    public IntakeReverseCommand(){
+        addRequirements(Constants.intake);
+
+    }
+
     @Override
     public void initialize(){
-        intake = Constants.intake;
-        lights = Constants.lights;
+        intake = Constants.intake;   
     }
 
     @Override
