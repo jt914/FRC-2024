@@ -12,7 +12,10 @@ public class IntakeCommand extends Command {
     private boolean isFinished = false;
     public int elapsed = 0;
     public boolean triggered = false;
+    public IntakeCommand(){
+        addRequirements(Constants.intake);
 
+    }
     @Override
     public void initialize(){
         intake = Constants.intake;

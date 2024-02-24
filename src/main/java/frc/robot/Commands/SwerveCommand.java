@@ -2,6 +2,7 @@ package frc.robot.Commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,7 +21,7 @@ public class SwerveCommand extends Command{
     double desiredOffset;
     boolean setDesired;
     PIDController aimController = new PIDController(.19, 0.000001, 0);
-      InterpolatingDoubleTreeMap tm = new InterpolatingDoubleTreeMap();
+    InterpolatingDoubleTreeMap tm = new InterpolatingDoubleTreeMap();
 
 
     public SwerveCommand(){
@@ -89,20 +90,21 @@ public class SwerveCommand extends Command{
       yaw = -1 * Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
 
       if(autoAim){
-          desired = Constants.camera.getDesiredShoot(0.4 * -1 * ySpeed);
-            if(desired != null && desired[0] != 0){
+          Constants.shooter.setVelocity();
+          desired = Constants.camera.getDesiredShoot(0.7 * -1 * ySpeed);
+          if(desired != null && desired[0] != 0){
             yaw = aimController.calculate(desired[0], 0);
-            SmartDashboard.putNumber("desired desired desired", desired[1]);
+            SmartDashboard.putNumber("Xspeed", xSpeed);
+            SmartDashboard.putNumber("getdesired andXspeed", tm.get(desired[1] +  xSpeed * 10));
             Constants.arm.setDesired(tm.get(desired[1]));
-            Constants.shooter.setVelocity();
-            SmartDashboard.putNumber("xSpeed", xSpeed);
             xSpeed = 0.4 * xSpeed;
-            ySpeed = 0.4 * ySpeed;
-            }
+            ySpeed = 0.4 * ySpeed;    
         }
+      }
+
         Constants.swerve.drive(xSpeed, ySpeed, yaw);
 
-      }
+    }
 
 }
     

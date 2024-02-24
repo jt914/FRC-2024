@@ -10,6 +10,11 @@ public class IntakeShootCommand extends Command {
     private Intake intake;
     private boolean isFinished = false;
 
+    public IntakeShootCommand(){
+        addRequirements(Constants.intake);
+
+    }
+
     @Override
     public void initialize(){
         intake = Constants.intake;

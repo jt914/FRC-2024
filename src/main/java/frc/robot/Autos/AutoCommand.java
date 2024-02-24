@@ -1,5 +1,8 @@
 package frc.robot.Autos;
+import org.photonvision.targeting.PhotonTrackedTarget;
+
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -19,6 +22,10 @@ public class AutoCommand extends Command {
     private int shooterStep;
     private int intakeStep;
     private int armStep;
+    private Transform3d target;
+    private PIDController aimController = new PIDController(.23, 0.000001, 0);
+    private PIDController drivePID = new PIDController(2, 0, 0);
+
 
     public AutoCommand(){
         swerve = Constants.swerve;
@@ -31,16 +38,11 @@ public class AutoCommand extends Command {
 
     @Override
     public void execute(){
-        double x = swerve.poseEstimator.getEstimatedPosition().getX();
-        double y = swerve.poseEstimator.getEstimatedPosition().getY();
-        SmartDashboard.putNumber("x" , x);
-        SmartDashboard.putNumber("y" , y);
-
-        swerve.drive(-1 * swerve.drivePIDController.calculate(x, -2), 
-        -swerve.drivePIDController.calculate(y, 0), 
-        swerve.turnPIDController.calculate(0,0));
-        // swerve.drive(swerve.driveSimpleMotorFeedforward.calculate(1, 0), swerve.drivePIDController.calculate(y, 0), swerve.turnPIDController.calculate(0,0));
-
+        target = Constants.camera.getTarget();
+        double xSpeed = drivePID.calculate(target.getX(), 1.44);
+        double ySpeed = drivePID.calculate(target.getY(), 1.77);
+        SmartDashboard.putNumber("xCalculated", xSpeed);
+        SmartDashboard.putNumber("yCalculated", ySpeed);
     }
 
     @Override
