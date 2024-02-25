@@ -53,11 +53,12 @@ public class Camera {
     public Transform3d getTarget(){
         PhotonTrackedTarget shooterTarget = null;
         for(PhotonTrackedTarget target: getLatestResult().getTargets()){
-            if(target.getFiducialId() == 7 || target.getFiducialId() == 4){
+            if(target.getFiducialId() == 7 || target.getFiducialId() == 1){
                 shooterTarget = target;
             }
         }
         if(shooterTarget != null){
+
             return shooterTarget.getBestCameraToTarget();
         }
         return null;
