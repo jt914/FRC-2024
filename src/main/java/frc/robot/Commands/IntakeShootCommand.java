@@ -4,14 +4,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Intake;
+import frc.robot.Subsystems.Lights;
 
 public class IntakeShootCommand extends Command {
     private Arm arm;
     private Intake intake;
     private boolean isFinished = false;
+    public Lights lights;
 
     public IntakeShootCommand(){
         addRequirements(Constants.intake);
+        arm = Constants.arm;
+        lights = Constants.lights;
 
     }
 
@@ -23,7 +27,11 @@ public class IntakeShootCommand extends Command {
 
     @Override
     public void execute(){
+        if(Constants.hasNote) {
+            lights.off();
+        }
         intake.runFast();
+        Constants.hasNote = false;
 
     }
     @Override

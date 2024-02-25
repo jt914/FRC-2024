@@ -37,13 +37,8 @@ public class Lights extends SubsystemBase{
             ledBuffer.setHSV(i, 56, 255, 50);
         }
     }
-    public void reset() {
-        for(var i = 0; i < 75; i++) {
-        ledBuffer.setHSV(i, 0, 0, 255);
-        }
-    }
     public void off() {
-        for(var i = 0; i < 150; i++) {
+        for(var i = 0; i < 75; i++) {
             ledBuffer.setHSV(i, 0, 0, 0);
         }
     }
