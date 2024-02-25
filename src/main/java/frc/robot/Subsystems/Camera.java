@@ -53,12 +53,12 @@ public class Camera {
     public Transform3d getTarget(){
         PhotonTrackedTarget shooterTarget = null;
         for(PhotonTrackedTarget target: getLatestResult().getTargets()){
-            if(target.getFiducialId() == 7 || target.getFiducialId() == 4){
+            if(target.getFiducialId() == 7 || target.getFiducialId() == 1){
                 shooterTarget = target;
             }
         }
         if(shooterTarget != null){
-            System.out.println("working");
+
             return shooterTarget.getBestCameraToTarget();
         }
         return null;
@@ -86,6 +86,7 @@ public class Camera {
             }
         }
 
+        System.out.println(getLatestResult().getTargets());
         if(seesShooter){
             //8
                 retVal[0] = shooterTarget.getYaw() + 3 * ySpeed;
