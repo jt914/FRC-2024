@@ -58,7 +58,6 @@ public class Camera {
             }
         }
         if(shooterTarget != null){
-            System.out.println("working");
             return shooterTarget.getBestCameraToTarget();
         }
         return null;
@@ -86,6 +85,7 @@ public class Camera {
             }
         }
 
+        System.out.println(getLatestResult().getTargets());
         if(seesShooter){
             //8
                 retVal[0] = shooterTarget.getYaw() + 3 * ySpeed;
