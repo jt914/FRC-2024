@@ -131,7 +131,6 @@ public class AutoCommand extends Command {
             }
 
             //shoot
-
             if(step == 6){
                 shooter.setLowVelocity();
                 shooterCounter++;

@@ -22,6 +22,7 @@ public class SwerveCommand extends Command{
     boolean setDesired;
     PIDController aimController = new PIDController(.19, 0.000001, 0);
     InterpolatingDoubleTreeMap tm = new InterpolatingDoubleTreeMap();
+    double prevXSpeed, prevYSpeed;
 
 
     public SwerveCommand(){
