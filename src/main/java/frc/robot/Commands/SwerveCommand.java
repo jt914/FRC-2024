@@ -107,7 +107,20 @@ public class SwerveCommand extends Command{
         }
       }
 
-        Constants.swerve.drive(xSpeed, ySpeed, yaw);
+      
+      if(Math.abs(prevXSpeed - xSpeed) > 0.6){
+        xSpeed = prevXSpeed + (0.6 * Math.signum(xSpeed));
+      }
+      if(Math.abs(prevYSpeed - ySpeed) > 0.6){
+        ySpeed = prevYSpeed + (0.6 * Math.signum(ySpeed));
+      }
+
+      
+      Constants.swerve.drive(xSpeed, ySpeed, yaw);
+
+      prevXSpeed = xSpeed;
+      prevYSpeed = ySpeed;
+      
 
     }
 
