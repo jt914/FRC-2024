@@ -25,6 +25,7 @@ public final class Constants {
     public static final double swerveControllerLeftStickDeadband = 0.1;
     public static final double swerveControllerRightXDeadband = 0.1;
 
+
     // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
     public static SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(5);
     public static SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(5);
@@ -40,6 +41,7 @@ public final class Constants {
     public static final Lights lights = new Lights();
 
     public static boolean autoAim = false;
+    public static boolean hasNote = false;
     
     /* - - - SWERVE DRIVE CONSTANTS - - - */
 

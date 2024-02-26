@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Intake;
+import frc.robot.Subsystems.Lights;
 
 public class IntakeCommand extends Command {
     private Arm arm;
@@ -12,6 +13,7 @@ public class IntakeCommand extends Command {
     private boolean isFinished = false;
     public int elapsed = 0;
     public boolean triggered = false;
+    public Lights lights;
     public IntakeCommand(){
         addRequirements(Constants.intake);
 
@@ -24,8 +26,8 @@ public class IntakeCommand extends Command {
         arm = Constants.arm;
         arm.setDesired(4.89);
         addRequirements(Constants.arm);
-
-    }
+        lights = Constants.lights;
+    }   
 
     @Override
     public void execute(){
@@ -41,9 +43,10 @@ public class IntakeCommand extends Command {
         if(elapsed > 3) {
             isFinished = true;
             elapsed = 0;
+            Constants.hasNote = true;
+            lights.setColorGreen(0, 75, 50);
         }
         arm.moveArm();
- 
     }
     @Override
     public boolean isFinished(){
@@ -54,7 +57,9 @@ public class IntakeCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        
+        if(interrupted) {
+            lights.off();
+        }
         Constants.intake.stop();
         isFinished = false;
     }
