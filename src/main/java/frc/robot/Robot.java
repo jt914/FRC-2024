@@ -23,6 +23,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Commands.FlashCommand;
 import frc.robot.Commands.IntakeCommand;
 import frc.robot.Commands.ShooterCommand;
 import frc.robot.Commands.SwerveCommand;
@@ -95,7 +97,6 @@ public class Robot extends LoggedRobot {
           SmartDashboard.putNumber("xCurrent", target.getX());
           SmartDashboard.putNumber("yCurrent", target.getY());
         }
-
 
   }
 

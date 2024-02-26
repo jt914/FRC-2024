@@ -16,7 +16,7 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase{
 
     private CANSparkMax intake;
-    public boolean running;
+    public static boolean running;
     public AnalogInput intakeSensor;
     public SparkPIDController intakePidController;
 

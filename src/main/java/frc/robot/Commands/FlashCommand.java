@@ -16,13 +16,15 @@ public class FlashCommand extends Command {
     }
     @Override
     public void execute(){
-        if(time % 40 == 0) {
-            lights.off();
+        if(Constants.hasNote == true && SwerveCommand.desired != null) {
+            if(time % 40 == 0) {
+                lights.off();
+            }   
+            else if (time % 40 == 20) {
+                lights.previous();
+            }
+            time++;
         }
-        else if (time % 40 == 20) {
-            lights.previous();
-        }
-        time++;
     }
     @Override
     public boolean isFinished(){

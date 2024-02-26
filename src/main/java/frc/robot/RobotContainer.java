@@ -52,6 +52,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    (Constants.swerveController.start()).onTrue(new FlashCommand());
     (Constants.swerveController.start()).onTrue(new SwerveCommand());
     (Constants.swerveController.b()).toggleOnTrue(new IntakeShootCommand());
 
