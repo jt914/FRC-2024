@@ -86,11 +86,7 @@ public class Robot extends LoggedRobot {
     Constants.swerve.updateOdometry();
     SmartDashboard.putNumber("currentPosition", Constants.arm.armEnc.getDistance());
     SmartDashboard.putNumber("desiredAngle", Constants.arm.desiredAngle);
-    Transform3d target = Constants.camera.getTarget();
-        if(target != null){
-          SmartDashboard.putNumber("xCurrent", target.getX());
-          SmartDashboard.putNumber("yCurrent", target.getY());
-        }
+
 
 
   }

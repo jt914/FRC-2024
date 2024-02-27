@@ -23,6 +23,7 @@ public class SwerveCommand extends Command{
     PIDController aimController = new PIDController(.19, 0.000001, 0);
     InterpolatingDoubleTreeMap tm = new InterpolatingDoubleTreeMap();
     double prevXSpeed, prevYSpeed;
+    long prevTime, currTime;
 
 
     public SwerveCommand(){
@@ -40,6 +41,8 @@ public class SwerveCommand extends Command{
       // tm.put(3.3, 16.7);
       // tm.put(4.4, 20.2);
       // tm.put(6.6, 25.4);
+      prevTime = System.currentTimeMillis();
+      currTime = System.currentTimeMillis();
 
     }
 
@@ -106,29 +109,58 @@ public class SwerveCommand extends Command{
         }
       }
       
+      
+
       // SmartDashboard.putNumber("prevX", prevXSpeed);
       // SmartDashboard.putNumber("prevY", prevYSpeed);
       // SmartDashboard.putNumber("x", xSpeed);
       // SmartDashboard.putNumber("y", ySpeed);
 
 
+      //if desired X Speed = 0
+      //-1, 0, 1
+      //-1, 0, 1
+
       // if(Math.abs(xSpeed) < 0.1){
-      //   xSpeed = -1 * Math.signum(prevXSpeed);
+      //   xSpeed = prevXSpeed + (-0.1 * Math.signum(prevXSpeed));
       // }
+      // else if(Math.abs(prevXSpeed - xSpeed) > 0.6){
+      //   xSpeed = prevXSpeed + (0.1 * Math.signum(xSpeed));
+      // }
+      // if(Math.abs(xSpeed) < 0.07){
+      //   xSpeed = 0;
+      // }
+
+
       // if(Math.abs(ySpeed) < 0.1){
-      //   ySpeed = -1 * Math.signum(prevYSpeed);
+      //   ySpeed = prevYSpeed + (-0.1 * Math.signum(prevYSpeed));
       // }
-      // if(Math.abs(prevXSpeed - xSpeed) > 0.6){
-      //   xSpeed = prevXSpeed + (0.05 * Math.signum(xSpeed));
+      // else if(Math.abs(prevYSpeed - ySpeed) > 0.6){
+      //   ySpeed = prevYSpeed + (0.1 * Math.signum(ySpeed));
       // }
-      // if(Math.abs(prevYSpeed - ySpeed) > 0.6){
-      //   ySpeed = prevYSpeed + (0.05 * Math.signum(ySpeed));
+      // if(Math.abs(xSpeed) < 0.07){
+      //   ySpeed = 0;
       // }
 
 
+
+
+
+
+      // currTime = System.currentTimeMillis();
+
+      // SmartDashboard.putNumber("xSpeedSwerve", xSpeed);
+      // SmartDashboard.putNumber("ySpeedSwerve", ySpeed);
+
+      // SmartDashboard.putNumber("time Diff", currTime - prevTime);
       
       Constants.swerve.drive(xSpeed, ySpeed, yaw);
+      // prevXSpeed = xSpeed;
+      // prevYSpeed = ySpeed;
 
+
+      // prevTime = currTime;
+      
 
     }
 

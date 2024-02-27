@@ -44,6 +44,8 @@ public class Intake extends SubsystemBase{
         running = true;
     }
 
+
+
     public void runSlow(){
         intakePidController.setReference(800, ControlType.kVelocity);
         SmartDashboard.putNumber("intake", intake.getEncoder().getVelocity());
@@ -55,6 +57,10 @@ public class Intake extends SubsystemBase{
         intake.set(-0.4);
         running = true;
 
+    }
+
+    public boolean hasNote(){
+        return intakeSensor.getVoltage() < 0.5;
     }
 
     public void stop() {

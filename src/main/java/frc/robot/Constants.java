@@ -18,7 +18,7 @@ public final class Constants {
 
     /* Controller Constants */
     public static final CommandXboxController swerveController = new CommandXboxController(0);
-    public static final CommandXboxController alternateController = new CommandXboxController(1);
+    public static final CommandXboxController alternateController = swerveController;
 
     public static boolean intakeRunning = false;
     public static boolean fieldRelative = false;

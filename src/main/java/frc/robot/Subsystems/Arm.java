@@ -37,16 +37,16 @@ public class Arm extends SubsystemBase{
     public Arm() {
         armLeft = new CANSparkMax(Constants.armLeftID, MotorType.kBrushless);
         armLeft.restoreFactoryDefaults();
-        armLeft.setIdleMode(IdleMode.kBrake);
+        armLeft.setIdleMode(IdleMode.kCoast);
         armLeft.enableVoltageCompensation(11);
-        armLeft.setSmartCurrentLimit(7);
+        armLeft.setSmartCurrentLimit(2);
         armLeft.burnFlash();
 
         armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
         armRight.restoreFactoryDefaults();
-        armRight.setIdleMode(IdleMode.kBrake);
+        armRight.setIdleMode(IdleMode.kCoast);
         armRight.enableVoltageCompensation(11);
-        armRight.setSmartCurrentLimit(7);
+        armRight.setSmartCurrentLimit(2);
         armRight.setInverted(true);
 
         armRight.burnFlash();

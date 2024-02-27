@@ -26,6 +26,7 @@ public class IntakeShootCommand extends Command {
         intake.runFast();
 
     }
+
     @Override
     public boolean isFinished(){
         return isFinished;
