@@ -32,10 +32,10 @@ public class SwerveCommand extends Command{
 
     @Override
     public void initialize(){
-      tm.put(2.96, 14.2);
-      tm.put(5.05, 19.9);
-      tm.put(7.68, 26.3);
-      tm.put(19.0, 29.1);
+      tm.put(1.90, 12.69);
+      tm.put(2.73, 18.238);
+      tm.put(3.3, 19.73);
+      tm.put(4.7, 23.48);
       // tm.put(2.15, 10.5);
       // tm.put(3.3, 16.7);
       // tm.put(4.4, 20.2);
@@ -98,10 +98,9 @@ public class SwerveCommand extends Command{
           Constants.shooter.setVelocity();
           desired = Constants.camera.getDesiredShoot(0.7 * -1 * ySpeed);
           if(desired != null && desired[0] != 0){
-            yaw = aimController.calculate(-4 + desired[0], 0);
-            SmartDashboard.putNumber("Xspeed", xSpeed);
-            SmartDashboard.putNumber("getdesired andXspeed", tm.get(desired[1] +  xSpeed * 10));
+            yaw = aimController.calculate(-1 + desired[0], 0);
             Constants.arm.setDesired(tm.get(desired[1]) + (xSpeed * 1.05));
+
             xSpeed = 0.4 * xSpeed;
             ySpeed = 0.4 * ySpeed;    
         }
@@ -130,9 +129,6 @@ public class SwerveCommand extends Command{
       
       Constants.swerve.drive(xSpeed, ySpeed, yaw);
 
-      prevXSpeed = xSpeed;
-      prevYSpeed = ySpeed;
-      
 
     }
 
