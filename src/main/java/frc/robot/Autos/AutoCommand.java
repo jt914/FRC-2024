@@ -33,11 +33,6 @@ public class AutoCommand extends Command {
     private Intake intake;
 
     public AutoCommand(){
-        addRequirements(swerve, shooter, arm, intake);
-        swerve = Constants.swerve;
-        shooter = Constants.shooter;
-        arm = Constants.arm;
-        intake = Constants.intake;
 
 
     }

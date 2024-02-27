@@ -106,14 +106,26 @@ public class SwerveCommand extends Command{
             ySpeed = 0.4 * ySpeed;    
         }
       }
-
       
-      if(Math.abs(prevXSpeed - xSpeed) > 0.6){
-        xSpeed = prevXSpeed + (0.6 * Math.signum(xSpeed));
-      }
-      if(Math.abs(prevYSpeed - ySpeed) > 0.6){
-        ySpeed = prevYSpeed + (0.6 * Math.signum(ySpeed));
-      }
+      // SmartDashboard.putNumber("prevX", prevXSpeed);
+      // SmartDashboard.putNumber("prevY", prevYSpeed);
+      // SmartDashboard.putNumber("x", xSpeed);
+      // SmartDashboard.putNumber("y", ySpeed);
+
+
+      // if(Math.abs(xSpeed) < 0.1){
+      //   xSpeed = -1 * Math.signum(prevXSpeed);
+      // }
+      // if(Math.abs(ySpeed) < 0.1){
+      //   ySpeed = -1 * Math.signum(prevYSpeed);
+      // }
+      // if(Math.abs(prevXSpeed - xSpeed) > 0.6){
+      //   xSpeed = prevXSpeed + (0.05 * Math.signum(xSpeed));
+      // }
+      // if(Math.abs(prevYSpeed - ySpeed) > 0.6){
+      //   ySpeed = prevYSpeed + (0.05 * Math.signum(ySpeed));
+      // }
+
 
       
       Constants.swerve.drive(xSpeed, ySpeed, yaw);

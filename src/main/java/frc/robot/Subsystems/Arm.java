@@ -55,7 +55,7 @@ public class Arm extends SubsystemBase{
         armEnc = new DutyCycleEncoder(9);
 
  
-        armEnc.setPositionOffset(.407);
+        armEnc.setPositionOffset(0.00655);
         armEnc.setDistancePerRotation(-360);
 
 
