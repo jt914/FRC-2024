@@ -34,6 +34,7 @@ public class IntakeShootCommand extends Command {
         Constants.hasNote = false;
 
     }
+
     @Override
     public boolean isFinished(){
         return isFinished;

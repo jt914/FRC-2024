@@ -41,7 +41,7 @@ public class AmpCommand extends Command {
     }
     @Override
     public void execute(){
-        arm.setDesired(115);
+        arm.setDesired(105);
 
         if(arm.armEnc.getDistance() > 45) {
             shooter.setLowVelocity();

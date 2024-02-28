@@ -86,7 +86,6 @@ public class Camera {
             }
         }
 
-        System.out.println(getLatestResult().getTargets());
         if(seesShooter){
             //8
                 retVal[0] = shooterTarget.getYaw() + 3 * ySpeed;

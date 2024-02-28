@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Subsystems.*;
 import frc.robot.Autos.AutoCommand;
+import frc.robot.Autos.TwoNoteCommand;
 // import frc.robot.Autos.AutoCommand;
 import frc.robot.Commands.*;
 
@@ -55,6 +56,7 @@ public class RobotContainer {
     (Constants.swerveController.start()).onTrue(new FlashCommand());
     (Constants.swerveController.start()).onTrue(new SwerveCommand());
     (Constants.swerveController.b()).toggleOnTrue(new IntakeShootCommand());
+    Constants.alternateController.x().onTrue(new WinchCommand());
 
     (Constants.swerveController.rightBumper()).toggleOnTrue(new IntakeCommand());
     (Constants.swerveController.x()).toggleOnTrue(new ArmCommand());
@@ -72,6 +74,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new AutoCommand();
+    return new TwoNoteCommand();
   }
 }
