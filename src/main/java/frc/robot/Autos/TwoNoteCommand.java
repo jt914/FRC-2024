@@ -29,7 +29,7 @@ public class TwoNoteCommand extends Command {
     private PIDController drivePID = new PIDController(5, 0.0001, 0);
     private PIDController aimController = new PIDController(.19, 0.000001, 0);
     private int counter = 0;
-    private int step = 1;
+    private int step = 0;
     private double xSpeed, ySpeed, yaw;
     private Shooter shooter;
     private Arm arm;
@@ -64,11 +64,20 @@ public class TwoNoteCommand extends Command {
 
     @Override
     public void execute(){
-        System.out.println(counter);
+
+        if(step == 0){
+            Constants.arm.setDesired(10);
+            counter++;
+            if(counter > 50){
+                step = 1;
+                counter = 0;
+
+            }
+        }
 
         if(step == 1){
             counter++;
-            swerve.drive(2,0,0);
+            swerve.drive(2,0,-3.5);
             if(counter > 15){
                 swerve.drive(0,0,0);
                 step = 2;
@@ -82,7 +91,7 @@ public class TwoNoteCommand extends Command {
             counter++;
             if(desired != null && desired[0] != 0){
                 yaw = aimController.calculate(-1 + desired[0], 0);
-                // Constants.arm.setDesired(tm.get(desired[1]));
+                Constants.arm.setDesired(15);
                 SmartDashboard.putNumber("arm positionwasdwasd", tm.get(desired[1]));
                 swerve.drive(0,0,yaw);
             }
@@ -102,6 +111,8 @@ public class TwoNoteCommand extends Command {
                 step = 4;
                 shooter.stop();
                 intake.stop();
+                Constants.arm.setDesired(6);
+
 
             }
 
@@ -109,7 +120,7 @@ public class TwoNoteCommand extends Command {
 
 
         else if(step == 4){
-            swerve.drive(2,0, 0);
+            swerve.drive(2,0, 0.1);
             intake.run();
             if(intake.hasNote()){
                 step = 5;

@@ -33,7 +33,7 @@ public final class Constants {
     /* Mechanisms */
     public static final Gyro m_gyro = new Gyro(-90);
     public static final Drivetrain swerve = new Drivetrain();
-    public static final Arm arm = new Arm();
+    public static Arm arm = new Arm();
     public static final Intake intake = new Intake();
     public static final Shooter shooter = new Shooter();
     public static final Camera camera = new Camera();
