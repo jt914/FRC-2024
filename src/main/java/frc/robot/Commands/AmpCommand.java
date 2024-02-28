@@ -19,17 +19,10 @@ import frc.robot.Subsystems.Swerve.Drivetrain;
 public class AmpCommand extends Command {
     private Arm arm;
     private Shooter shooter;
-    private Drivetrain swerve;
-    private Camera cam;
-    private boolean isFinished = false;
-    private int ampStep = 0;
-    private double distanceTarget;
-    private double distanceWall;
+    
     public AmpCommand(){
         arm = Constants.arm;
-        swerve = Constants.swerve;
         shooter = Constants.shooter;
-        cam = Constants.camera;
         addRequirements(arm);
         addRequirements(shooter);
         addRequirements(Constants.intake);
@@ -45,7 +38,6 @@ public class AmpCommand extends Command {
 
         if(arm.armEnc.getDistance() > 45) {
             shooter.setLowVelocity();
-            ampStep++;
         }
         arm.moveArm();
     }

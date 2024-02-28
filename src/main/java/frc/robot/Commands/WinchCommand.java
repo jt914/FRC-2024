@@ -10,9 +10,6 @@ import frc.robot.Subsystems.Winch;
 
 public class WinchCommand extends Command {
     private Winch winch;
-    private Intake intake;
-    private boolean isFinished = false;
-    private boolean forward;
 
     public WinchCommand(){
         addRequirements(Constants.winch);

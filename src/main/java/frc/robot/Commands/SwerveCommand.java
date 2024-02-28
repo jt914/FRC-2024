@@ -13,7 +13,6 @@ import frc.robot.Subsystems.Swerve.Drivetrain;
 
 public class SwerveCommand extends Command{
 
-    private boolean driving = true;
     int autoAimLoop;
     boolean autoAim = false;
     public static double[] desired;

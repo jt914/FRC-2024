@@ -88,7 +88,6 @@ public class Camera {
             //8
                 retVal[0] = shooterTarget.getYaw() + 3 * ySpeed;
 
-            
             retVal[1] =
             PhotonUtils.calculateDistanceToTargetMeters(
                     0.286,

@@ -9,9 +9,6 @@ import frc.robot.Subsystems.Intake;
 
 public class ArmCommand extends Command {
     private Arm arm;
-    private Intake intake;
-    private boolean isFinished = false;
-    private boolean forward;
 
     public ArmCommand(){
         addRequirements(Constants.arm);

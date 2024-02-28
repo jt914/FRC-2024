@@ -7,14 +7,12 @@ import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Lights;
 
 public class IntakeShootCommand extends Command {
-    private Arm arm;
     private Intake intake;
     private boolean isFinished = false;
     public Lights lights;
 
     public IntakeShootCommand(){
         addRequirements(Constants.intake);
-        arm = Constants.arm;
         lights = Constants.lights;
 
     }

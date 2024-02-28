@@ -7,7 +7,6 @@ import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Lights;
 
 public class IntakeReverseCommand extends Command {
-    private Arm arm;
     private Intake intake;
     private boolean isFinished = false;
     public Lights lights;

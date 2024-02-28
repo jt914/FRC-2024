@@ -20,7 +20,6 @@ public class Shooter extends SubsystemBase{
 
     private CANSparkMax shooterTop;
     private CANSparkMax shooterBot;
-    private double targetVelocity;
     public SparkPIDController controllerTop;
     public SparkPIDController controllerBot;
 
@@ -54,10 +53,7 @@ public class Shooter extends SubsystemBase{
         double kD = 0; 
         double kIz = 0; 
         double kFF = 0.0001968; 
-        double kMaxOutput = 1; 
-        double kMinOutput = -1;
-        double maxRPM = 5700;
-    
+
         // set PID coefficients
         controllerTop.setP(kP);
         controllerTop.setI(kI);
