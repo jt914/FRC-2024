@@ -16,7 +16,7 @@ public class SwerveCommand extends Command{
     private boolean driving = true;
     int autoAimLoop;
     boolean autoAim = false;
-    double[] desired;
+    public static double[] desired;
     boolean isFinished = false;
     double desiredOffset;
     boolean setDesired;
