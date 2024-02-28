@@ -39,10 +39,7 @@ public class Winch extends SubsystemBase{
         winchRight.burnFlash();
         winchLeft.burnFlash();
 
-
     }
-
-  
 
     public void moveOut() {
         winchLeft.set(-0.2);

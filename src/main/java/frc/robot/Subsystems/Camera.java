@@ -73,9 +73,7 @@ public class Camera {
         1. use Camera to get pose from hood
         2. calculate optimal arm angle and shooter speed for camera
         might need to do testing
-        
         */
-
         PhotonTrackedTarget shooterTarget = null;
         // PhotonUtils.calculateDistanceToTargetMeters(0, );
         boolean seesShooter = false;
@@ -115,5 +113,4 @@ public class Camera {
         */
         return 90;
     }
-
 }

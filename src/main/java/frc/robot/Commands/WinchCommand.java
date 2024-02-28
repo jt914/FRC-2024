@@ -18,7 +18,6 @@ public class WinchCommand extends Command {
         addRequirements(Constants.winch);
         winch = Constants.winch;
 
-    
     }
 
     @Override
@@ -50,5 +49,4 @@ public class WinchCommand extends Command {
     public void end(boolean interrupted) {
 
     }
-
 }

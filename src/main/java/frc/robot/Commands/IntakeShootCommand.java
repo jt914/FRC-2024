@@ -47,5 +47,4 @@ public class IntakeShootCommand extends Command {
         intake.stop();
 
     }
-    
 }

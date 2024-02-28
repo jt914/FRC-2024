@@ -108,14 +108,11 @@ public class SwerveCommand extends Command{
             ySpeed = 0.4 * ySpeed;    
         }
       }
-      
-      
-
+    
       // SmartDashboard.putNumber("prevX", prevXSpeed);
       // SmartDashboard.putNumber("prevY", prevYSpeed);
       // SmartDashboard.putNumber("x", xSpeed);
       // SmartDashboard.putNumber("y", ySpeed);
-
 
       //if desired X Speed = 0
       //-1, 0, 1
@@ -131,7 +128,6 @@ public class SwerveCommand extends Command{
       //   xSpeed = 0;
       // }
 
-
       // if(Math.abs(ySpeed) < 0.1){
       //   ySpeed = prevYSpeed + (-0.1 * Math.signum(prevYSpeed));
       // }
@@ -141,11 +137,6 @@ public class SwerveCommand extends Command{
       // if(Math.abs(xSpeed) < 0.07){
       //   ySpeed = 0;
       // }
-
-
-
-
-
 
       // currTime = System.currentTimeMillis();
 
@@ -158,12 +149,9 @@ public class SwerveCommand extends Command{
       // prevXSpeed = xSpeed;
       // prevYSpeed = ySpeed;
 
-
       // prevTime = currTime;
       
-
     }
-
 }
     
     

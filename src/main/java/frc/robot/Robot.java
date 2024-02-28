@@ -53,8 +53,6 @@ public class Robot extends LoggedRobot {
     if(Constants.arm.armEnc.getDistance() > 10){
       Constants.arm = null;
     }
-
-
   }
 
   @Override
@@ -65,7 +63,7 @@ public class Robot extends LoggedRobot {
     SmartDashboard.putNumber("desired", Constants.arm.desiredAngle);
     SmartDashboard.putNumber("current", Constants.arm.armEnc.getDistance());
     Lights.strip.setData(Lights.ledBuffer);
->
+
   }
 
   @Override
@@ -105,5 +103,4 @@ public class Robot extends LoggedRobot {
 
   public void disabledPeriodic(){
   }
-
 }

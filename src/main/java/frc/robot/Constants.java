@@ -25,7 +25,6 @@ public final class Constants {
     public static final double swerveControllerLeftStickDeadband = 0.1;
     public static final double swerveControllerRightXDeadband = 0.1;
 
-
     // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
     public static SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(5);
     public static SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(5);
@@ -40,9 +39,11 @@ public final class Constants {
     public static final Camera camera = new Camera();
     public static final Winch winch = new Winch();
     public static final Lights lights = new Lights();
+
+    //Status Constants
     public static boolean autoAim = false;
     public static boolean hasNote = false;
-    
+
     /* - - - SWERVE DRIVE CONSTANTS - - - */
 
     public static final int frontLeftDriveID = 4;
@@ -72,12 +73,11 @@ public final class Constants {
     public static final double armClimbOffset = 1;
 
     /* - - - OTHER CONSTANTS - - - */
-
-    public static final int intakeID = 13; 
+    public static final int armRightID = 9; 
+    public static final int armLeftID = 10; 
     public static final int shooterTopID = 11; 
     public static final int shooterBotID = 12; 
-    public static final int armLeftID = 10; 
-    public static final int armRightID = 9; 
+    public static final int intakeID = 13; 
     public static final int winchLeftID = 14;
     public static final int winchRightID = 15;
 

@@ -3,17 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.Subsystems.Swerve;
-
 import com.kauailabs.navx.frc.*;
-
-
 
 public class Gyro {
   // private AHRS m_gyro;
   private Drivetrain drivetrain;
   public static AHRS m_gyro;
   private double gyroAngleOffset = 0;
-
 
   /** Creates a new Gyro. */
   public Gyro(double offset) {
@@ -46,5 +42,4 @@ public class Gyro {
   public void setGyroAngleOffset(double adjustment) {
     gyroAngleOffset = adjustment;
   }
-
 }

@@ -16,7 +16,6 @@ public class ArmCommand extends Command {
     public ArmCommand(){
         addRequirements(Constants.arm);
 
-    
     }
 
     @Override
@@ -27,9 +26,6 @@ public class ArmCommand extends Command {
     }
     @Override
     public void execute(){
-
-
-
         if(Constants.alternateController.leftTrigger().getAsBoolean()){
             Constants.arm.setDesired(Constants.arm.desiredAngle - 0.25);
         }
@@ -44,5 +40,4 @@ public class ArmCommand extends Command {
         arm.stop();
 
     }
-
 }

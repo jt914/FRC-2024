@@ -46,8 +46,6 @@ public class Intake extends SubsystemBase{
         running = true;
     }
 
-
-
     public void runSlow(){
         intakePidController.setReference(800, ControlType.kVelocity);
         SmartDashboard.putNumber("intake", intake.getEncoder().getVelocity());

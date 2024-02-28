@@ -17,7 +17,6 @@ public class Lights extends SubsystemBase{
     Shooter shooter;
     Drivetrain swerve;
     
-
     public Lights()
     {
         strip = new AddressableLED(0);
@@ -70,8 +69,4 @@ public class Lights extends SubsystemBase{
     public static boolean intakeRunning() {
         return Intake.running;
     }
-    // public void periodic() {
-    //     if(Lights.hasNote() && Lights.seesTag()) {
-    //     }
-    // }
 }

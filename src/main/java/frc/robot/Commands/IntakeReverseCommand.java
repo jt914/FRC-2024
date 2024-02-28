@@ -15,11 +15,13 @@ public class IntakeReverseCommand extends Command {
     public IntakeReverseCommand(){
         addRequirements(Constants.intake);
         lights = Constants.lights;
+
     }
 
     @Override
     public void initialize(){
-        intake = Constants.intake;   
+        intake = Constants.intake;
+
     }
 
     @Override
@@ -27,6 +29,7 @@ public class IntakeReverseCommand extends Command {
         intake.reverse();
         lights.off();
         Constants.hasNote = false;
+
     }
     @Override
     public boolean isFinished(){
@@ -39,7 +42,5 @@ public class IntakeReverseCommand extends Command {
     // Constants.intakeStatus = false;
         intake.stop();
         
-
     }
-    
 }

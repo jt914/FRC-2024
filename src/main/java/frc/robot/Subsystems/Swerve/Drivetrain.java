@@ -133,9 +133,6 @@ public class Drivetrain extends SubsystemBase {
     // SmartDashboard.putNumber("rotation", yaw);
 
   }
-
-
-
   public Pose2d getPose(){
     return poseEstimator.getEstimatedPosition();
   }
@@ -183,8 +180,6 @@ public class Drivetrain extends SubsystemBase {
     m_backLeft.setModuleState(swerveModuleStates[2], 2);
     m_backRight.setModuleState(swerveModuleStates[3], 3);
 
-
-    
     // SmartDashboard.putNumber("xSpeed", xSpeed);
     // SmartDashboard.putNumber("ySpeed", ySpeed);
     // SmartDashboard.putNumber("rotation", yaw);
@@ -208,9 +203,6 @@ public class Drivetrain extends SubsystemBase {
 
         // System.out.println(Constants.camera.getLatestResult().getBestTarget().getFiducialId());
 
-
-
-  
     // Convert robot pose from Pose3d to Pose2d needed to apply vision measurements.
     
     // SwerveDriveWheelPositions wheelPositions = new SwerveDriveWheelPositions(new SwerveModulePosition[] {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_backLeft.getPosition(), m_backRight.getPosition()});
@@ -232,7 +224,6 @@ public class Drivetrain extends SubsystemBase {
           m_frontRight.getPosition(),
           m_backLeft.getPosition(),
           m_backRight.getPosition()
-
 
         });
 

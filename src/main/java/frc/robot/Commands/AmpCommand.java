@@ -48,7 +48,6 @@ public class AmpCommand extends Command {
             ampStep++;
         }
         arm.moveArm();
-
     }
 
     @Override

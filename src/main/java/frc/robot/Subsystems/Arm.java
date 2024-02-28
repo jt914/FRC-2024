@@ -53,17 +53,11 @@ public class Arm extends SubsystemBase{
 
         armRight.burnFlash();
 
-
         // armSwitchBot = new DigitalInput(8);
         armEnc = new DutyCycleEncoder(8);
-
- 
         armEnc.setPositionOffset(.9);
-
         armEnc.setDistancePerRotation(-360);
         armEnc.setPositionOffset(0.9);
-
-
 
         kP = .05;
         kI = 0;

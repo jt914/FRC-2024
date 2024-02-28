@@ -35,7 +35,6 @@ public class FlashCommand extends Command {
     @Override
     public void end(boolean interrupted) {
 
-
     }
     
 }

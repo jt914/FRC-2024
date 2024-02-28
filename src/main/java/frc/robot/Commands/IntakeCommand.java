@@ -65,6 +65,5 @@ public class IntakeCommand extends Command {
         Constants.intake.stop();
         isFinished = false;
     }
- 
 }
 

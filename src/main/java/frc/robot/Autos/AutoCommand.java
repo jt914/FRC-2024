@@ -43,16 +43,13 @@ public class AutoCommand extends Command {
         intake = Constants.intake;
         
     }
-
     @Override
     public void initialize(){
 
     }
-
     //things to do: Figure out if gyro is rotating which direction
     //Find exact locations of the notes
     //Tune PID and Drive PID
-
 
     @Override
     public void execute(){
@@ -73,9 +70,6 @@ public class AutoCommand extends Command {
             SmartDashboard.putNumber("xCurrent", target.getX());
             SmartDashboard.putNumber("yCurrent", target.getY());
             SmartDashboard.putNumber("Step", step);
-
-
-            
             //shoot
             if(step == 0){
                 shooter.setVelocity();
@@ -85,7 +79,6 @@ public class AutoCommand extends Command {
                     step = 1;
 
                 }
-
             }
 
             if(step == 1){
@@ -98,7 +91,6 @@ public class AutoCommand extends Command {
                     shooter.stop();
 
                 }
-
             }
             //drive and intake 1st note
             if(step == 2){
@@ -127,8 +119,8 @@ public class AutoCommand extends Command {
                     step = 3;
                     swerve.drive(0,0,0);
                 }
-        
             }
+
             if(step == 3){
                 shooter.setVelocity();
 
@@ -138,9 +130,8 @@ public class AutoCommand extends Command {
                     step = 4;
 
                 }
-
             }
-
+            
             if(step == 4){
                 intake.run();
 
@@ -152,12 +143,8 @@ public class AutoCommand extends Command {
                     intake.stop();
 
                 }
-
             }
-
-
-        }
-        
+        } 
         // if(target == null){
         //     counter++;
         // }
@@ -165,8 +152,6 @@ public class AutoCommand extends Command {
         //     swerve.drive(0,0,0);
         // }
     }
-
-
     @Override
     public void end(boolean interrupted) {
         swerve.drive(0,0,0);

@@ -46,7 +46,6 @@ public class TwoNoteCommand extends Command {
         intake = Constants.intake;
         
     }
-
     @Override
     public void initialize(){
         tm.put(1.90, 12.69);
@@ -54,17 +53,12 @@ public class TwoNoteCommand extends Command {
         tm.put(3.3, 19.73);
         tm.put(4.7, 23.48);
   
-
     }
-
     //things to do: Figure out if gyro is rotating which direction
     //Find exact locations of the notes
     //Tune PID and Drive PID
-
-
     @Override
     public void execute(){
-
         if(step == 0){
             Constants.arm.setDesired(10);
             counter++;
@@ -94,12 +88,13 @@ public class TwoNoteCommand extends Command {
                 Constants.arm.setDesired(15);
                 SmartDashboard.putNumber("arm positionwasdwasd", tm.get(desired[1]));
                 swerve.drive(0,0,yaw);
+
             }
             if(counter > 50){
                 step = 3;
                 counter = 0;
+
             }
-      
         }
 
         else if(step == 3){
@@ -112,12 +107,8 @@ public class TwoNoteCommand extends Command {
                 shooter.stop();
                 intake.stop();
                 Constants.arm.setDesired(6);
-
-
             }
-
         }
-
 
         else if(step == 4){
             swerve.drive(2,0, 0.1);
@@ -143,8 +134,8 @@ public class TwoNoteCommand extends Command {
                 step = 6;
                 counter = 0;
             }
-      
         }
+        
         else if(step == 6){
             intake.run();
 
@@ -156,7 +147,6 @@ public class TwoNoteCommand extends Command {
                 intake.stop();
 
             }
-
         }
     }
 
