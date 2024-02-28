@@ -59,7 +59,7 @@ public class Robot extends LoggedRobot {
     SmartDashboard.putNumber("gyroswasd", Constants.m_gyro.getTotalAngleDegrees());
     SmartDashboard.putNumber("desired", Constants.arm.desiredAngle);
     SmartDashboard.putNumber("current", Constants.arm.armEnc.getDistance());
-
+    Lights.strip.setData(Lights.ledBuffer);
   }
 
   @Override

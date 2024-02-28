@@ -29,33 +29,35 @@ public class Arm extends SubsystemBase{
     private double kP, kI, kD;
     public double desiredAngle;
     // public PIDController controller = new PIDController(.6, .05, .165);
-    public PIDController controller = new PIDController(.38, 0.001, .01);
+    // public PIDController controller = new PIDController(.38, 0.001, .01);
+        public PIDController controller = new PIDController(0, 0.000, .00);
+
     // public PIDController controller = new PIDController(.2, .13, 0);
     private final ArmFeedforward feedforward  = new ArmFeedforward(0, .22, 0);
-    public DigitalInput armSwitch;
+    public DigitalInput armSwitchBot;
 
     public Arm() {
         armLeft = new CANSparkMax(Constants.armLeftID, MotorType.kBrushless);
         armLeft.restoreFactoryDefaults();
         armLeft.setIdleMode(IdleMode.kBrake);
         armLeft.enableVoltageCompensation(11);
-        armLeft.setSmartCurrentLimit(7);
+        armLeft.setSmartCurrentLimit(2);
         armLeft.burnFlash();
 
         armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
         armRight.restoreFactoryDefaults();
         armRight.setIdleMode(IdleMode.kBrake);
         armRight.enableVoltageCompensation(11);
-        armRight.setSmartCurrentLimit(7);
+        armRight.setSmartCurrentLimit(2);
         armRight.setInverted(true);
 
         armRight.burnFlash();
 
-        armSwitch = new DigitalInput(8);
-        armEnc = new DutyCycleEncoder(9);
+        // armSwitchBot = new DigitalInput(8);
+        armEnc = new DutyCycleEncoder(8);
 
  
-        armEnc.setPositionOffset(.407);
+        armEnc.setPositionOffset(.9);
         armEnc.setDistancePerRotation(-360);
 
 
@@ -81,8 +83,13 @@ public class Arm extends SubsystemBase{
         SmartDashboard.putNumber("pid", controller.calculate(armEnc.getDistance(),desiredAngle) );
         SmartDashboard.putNumber("ff", feedforward.calculate(desiredAngle* Math.PI / 180, Math.PI/10));
         SmartDashboard.putNumber("k", k);
-        armLeft.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + (feedforward.calculate(armEnc.getDistance()* Math.PI / 180, k * .3)));
+        // if(armSwitchBot.get()) {
+        //     if(armLeft.getAppliedOutput() < 0) {
+        //         // arm voltage is negative
+        //     }
+        // }
         armRight.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + (feedforward.calculate(armEnc.getDistance() * Math.PI / 180, k * .3)));
+        armLeft.setVoltage(controller.calculate(armEnc.getDistance(), desiredAngle) + (feedforward.calculate(armEnc.getDistance() * Math.PI / 180, k * .3)));
         SmartDashboard.putNumber("Left PID", controller.calculate(armEnc.getDistance(), desiredAngle));
         SmartDashboard.putNumber("Left FF", MathUtil.clamp(feedforward.calculate(desiredAngle * Math.PI / 180, k), -2, 2));
         SmartDashboard.putNumber("p", controller.getPositionError() * controller.getP());

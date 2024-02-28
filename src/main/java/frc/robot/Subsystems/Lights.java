@@ -8,8 +8,8 @@ import frc.robot.Commands.SwerveCommand;
 import frc.robot.Subsystems.Swerve.Drivetrain;
 
 public class Lights extends SubsystemBase{
-    AddressableLED strip;
-    AddressableLEDBuffer ledBuffer;
+    public static AddressableLED strip;
+    public static AddressableLEDBuffer ledBuffer;
     int saveH;
     int saveS;
     int saveV;
@@ -20,24 +20,24 @@ public class Lights extends SubsystemBase{
 
     public Lights()
     {
-        strip = new AddressableLED(9);
-        int length = 75;
+        strip = new AddressableLED(0);
+        int length = 150;
         strip.setLength(length);
         ledBuffer = new AddressableLEDBuffer(length);
         strip.start();
     }
     public void setColor(int start, int end, int h, int s, int v) {
         for(var i = start; i < end; i++) {
-        ledBuffer.setHSV(i, h, s, v);
-        saveH = h;
-        saveS = s;
-        saveV = v;
+            ledBuffer.setHSV(i, h, s, v);
+            saveH = h;
+            saveS = s;
+            saveV = v;
         }
     }
     public void setColorRed(int start, int end, int v) {
         for(var i = start; i < end; i++) {
-            ledBuffer.setHSV(i, 255, 255, 50);
-            saveH = 255;
+            ledBuffer.setHSV(i, 180, 255, 50);
+            saveH = 180;
             saveS = 255;
             saveV = 50;
         }
@@ -51,13 +51,13 @@ public class Lights extends SubsystemBase{
         }
     }
     public void off() {
-        for(var i = 0; i < 75; i++) {
+        for(var i = 30; i < 150; i++) {
             ledBuffer.setHSV(i, 0, 0, 0);
         }
     }
     
     public void previous() {
-        for(var i = 0; i < 75; i++) {
+        for(var i = 30; i < 150; i++) {
             ledBuffer.setHSV(i, saveH, saveS, saveV);
         }
     }

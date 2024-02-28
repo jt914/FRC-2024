@@ -19,6 +19,7 @@ public class Intake extends SubsystemBase{
     public static boolean running;
     public AnalogInput intakeSensor;
     public SparkPIDController intakePidController;
+    public Lights lights = Constants.lights;
 
     public Intake() {
         intake = new CANSparkMax(Constants.intakeID, MotorType.kBrushless);
@@ -31,6 +32,7 @@ public class Intake extends SubsystemBase{
 
         intake.burnFlash();
         intakeSensor = new AnalogInput(0);
+
     }
 
     public void runFast() {

@@ -32,8 +32,10 @@ public class IntakeCommand extends Command {
     @Override
     public void execute(){
         intake.run();
+        lights.setColorRed(30, 150, 50);
         SmartDashboard.putNumber("IntakeSens", Constants.intake.intakeSensor.getVoltage());
         SmartDashboard.putBoolean("Intake Trigger", triggered);
+
         if(Constants.intake.intakeSensor.getVoltage()<.5) {
             triggered = true;
         }
@@ -44,7 +46,7 @@ public class IntakeCommand extends Command {
             isFinished = true;
             elapsed = 0;
             Constants.hasNote = true;
-            lights.setColorGreen(0, 75, 50);
+            lights.setColorGreen(30, 150, 50);
         }
         arm.moveArm();
     }
