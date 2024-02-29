@@ -18,7 +18,7 @@ public class ArmCommand extends Command {
     @Override
     public void initialize(){
         arm = Constants.arm;
-        Constants.arm.desiredAngle = Constants.arm.armEnc.getDistance();
+        Constants.arm.desiredAngle = Constants.arm.getAngle();
 
     }
     @Override
@@ -28,6 +28,9 @@ public class ArmCommand extends Command {
         }
         else if(Constants.alternateController.rightTrigger().getAsBoolean()){
             Constants.arm.setDesired(Constants.arm.desiredAngle + 0.25);
+        }
+        if(Constants.arm.desiredAngle < 1) {
+            Constants.arm.desiredAngle = 5;
         }
         Constants.arm.setDesired(Constants.arm.desiredAngle);
     }

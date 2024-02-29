@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.SPI;
 
@@ -50,9 +51,6 @@ public class Robot extends LoggedRobot {
     autoCommand = robot.getAutonomousCommand();
     Constants.m_gyro.calibrateGyro();
 
-    if(Constants.arm.armEnc.getDistance() > 10){
-      Constants.arm = null;
-    }
   }
 
   @Override
@@ -61,7 +59,7 @@ public class Robot extends LoggedRobot {
     SmartDashboard.putNumber("gyroswasd", Constants.m_gyro.getTotalAngleDegrees());
 
     SmartDashboard.putNumber("desired", Constants.arm.desiredAngle);
-    SmartDashboard.putNumber("current", Constants.arm.armEnc.getDistance());
+    SmartDashboard.putNumber("current", Constants.arm.getAngle());
     Lights.strip.setData(Lights.ledBuffer);
 
   }
@@ -75,15 +73,18 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousPeriodic() {
-        Constants.arm.moveArm();
 
   }
   
   public void teleopInit() {
-    Constants.arm.setDesired(Constants.arm.armEnc.getDistance());
+    Constants.arm.setDesired(Constants.arm.getAngle());
     if (autoCommand != null) {
       autoCommand.cancel();
       
+    }
+
+    if(Constants.arm.currentPos > 40){
+      Constants.arm = null;
     }
 
     SmartDashboard.putData("Field", m_field);
@@ -94,6 +95,10 @@ public class Robot extends LoggedRobot {
   @Override
   public void teleopPeriodic() {
     Constants.swerve.updateOdometry();
+    if(Constants.arm.desiredAngle < 5){
+        Constants.arm.moveArm();
+
+    }
 
   }
 

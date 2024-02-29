@@ -8,6 +8,7 @@ import javax.naming.LimitExceededException;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
@@ -61,6 +62,13 @@ public class SwerveModule {
     driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
     turnMotor = new CANSparkMax(turnMotorID , MotorType.kBrushless);
 
+    if(driveMotor.getDeviceId() == 4){
+      driveMotor.setIdleMode(IdleMode.kCoast);
+    }
+    if(turnMotor.getDeviceId() == 3){
+      turnMotor.setIdleMode(IdleMode.kCoast);
+    }
+
     driveEncoder = driveMotor.getEncoder();
     turnEncoder = turnMotor.getEncoder();
     // unmodified_turningEncoder = m_turningMotor.getEncoder();
@@ -100,7 +108,12 @@ public class SwerveModule {
     double driveOutput = optimizedModuleOutput[1];
 
     // double driveOutput = driveFeedForward.calculate(1, 0) * Math.sqrt(Math.pow(Constants.swerveController.getLeftX(),2) + Math.pow(Constants.swerveController.getLeftY(),2));
-    driveMotor.setVoltage(driveOutput);
+    if(driveMotor.getDeviceId() != 7 || driveMotor.getDeviceId() != 4){
+      driveMotor.setVoltage(driveOutput);
+    }
+
+    
+
 
     SmartDashboard.putNumber("driveOutput", driveOutput);
 
@@ -110,6 +123,7 @@ public class SwerveModule {
     {
       turnEncoder.setPosition(0);
     }
+
   }
 
   /**
