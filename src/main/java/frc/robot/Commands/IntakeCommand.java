@@ -42,7 +42,7 @@ public class IntakeCommand extends Command {
         if(triggered == true) {
             elapsed++;
         }
-        if(elapsed > 3) {
+        if(elapsed > 7) {
             isFinished = true;
             elapsed = 0;
             Constants.hasNote = true;

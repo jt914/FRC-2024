@@ -22,6 +22,13 @@ public class ArmCommand extends Command {
     }
     @Override
     public void execute(){
+        if(Constants.alternateController.leftTrigger().getAsBoolean()){
+            Constants.arm.setDesired(Constants.arm.desiredAngle - 0.25);
+        }
+        else if(Constants.alternateController.rightTrigger().getAsBoolean()){
+            Constants.arm.setDesired(Constants.arm.desiredAngle + 0.25);
+        }
+        Constants.arm.setDesired(Constants.arm.desiredAngle);
     }
 
     @Override

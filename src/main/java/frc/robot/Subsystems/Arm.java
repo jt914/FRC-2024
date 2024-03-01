@@ -27,7 +27,7 @@ public class Arm extends SubsystemBase{
     public DutyCycleEncoder armEnc;
     private SparkLimitSwitch limitSwitch;
     private double kP, kI, kD;
-    private double desiredAngle;
+    public double desiredAngle;
     // public PIDController controller = new PIDController(.6, .05, .165);
     public PIDController controller = new PIDController(.38, 0.001, .01);
 
@@ -69,15 +69,15 @@ public class Arm extends SubsystemBase{
     }
 
     public void moveArm() {
-        // desiredAngle = MathUtil.clamp(this.desiredAngle, 0,120);
+        desiredAngle = MathUtil.clamp(this.desiredAngle, 0,120);
 
         // SmartDashboard.putNumber("Brake", armLeft.getBusVoltage()*armLeft.getAppliedOutput());
         
-        double k = Math.signum(desiredAngle - getAngle());
-        if(Math.abs(desiredAngle-getAngle()) < 2);
-        {
-            k = 0;
-        }
+        // double k = Math.signum(desiredAngle - getAngle());
+        // if(Math.abs(desiredAngle-getAngle()) < 2);
+        // {
+        //     k = 0;
+        // }
         // SmartDashboard.putNumber("pid", controller.calculate(((1 - armEnc.getAbsolutePosition()) * 360),desiredAngle) );
         // SmartDashboard.putNumber("ff", feedforward.calculate(desiredAngle* Math.PI / 180, Math.PI/10));
         // SmartDashboard.putNumber("k", k);
@@ -89,8 +89,8 @@ public class Arm extends SubsystemBase{
         SmartDashboard.putNumber("voltage", controller.calculate(getAngle(), desiredAngle));
         SmartDashboard.putNumber("currentAgnleee", getAngle());
         SmartDashboard.putNumber("desiredAngleee", desiredAngle);
-        armRight.setVoltage(controller.calculate(getAngle(), desiredAngle) + (feedforward.calculate(getAngle() * Math.PI / 180, k * .3)));
-        armLeft.setVoltage(controller.calculate(getAngle(), desiredAngle) + (feedforward.calculate(getAngle() * Math.PI / 180, k * .3)));
+        armRight.setVoltage(controller.calculate(getAngle(), desiredAngle) + (feedforward.calculate(getAngle() * Math.PI / 180, 0)));
+        armLeft.setVoltage(controller.calculate(getAngle(), desiredAngle) + (feedforward.calculate(getAngle() * Math.PI / 180, 0)));
         SmartDashboard.putData("pidControl", controller);
     }
     public double getAngle() {

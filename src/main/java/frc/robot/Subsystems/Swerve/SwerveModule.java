@@ -108,10 +108,9 @@ public class SwerveModule {
     double driveOutput = optimizedModuleOutput[1];
 
     // double driveOutput = driveFeedForward.calculate(1, 0) * Math.sqrt(Math.pow(Constants.swerveController.getLeftX(),2) + Math.pow(Constants.swerveController.getLeftY(),2));
-      driveMotor.setVoltage(driveOutput);
     
+          driveMotor.setVoltage(driveOutput);
 
-    
 
 
     SmartDashboard.putNumber("driveOutput", driveOutput);

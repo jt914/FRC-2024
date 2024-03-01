@@ -21,6 +21,9 @@ public class ToggleAutoAimCommand extends Command {
     @Override
     public void initialize(){
         Constants.autoAim = !Constants.autoAim;
+        if(Constants.autoAim == false){
+            Constants.shooter.stop();
+        }
 
     }
     @Override

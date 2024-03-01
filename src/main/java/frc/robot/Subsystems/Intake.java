@@ -24,11 +24,12 @@ public class Intake extends SubsystemBase{
     public Intake() {
         intake = new CANSparkMax(Constants.intakeID, MotorType.kBrushless);
         intake.restoreFactoryDefaults();
-        intake.setIdleMode(IdleMode.kBrake);
         intake.enableVoltageCompensation(11);
         intakePidController = intake.getPIDController();
-        intakePidController.setFF(0.00025);
+        intakePidController.setFF(0.00035);
         intakePidController.setP(0.000001);
+        intake.setIdleMode(IdleMode.kBrake);
+
 
         intake.burnFlash();
         intakeSensor = new AnalogInput(0);
@@ -36,13 +37,17 @@ public class Intake extends SubsystemBase{
     }
 
     public void runFast() {
-        intakePidController.setReference(4700, ControlType.kVelocity);
+
+        intakePidController.setReference(4000, ControlType.kVelocity);
         SmartDashboard.putNumber("intake", intake.getEncoder().getVelocity());
+
         running = true;
     }
     public void run() {
+
         intakePidController.setReference(1100, ControlType.kVelocity);
         SmartDashboard.putNumber("intake", intake.getEncoder().getVelocity());
+
         running = true;
     }
 

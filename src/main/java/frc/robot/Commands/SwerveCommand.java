@@ -32,14 +32,9 @@ public class SwerveCommand extends Command{
 
     @Override
     public void initialize(){
-      tm.put(1.90, 12.69);
-      tm.put(2.73, 18.238);
-      tm.put(3.3, 19.73);
-      tm.put(4.7, 23.48);
-      // tm.put(2.15, 10.5);
-      // tm.put(3.3, 16.7);
-      // tm.put(4.4, 20.2);
-      // tm.put(6.6, 25.4);
+      tm.put(10.74, 20.0);
+      tm.put(7.1, 17.0);
+      tm.put(4.3, 11.5);
       prevTime = System.currentTimeMillis();
       currTime = System.currentTimeMillis();
 
@@ -105,8 +100,12 @@ public class SwerveCommand extends Command{
 
             xSpeed = 0.4 * xSpeed;
             ySpeed = 0.4 * ySpeed;    
+              SmartDashboard.putNumber("wawasdassd", desired[1]);
+
         }
+
       }
+
     
       // SmartDashboard.putNumber("prevX", prevXSpeed);
       // SmartDashboard.putNumber("prevY", prevYSpeed);
