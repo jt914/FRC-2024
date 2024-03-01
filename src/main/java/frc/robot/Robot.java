@@ -50,6 +50,7 @@ public class Robot extends LoggedRobot {
     robot = new RobotContainer();
     autoCommand = robot.getAutonomousCommand();
     Constants.m_gyro.calibrateGyro();
+    Constants.arm.setDesired(Constants.arm.getAngle());
 
   }
 
@@ -58,7 +59,6 @@ public class Robot extends LoggedRobot {
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("gyroswasd", Constants.m_gyro.getTotalAngleDegrees());
 
-    SmartDashboard.putNumber("desired", Constants.arm.desiredAngle);
     SmartDashboard.putNumber("current", Constants.arm.getAngle());
     Lights.strip.setData(Lights.ledBuffer);
 
@@ -77,13 +77,14 @@ public class Robot extends LoggedRobot {
   }
   
   public void teleopInit() {
-    Constants.arm.setDesired(Constants.arm.getAngle());
     if (autoCommand != null) {
       autoCommand.cancel();
       
     }
 
-    if(Constants.arm.currentPos > 40){
+    Constants.arm.moveArm();
+
+    if(Constants.arm.getAngle() > 90){
       Constants.arm = null;
     }
 
@@ -95,6 +96,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void teleopPeriodic() {
     Constants.swerve.updateOdometry();
+    SmartDashboard.putNumber("wasdwASDWASDASD", Constants.arm.getAngle());
     // if(Constants.arm.desiredAngle < 5){
     //     Constants.arm.moveArm();
 
