@@ -48,7 +48,7 @@ public class IntakeCommand extends Command {
             Constants.hasNote = true;
             lights.setColorGreen(30, 150, 50);
         }
-        arm.moveArm();
+        // arm.moveArm();
     }
     @Override
     public boolean isFinished(){

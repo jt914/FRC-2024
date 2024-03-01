@@ -95,10 +95,10 @@ public class Robot extends LoggedRobot {
   @Override
   public void teleopPeriodic() {
     Constants.swerve.updateOdometry();
-    if(Constants.arm.desiredAngle < 5){
-        Constants.arm.moveArm();
+    // if(Constants.arm.desiredAngle < 5){
+    //     Constants.arm.moveArm();
 
-    }
+    // }
 
   }
 
