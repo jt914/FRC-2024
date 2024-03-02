@@ -19,7 +19,6 @@ public class WinchCommand extends Command {
 
     @Override
     public void initialize(){
-        System.out.println("working");
 
     }
     @Override

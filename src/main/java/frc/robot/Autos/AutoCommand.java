@@ -51,7 +51,6 @@ public class AutoCommand extends Command {
         target = Constants.camera.getTarget();
         if(step == -1){
             swerve.drive(3,0, 0);
-            System.out.println(counter);
             counter++;
             if(counter > 20){
                 counter = 0;

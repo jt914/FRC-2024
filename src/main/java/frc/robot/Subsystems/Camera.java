@@ -63,6 +63,20 @@ public class Camera {
         }
         return null;
     }
+    //Test method, returns true if sees target
+    public boolean ifTarget(){
+        PhotonTrackedTarget shooterTarget = null;
+        for(PhotonTrackedTarget target: getLatestResult().getTargets()){
+            if(target.getFiducialId() == 7 || target.getFiducialId() == 1){
+                shooterTarget = target;
+            }
+        }
+        if(shooterTarget != null){
+
+            return true;
+        }
+        return false;
+    }
 
     //if null the command to get desired shoot should just do nothing
     public double[] getDesiredShoot(double ySpeed){

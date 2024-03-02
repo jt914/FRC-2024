@@ -44,12 +44,17 @@ public class BlankAuto extends Command {
     }
     @Override
     public void initialize(){
+        swerve = Constants.swerve;
     
     }
         
     
     @Override
     public void execute(){
+        if(counter < 50){
+            swerve.drive(1, 0 ,0);
+        }
+        counter++;
         
     }
 
