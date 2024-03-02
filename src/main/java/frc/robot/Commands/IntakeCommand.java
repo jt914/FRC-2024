@@ -24,7 +24,7 @@ public class IntakeCommand extends Command {
         triggered = false;
         elapsed = 0;
         arm = Constants.arm;
-        // arm.setDesired(4.89);
+        arm.setDesired(4.89);
         addRequirements(Constants.arm);
         lights = Constants.lights;
     }   
@@ -48,7 +48,7 @@ public class IntakeCommand extends Command {
             Constants.hasNote = true;
             lights.setColorGreen(30, 150, 50);
         }
-        // arm.moveArm();
+        arm.moveArm();
     }
     @Override
     public boolean isFinished(){
