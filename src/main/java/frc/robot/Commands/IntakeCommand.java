@@ -24,7 +24,7 @@ public class IntakeCommand extends Command {
         triggered = false;
         elapsed = 0;
         arm = Constants.arm;
-        arm.setDesired(4.89);
+        // arm.setDesired(4.89);
         addRequirements(Constants.arm);
         lights = Constants.lights;
     }   
@@ -42,7 +42,7 @@ public class IntakeCommand extends Command {
         if(triggered == true) {
             elapsed++;
         }
-        if(elapsed > 7) {
+        if(elapsed > 2) {
             isFinished = true;
             elapsed = 0;
             Constants.hasNote = true;

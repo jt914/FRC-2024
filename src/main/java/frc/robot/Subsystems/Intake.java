@@ -26,7 +26,7 @@ public class Intake extends SubsystemBase{
         intake.restoreFactoryDefaults();
         intake.enableVoltageCompensation(11);
         intakePidController = intake.getPIDController();
-        intakePidController.setFF(0.00035);
+        intakePidController.setFF(0.00025);
         intakePidController.setP(0.000001);
         intake.setIdleMode(IdleMode.kBrake);
 
@@ -45,7 +45,7 @@ public class Intake extends SubsystemBase{
     }
     public void run() {
 
-        intakePidController.setReference(1100, ControlType.kVelocity);
+        intakePidController.setReference(1000, ControlType.kVelocity);
         SmartDashboard.putNumber("intake", intake.getEncoder().getVelocity());
 
         running = true;
