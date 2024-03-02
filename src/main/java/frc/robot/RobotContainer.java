@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Subsystems.*;
 import frc.robot.Autos.AutoCommand;
+import frc.robot.Autos.BlankAuto;
 import frc.robot.Autos.TwoNoteCommand;
 // import frc.robot.Autos.AutoCommand;
 import frc.robot.Commands.*;
@@ -74,6 +75,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new TwoNoteCommand();
+    return new BlankAuto();
   }
 }

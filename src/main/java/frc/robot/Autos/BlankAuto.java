@@ -25,9 +25,9 @@ public class BlankAuto extends Command {
     private int intakeStep;
     private int armStep;
     private Transform3d target;
-    private PIDController turnPID = new PIDController(.002, 0.000001, 0);
-    private PIDController drivePID = new PIDController(5, 0.0001, 0);
-    private PIDController aimController = new PIDController(.19, 0.000001, 0);
+    // private PIDController turnPID = new PIDController(.002, 0.000001, 0);
+    // private PIDController drivePID = new PIDController(5, 0.0001, 0);
+    // private PIDController aimController = new PIDController(.19, 0.000001, 0);
     private int counter = 0;
     private int step = 0;
     private double xSpeed, ySpeed, yaw;
