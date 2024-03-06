@@ -57,13 +57,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotPeriodic(){
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("gyroswasd", Constants.m_gyro.getTotalAngleDegrees());
-
-    SmartDashboard.putNumber("current", Constants.arm.getAngle());
     Lights.strip.setData(Lights.ledBuffer);
-    SmartDashboard.putNumber("wasdwasdasdwasdwas", Constants.arm.getAngle());
-    SmartDashboard.putNumber("deasreasdwasdwasdwadasd", Constants.arm.desiredAngle);
-
   }
 
   @Override

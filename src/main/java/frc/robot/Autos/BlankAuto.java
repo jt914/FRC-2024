@@ -51,8 +51,11 @@ public class BlankAuto extends Command {
     
     @Override
     public void execute(){
-        if(counter < 50){
-            swerve.drive(1, 0 ,0);
+        if(counter < 300){
+            swerve.drive(3, 0 ,0);
+        }
+        if(counter > 300){
+            swerve.drive(0,0,0);
         }
         counter++;
         
@@ -61,7 +64,6 @@ public class BlankAuto extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        swerve.drive(0,0,0);
 
     }
 }

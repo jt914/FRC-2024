@@ -49,8 +49,6 @@ public class SwerveCommand extends Command{
           Constants.m_gyro.calibrateGyro();
 
         }
-        SmartDashboard.putBoolean("Target", Constants.camera.ifTarget());
-        SmartDashboard.putBoolean("autoAim", Constants.autoAim);
 
         driveWithJoystick(Constants.fieldRelative, Constants.autoAim);
 
@@ -63,7 +61,6 @@ public class SwerveCommand extends Command{
 
     public void driveWithJoystick(boolean fieldRelative, boolean autoAim) {
 
-      Constants.shooter.stop();
 
       double xSpeed = 0;
       double ySpeed = 0;
@@ -104,6 +101,9 @@ public class SwerveCommand extends Command{
 
         }
 
+      }
+      if(!autoAim){
+        Constants.shooter.stop();
       }
 
     
