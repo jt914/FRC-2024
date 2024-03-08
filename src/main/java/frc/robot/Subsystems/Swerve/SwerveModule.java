@@ -6,6 +6,8 @@ package frc.robot.Subsystems.Swerve;
 
 import javax.naming.LimitExceededException;
 
+import com.ctre.phoenix6.configs.CANcoderConfigurator;
+import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -37,6 +39,7 @@ public class SwerveModule {
 
   private final CANSparkMax driveMotor;
   private final CANSparkMax turnMotor;
+  private final CANcoder turnCoder;
 
   public RelativeEncoder driveEncoder;
   public RelativeEncoder turnEncoder;
@@ -62,6 +65,7 @@ public class SwerveModule {
     swerveLimitSwitch = new DigitalInput(driveMotorID);
     driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
     turnMotor = new CANSparkMax(turnMotorID , MotorType.kBrushless);
+    turnCoder = new CANcoder(CANCoderID);
 
     if(driveMotor.getDeviceId() == 4){
       driveMotor.setIdleMode(IdleMode.kCoast);
@@ -93,6 +97,11 @@ public class SwerveModule {
     // Limit the PID Controller's input range between -pi and pi and set the input
     // to be continuous.
     turnPIDController.enableContinuousInput(-180,  180);
+
+    CANcoderConfigurator turnConfig = turnCoder.getConfigurator();
+    MagnetSensorConfigs turnMagConfig = new MagnetSensorConfigs();
+    turnConfig.refresh(turnMagConfig);
+    turnConfig.apply(turnMagConfig.withMagnetOffset(1));
   }
 
   /**
@@ -192,5 +201,8 @@ public class SwerveModule {
 
   public void setTurnEncoder(double angle) {
     turnEncoder.setPosition(angle);
+  }
+  public void resetAbsoluteModules() {
+    turnEncoder.setPosition(turnCoder.getPosition().getValueAsDouble());
   }
 }
