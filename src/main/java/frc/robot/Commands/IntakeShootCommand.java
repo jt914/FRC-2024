@@ -10,6 +10,7 @@ public class IntakeShootCommand extends Command {
     private Intake intake;
     private boolean isFinished = false;
     public Lights lights;
+    int elapsed = 0;
 
     public IntakeShootCommand(){
         addRequirements(Constants.intake);
@@ -20,17 +21,20 @@ public class IntakeShootCommand extends Command {
     @Override
     public void initialize(){
         intake = Constants.intake;
-
+        elapsed = 0;
     }
 
     @Override
     public void execute(){
+        elapsed++;
         if(Constants.hasNote) {
             lights.off();
         }
         intake.runFast();
         Constants.hasNote = false;
-
+        if(elapsed > 20) {
+            isFinished = true;
+        }
     }
 
     @Override

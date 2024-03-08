@@ -78,8 +78,10 @@ public class Shooter extends SubsystemBase{
     }
     public void setVelocity() {
         //7 and 9 before
-        shooterBot.set(SmartDashboard.getNumber("shooterBot", 0.79));
-        shooterTop.set(SmartDashboard.getNumber("shooterTop", 0.89));
+        // shooterBot.set(SmartDashboard.getNumber("shooterBot", 0.79));
+        // shooterTop.set(SmartDashboard.getNumber("shooterTop", 0.89));
+        controllerBot.setReference(4484, ControlType.kVelocity);
+        controllerBot.setReference(5052, ControlType.kVelocity);
         SmartDashboard.putNumber("rpmTop", shooterBot.getEncoder().getVelocity());
         SmartDashboard.putNumber("rpmBot", shooterBot.getEncoder().getVelocity());
 

@@ -56,6 +56,11 @@ public final class Constants {
     public static final int backLeftTurnID = 1;
     public static final int backRightTurnID = 8;
 
+    public static final int frontLeftCANCoderID = 1;
+    public static final int frontRightCANCoderID = 2;
+    public static final int backLeftCANCoderID = 3;
+    public static final int backRightCANCoderID = 4;
+
     public static final double frontLeftOffset = 0;
     public static final double frontRightOffset = 0;
     public static final double backLeftOffset = 0;

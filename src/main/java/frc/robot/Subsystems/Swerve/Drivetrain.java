@@ -72,10 +72,10 @@ public class Drivetrain extends SubsystemBase {
     m_backLeftLocation = new Translation2d(-Constants.drivetrainModuleOffset, Constants.drivetrainModuleOffset);
     m_backRightLocation = new Translation2d(-Constants.drivetrainModuleOffset, -Constants.drivetrainModuleOffset);
 
-    m_frontLeft = new SwerveModule(Constants.frontLeftDriveID, Constants.frontLeftTurnID);
-    m_frontRight = new SwerveModule(Constants.frontRightDriveID, Constants.frontRightTurnID);
-    m_backLeft = new SwerveModule(Constants.backLeftDriveID, Constants.backLeftTurnID);
-    m_backRight = new SwerveModule(Constants.backRightDriveID, Constants.backRightTurnID);
+    m_frontLeft = new SwerveModule(Constants.frontLeftDriveID, Constants.frontLeftTurnID, Constants.frontLeftCANCoderID);
+    m_frontRight = new SwerveModule(Constants.frontRightDriveID, Constants.frontRightTurnID, Constants.frontRightCANCoderID);
+    m_backLeft = new SwerveModule(Constants.backLeftDriveID, Constants.backLeftTurnID, Constants.backLeftCANCoderID);
+    m_backRight = new SwerveModule(Constants.backRightDriveID, Constants.backRightTurnID, Constants.backRightCANCoderID);
 
     m_kinematics =
       new SwerveDriveKinematics(

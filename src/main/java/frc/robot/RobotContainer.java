@@ -56,7 +56,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     (Constants.swerveController.start()).onTrue(new FlashCommand());
     (Constants.swerveController.start()).onTrue(new SwerveCommand());
-    (Constants.swerveController.b()).toggleOnTrue(new IntakeShootCommand());
+    (Constants.swerveController.b()).onTrue(new IntakeShootCommand());
     Constants.alternateController.x().onTrue(new WinchCommand());
 
     (Constants.swerveController.rightBumper()).toggleOnTrue(new IntakeCommand());

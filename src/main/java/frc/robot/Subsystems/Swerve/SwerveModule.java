@@ -6,6 +6,7 @@ package frc.robot.Subsystems.Swerve;
 
 import javax.naming.LimitExceededException;
 
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -56,7 +57,7 @@ public class SwerveModule {
    * Constructs a SwerveModule with a drive motor, turning motor, drive encoder and turning encoder.
    *
    */
-  public SwerveModule(int driveMotorID, int turnMotorID) 
+  public SwerveModule(int driveMotorID, int turnMotorID, int CANCoderID) 
   {
     swerveLimitSwitch = new DigitalInput(driveMotorID);
     driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
