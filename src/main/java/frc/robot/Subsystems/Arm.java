@@ -70,6 +70,7 @@ public class Arm extends ProfiledPIDSubsystem{
         armEnc.setDistancePerRotation(-360);
 
         setGoal(armEnc.getDistance());
+        
         // armEnc.reset();
 
         // armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
