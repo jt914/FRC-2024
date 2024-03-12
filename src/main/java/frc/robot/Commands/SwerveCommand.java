@@ -26,8 +26,9 @@ public class SwerveCommand extends Command{
 
 
     public SwerveCommand(){
-      addRequirements(Constants.swerve);
-
+      if(Constants.swerve != null) {
+        addRequirements(Constants.swerve);
+      }
     }
 
     @Override
@@ -142,8 +143,9 @@ public class SwerveCommand extends Command{
       // SmartDashboard.putNumber("ySpeedSwerve", ySpeed);
 
       // SmartDashboard.putNumber("time Diff", currTime - prevTime);
-      
-      Constants.swerve.drive(xSpeed, ySpeed, yaw);
+      if(Constants.swerve != null) {
+        Constants.swerve.drive(xSpeed, ySpeed, yaw);
+      }
       // prevXSpeed = xSpeed;
       // prevYSpeed = ySpeed;
 

@@ -12,30 +12,42 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 
-public class Arm extends SubsystemBase{
+public class Arm extends ProfiledPIDSubsystem{
 
     public double currentPos;
     private CANSparkMax armLeft,armRight;
     public DutyCycleEncoder armEnc;
     private SparkLimitSwitch limitSwitch;
-    private double kP, kI, kD;
     public double desiredAngle;
-    // public PIDController controller = new PIDController(.6, .05, .165);
-    public PIDController controller = new PIDController(.38, 0.001, .01);
 
-    // public PIDController controller = new PIDController(.2, .13, 0);
+    // public PIDController controller = new PIDController(.38, 0.001, .01);
+
     private final ArmFeedforward feedforward  = new ArmFeedforward(0, .22, 0);
     public DigitalInput armSwitchBot;
+    private static double maxVelocity = 100; 
+    private static double maxAcceleration = 200; 
+    private static ProfiledPIDController profiledPIDController = new ProfiledPIDController(
+            .4,
+            .05,
+            .00008,
+            new TrapezoidProfile.Constraints(
+                maxVelocity, // degrees per second
+                maxAcceleration) // degrees per second^2
+                ,.02);
 
     public Arm() {
+        super(profiledPIDController);
         armLeft = new CANSparkMax(Constants.armLeftID, MotorType.kBrushless);
         armLeft.restoreFactoryDefaults();
         armLeft.setIdleMode(IdleMode.kBrake);
@@ -56,47 +68,46 @@ public class Arm extends SubsystemBase{
         armEnc = new DutyCycleEncoder(8);
         // armEnc.setPositionOffset(.9);
         // armEnc.setDistancePerRotation(-360);
+        profiledPIDController.setTolerance(.2);
 
-        kP = .05;
-        kI = 0;
-        kD = 0;
+        setGoal(getMeasurement());
+    }
+
+    @Override
+    public double getMeasurement() {
+        return ((1 - armEnc.getAbsolutePosition()) * 360) -19.6;        
     }
 
     public void setDesired(double desired){
         desiredAngle = desired;
-        System.out.println(desiredAngle);
-
     }
 
     public void moveArm() {
-        desiredAngle = MathUtil.clamp(this.desiredAngle, 0,120);
+        SmartDashboard.putNumber("Desired Angle: ", desiredAngle);
+    }
 
-        // SmartDashboard.putNumber("Brake", armLeft.getBusVoltage()*armLeft.getAppliedOutput());
-        
-        // double k = Math.signum(desiredAngle - getAngle());
-        // if(Math.abs(desiredAngle-getAngle()) < 2);
-        // {
-        //     k = 0;
-        // }
-        // SmartDashboard.putNumber("pid", controller.calculate(((1 - armEnc.getAbsolutePosition()) * 360),desiredAngle) );
-        // SmartDashboard.putNumber("ff", feedforward.calculate(desiredAngle* Math.PI / 180, Math.PI/10));
-        // SmartDashboard.putNumber("k", k);
-        // // if(armSwitchBot.get()) {
-        // //     if(armLeft.getAppliedOutput() < 0) {
-        // //         // arm voltage is negative
-        // //     }
-        // // }
-        SmartDashboard.putNumber("voltage", controller.calculate(getAngle(), desiredAngle));
-        SmartDashboard.putNumber("currentAgnleee", getAngle());
-        SmartDashboard.putNumber("desiredAngleee", desiredAngle);
-        armRight.setVoltage(controller.calculate(getAngle(), desiredAngle) + (feedforward.calculate(getAngle() * Math.PI / 180, 0)));
-        armLeft.setVoltage(controller.calculate(getAngle(), desiredAngle) + (feedforward.calculate(getAngle() * Math.PI / 180, 0)));
-        SmartDashboard.putData("pidControl", controller);
+    @Override
+    protected void useOutput(double output, TrapezoidProfile.State desiredSetpoint) {
+            // TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(
+            //     maxVelocity, // degrees per second  
+            //     maxAcceleration); // degrees per second^2
+            
+            // profiledPIDController.setConstraints(constraints);
+
+            // armLeft.setVoltage(controller.calculate(armEnc.getDistance(), output) + MathUtil.clamp(feedforward.calculate(output* Math.PI / 180, k), -2, 2));
+            // armRight.setVoltage(controller.calculate(armEnc.getDistance(), output) + MathUtil.clamp(feedforward.calculate(output * Math.PI / 180, k), -2, 2));
+            output = output + (feedforward.calculate(Math.toRadians(desiredSetpoint.position), Math.toRadians(desiredSetpoint.velocity)));
+            output = MathUtil.clamp(output, -5, 5);
+            // armLeft.setVoltage(output);
+            // armRight.setVoltage(output);
+            SmartDashboard.putNumber("Desired Angle", desiredAngle);
+            SmartDashboard.putNumber("Voltage Output", output);  
     }
-    public double getAngle() {
-        return ((1 - armEnc.getAbsolutePosition()) * 360) -19.6;
+
+    public boolean atSetpoint() {
+        return profiledPIDController.atSetpoint();
     }
-    
+
     public void stop() {
         armLeft.set(0);
         armRight.set(0);

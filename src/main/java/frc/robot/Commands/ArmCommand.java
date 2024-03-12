@@ -12,20 +12,19 @@ public class ArmCommand extends Command {
 
     public ArmCommand(){
         addRequirements(Constants.arm);
-
     }
 
     @Override
     public void initialize(){
         arm = Constants.arm;
-
+        Constants.armRunning = true;
     }
     @Override
     public void execute(){
-        if(Constants.alternateController.leftTrigger().getAsBoolean()){
+        if(Constants.swerveController.leftTrigger().getAsBoolean()){
             Constants.arm.setDesired(Constants.arm.desiredAngle - 0.25);
         }
-        else if(Constants.alternateController.rightTrigger().getAsBoolean()){
+        else if(Constants.swerveController.rightTrigger().getAsBoolean()){
             Constants.arm.setDesired(Constants.arm.desiredAngle + 0.25);
         }
         Constants.arm.setDesired(Constants.arm.desiredAngle);

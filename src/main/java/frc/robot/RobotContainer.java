@@ -57,10 +57,11 @@ public class RobotContainer {
     (Constants.swerveController.start()).onTrue(new FlashCommand());
     (Constants.swerveController.start()).onTrue(new SwerveCommand());
     (Constants.swerveController.b()).onTrue(new IntakeShootCommand());
-    Constants.alternateController.x().onTrue(new WinchCommand());
+    // Constants.alternateController.x().onTrue(new WinchCommand());
 
     (Constants.swerveController.rightBumper()).toggleOnTrue(new IntakeCommand());
-    (Constants.swerveController.x()).toggleOnTrue(new ArmCommand());
+    (Constants.swerveController.x()).toggleOnTrue(new ShooterCommand());
+    //Change this back to ArmCommand ^
     (Constants.swerveController.leftBumper()).whileTrue(new IntakeReverseCommand());
     (Constants.swerveController.a()).toggleOnTrue(new AmpCommand());
     Constants.swerveController.y().onTrue(new ToggleAutoAimCommand());

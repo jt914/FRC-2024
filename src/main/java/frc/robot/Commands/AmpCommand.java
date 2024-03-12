@@ -36,7 +36,7 @@ public class AmpCommand extends Command {
     public void execute(){
         arm.setDesired(105);
 
-        if(arm.getAngle() > 45) {
+        if(arm.getMeasurement() > 45) {
             shooter.setLowVelocity();
         }
         arm.moveArm();

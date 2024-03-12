@@ -32,65 +32,70 @@ public class Shooter extends SubsystemBase{
         shooterTop.setIdleMode(IdleMode.kCoast);
         shooterTop.enableVoltageCompensation(11);
         shooterTop.setInverted(true);
-
         shooterBot = new CANSparkMax(Constants.shooterBotID, MotorType.kBrushless);
         shooterBot.restoreFactoryDefaults();
         shooterBot.setIdleMode(IdleMode.kCoast);
         shooterBot.setInverted(true);
         shooterBot.enableVoltageCompensation(11);
 
-        SmartDashboard.putNumber("bottomRPM", 4000);
-        SmartDashboard.putNumber("topRPM", 4000);
-
-        shooterBot.burnFlash();
-        shooterTop.burnFlash();
-
         controllerTop = shooterTop.getPIDController();
         controllerBot = shooterBot.getPIDController();
 
-        double kP = 0.000000001;
+        double kP = 0;
         double kI = 0;
         double kD = 0; 
-        double kIz = 0; 
-        double kFF = 0.0001968; 
+        double kFFtop = 0.0001968;
+        double kFFbot = 0.0001968;
 
         // set PID coefficients
         controllerTop.setP(kP);
         controllerTop.setI(kI);
         controllerTop.setD(kD);
-        controllerTop.setIZone(kIz);
-        controllerTop.setFF(kFF);
+        controllerTop.setFF(kFFtop);
 
         controllerBot.setP(kP);
         controllerBot.setI(kI);
         controllerBot.setD(kD);
-        controllerBot.setIZone(kIz);
-        controllerBot.setFF(kFF);
-        SmartDashboard.putNumber("shooterBot", 0.79);
-        SmartDashboard.putNumber("shooterTop", 0.89);
+        controllerBot.setFF(kFFbot);
+        shooterBot.burnFlash();
+        shooterTop.burnFlash();
 
     }
-
-    public void setSpeed(double botSpeed, double topSpeed) {
-        shooterBot.set(botSpeed);
-        shooterTop.set(topSpeed);
-
+  /**
+   * Converts a percentage to velocity in RPMs.
+   *
+   * @param percent Percentage in integer form.
+   */
+    public double toRPM(double percent) {
+        return .01 * percent * 5676;
     }
+  /**
+   * Set top and bottom shooter speeds in percents.
+   *
+   * @param botPercent Percentage to run bottom shooter at, in integer form.
+   * @param topPercent Percentage to run top shooter at, in integer form.
+   */
+    public void setSpeed(double botPercent, double topPercent) {
+        controllerBot.setReference(toRPM(botPercent), ControlType.kVelocity);
+        controllerTop.setReference(toRPM(topPercent), ControlType.kVelocity);
+    }
+
     public void setVelocity() {
         //7 and 9 before
         // shooterBot.set(SmartDashboard.getNumber("shooterBot", 0.79));
         // shooterTop.set(SmartDashboard.getNumber("shooterTop", 0.89));
-        controllerBot.setReference(4484, ControlType.kVelocity);
-        controllerBot.setReference(5052, ControlType.kVelocity);
-        SmartDashboard.putNumber("rpmTop", shooterBot.getEncoder().getVelocity());
+        // controllerBot.setReference(4484, ControlType.kVelocity);
+        // controllerTop.setReference(5052, ControlType.kVelocity);
+        controllerBot.setReference(toRPM(44), ControlType.kVelocity);
+        controllerTop.setReference(toRPM(50), ControlType.kVelocity);
+        SmartDashboard.putNumber("rpmTop", shooterTop.getEncoder().getVelocity());
         SmartDashboard.putNumber("rpmBot", shooterBot.getEncoder().getVelocity());
 
     }
 
     public void setLowVelocity(){
-        // controllerBot.setReference(2000, ControlType.kVelocity);
-        shooterBot.set(0.3);
-        shooterTop.set(0.45);
+        controllerBot.setReference(toRPM(20), ControlType.kVelocity);
+        controllerTop.setReference(toRPM(30), ControlType.kVelocity);
     }
 
     public void stop() {

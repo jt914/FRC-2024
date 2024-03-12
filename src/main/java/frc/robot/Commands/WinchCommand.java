@@ -24,21 +24,21 @@ public class WinchCommand extends Command {
     @Override
     public void execute(){
 
-        if(Constants.swerveController.leftTrigger().getAsBoolean() || Constants.swerveController.rightTrigger().getAsBoolean() || Constants.alternateController.y().getAsBoolean()){
-            if(Constants.swerveController.leftTrigger().getAsBoolean()){
-                winch.moveLeftIn();
-            }
-            if(Constants.swerveController.rightTrigger().getAsBoolean()){
-                winch.moveRightIn();
-            }
-            if(Constants.alternateController.y().getAsBoolean()){
-                winch.moveOut();
-            }
-        }
+    //     if(Constants.swerveController.leftTrigger().getAsBoolean() || Constants.swerveController.rightTrigger().getAsBoolean() || Constants.alternateController.y().getAsBoolean()){
+    //         if(Constants.swerveController.leftTrigger().getAsBoolean()){
+    //             winch.moveLeftIn();
+    //         }
+    //         if(Constants.swerveController.rightTrigger().getAsBoolean()){
+    //             winch.moveRightIn();
+    //         }
+    //         if(Constants.alternateController.y().getAsBoolean()){
+    //             winch.moveOut();
+    //         }
+    //     }
 
-        else{
-            winch.stop();
-        }
+    //     else{
+    //         winch.stop();
+    //     }
     }
 
     @Override
