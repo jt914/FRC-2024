@@ -51,13 +51,8 @@ public class Robot extends LoggedRobot {
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
   if (isReal()) {
-      Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
       Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
   } else {
-      setUseTiming(false); // Run as fast as possible
-      String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
-      Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
-      Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
   }
 
 // Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
@@ -112,7 +107,7 @@ Logger.start(); // Start logging! No more data receivers, replay sources, or met
     if(Constants.swerve != null) {
       Constants.swerve.updateOdometry();
     }
-    Constants.arm.setGoal(Constants.arm.desiredAngle);
+    // Constants.arm.setGoal(Constants.arm.desiredAngle);
 
   
 

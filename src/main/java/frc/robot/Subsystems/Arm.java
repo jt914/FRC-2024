@@ -80,6 +80,8 @@ public class Arm extends ProfiledPIDSubsystem{
 
     public void setDesired(double desired){
         desiredAngle = desired;
+        desiredAngle = MathUtil.clamp(desiredAngle, 5, 120);
+
     }
 
     public void moveArm() {
