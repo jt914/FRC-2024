@@ -127,7 +127,7 @@ public class Drivetrain extends SubsystemBase {
     m_frontRight.setModuleState(swerveModuleStates[1], 1);
     m_backLeft.setModuleState(swerveModuleStates[2], 2);
     // m_backRight.setModuleState(swerveModuleStates[3], 3);
-    m_backRight.setModuleState(new SwerveModuleState(),3);
+    m_backRight.setModuleState(swerveModuleStates[3],3);
 
     // SmartDashboard.putNumber("xSpeed", xSpeed);
     // SmartDashboard.putNumber("ySpeed", ySpeed);
