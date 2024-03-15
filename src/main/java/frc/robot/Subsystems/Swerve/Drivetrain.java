@@ -42,10 +42,10 @@ public class Drivetrain extends SubsystemBase {
   private final Translation2d m_backLeftLocation;
   private final Translation2d m_backRightLocation;
 
-  private final SwerveModule m_frontLeft;
-  private final SwerveModule m_frontRight;
+  public final SwerveModule m_frontLeft;
+  public final SwerveModule m_frontRight;
   public final SwerveModule m_backLeft;
-  private final SwerveModule m_backRight;
+  public final SwerveModule m_backRight;
   private ChassisSpeeds speeds;
 
   public SwerveModuleState[] states = new SwerveModuleState[4];

@@ -70,6 +70,10 @@ Logger.start(); // Start logging! No more data receivers, replay sources, or met
     Lights.strip.setData(Lights.ledBuffer);
     SmartDashboard.putNumber("Measurement", Constants.arm.getMeasurement());
     SmartDashboard.putNumber("Desired Angle ", Constants.arm.desiredAngle);
+    // SmartDashboard.putNumber("SwerveDesired FL: ", Constants.swerve.m_frontLeft.getTurn180Angle());
+    // SmartDashboard.putNumber("SwerveDesired FR: ", Constants.swerve.m_frontRight.getTurn180Angle());
+    // SmartDashboard.putNumber("SwerveDesired BL: ", Constants.swerve.m_backLeft.getTurn180Angle());
+    // SmartDashboard.putNumber("SwerveDesired BR: ", Constants.swerve.m_backRight.getTurn180Angle());
   }
 
   @Override

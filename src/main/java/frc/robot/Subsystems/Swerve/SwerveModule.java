@@ -72,6 +72,7 @@ public class SwerveModule {
     turnEncoder = turnMotor.getEncoder();
     driveMotor.setInverted(false);
     turnMotor.setInverted(true);
+    driveMotor.setOpenLoopRampRate(.7);
     driveMotor.burnFlash();
     turnMotor.burnFlash();
     // unmodified_turningEncoder = m_turningMotor.getEncoder();
@@ -112,7 +113,7 @@ public class SwerveModule {
     // Optimize the reference state to avoid spinning further than 90 degrees
     double moduleVelocity = desiredState.speedMetersPerSecond;
     double moduleAngle = desiredState.angle.getDegrees();
-    
+    SmartDashboard.putNumber("DesiredModuleAngle" + module, moduleAngle);
     double optimizedModuleOutput[] = glacierOptimized(moduleAngle, getTurn180Angle(), moduleVelocity);
 
     double driveOutput = optimizedModuleOutput[1];
