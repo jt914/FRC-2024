@@ -67,17 +67,16 @@ public class SwerveModule {
     turnMotor = new CANSparkMax(turnMotorID , MotorType.kBrushless);
     turnCoder = new CANcoder(CANCoderID);
 
-    if(driveMotor.getDeviceId() == 4){
-      driveMotor.setIdleMode(IdleMode.kCoast);
-    }
-    if(turnMotor.getDeviceId() == 3){
-      turnMotor.setIdleMode(IdleMode.kCoast);
-    }
 
     driveEncoder = driveMotor.getEncoder();
     turnEncoder = turnMotor.getEncoder();
+    driveMotor.setInverted(false);
+    turnMotor.setInverted(true);
+    driveMotor.setOpenLoopRampRate(.7);
+    driveMotor.burnFlash();
+    turnMotor.burnFlash();
     // unmodified_turningEncoder = m_turningMotor.getEncoder();
-    // m_turningEncoder = unmodified_turningEncoder.getPosition()*Math.toRadians((1/360)*(1/15.2));
+    // m_turningEncoder = unmodified_turningEncoder.getPosition()*Math.toRadians((1/360)*(1/12.8));
 
     driveEncoder.setPosition(0);
     turnEncoder.setPosition(0);
@@ -102,6 +101,7 @@ public class SwerveModule {
     MagnetSensorConfigs turnMagConfig = new MagnetSensorConfigs();
     turnConfig.refresh(turnMagConfig);
     turnConfig.apply(turnMagConfig.withMagnetOffset(1));
+    
   }
 
   /**
@@ -113,6 +113,7 @@ public class SwerveModule {
     // Optimize the reference state to avoid spinning further than 90 degrees
     double moduleVelocity = desiredState.speedMetersPerSecond;
     double moduleAngle = desiredState.angle.getDegrees();
+    SmartDashboard.putNumber("DesiredModuleAngle" + module, moduleAngle);
     double optimizedModuleOutput[] = glacierOptimized(moduleAngle, getTurn180Angle(), moduleVelocity);
 
     double driveOutput = optimizedModuleOutput[1];
@@ -123,7 +124,7 @@ public class SwerveModule {
 
 
 
-    SmartDashboard.putNumber("driveOutput", driveOutput);
+    SmartDashboard.putNumber("turnOutput", optimizedModuleOutput[0]);
 
     double turnOutput = MathUtil.clamp(turnPIDController.calculate(getTurn180Angle(), optimizedModuleOutput[0]), -0.4, 0.4);
     turnMotor.set(turnOutput);
@@ -168,7 +169,7 @@ public class SwerveModule {
   public SwerveModuleState getState() {
 
     return new SwerveModuleState(
-        driveEncoder.getVelocity()/40.5, new Rotation2d(turnEncoder.getPosition()*23.684));
+        driveEncoder.getVelocity()/40.5, new Rotation2d(turnEncoder.getPosition()*28.125));
         
       }
   /**
@@ -178,7 +179,7 @@ public class SwerveModule {
    */
   public SwerveModulePosition getPosition() {
     return new SwerveModulePosition(
-        driveEncoder.getPosition()/26.5, new Rotation2d(turnEncoder.getPosition()/15.2 * 2 * Math.PI));
+        driveEncoder.getPosition()/26.5, new Rotation2d(turnEncoder.getPosition()/12.8 * 2 * Math.PI));
 
   }
   /**
@@ -187,14 +188,14 @@ public class SwerveModule {
    * @return Angle of the module converted to a range between -180 degrees and 180 degrees
    */
   public double getTurn180Angle() {
-    if (turnEncoder.getPosition()*23.684 > 360) {
-      turnEncoder180 = ((turnEncoder.getPosition()*23.684) % 360) - 180;
+    if (turnEncoder.getPosition()*28.125 > 360) {
+      turnEncoder180 = ((turnEncoder.getPosition()*28.125) % 360) - 180;
     }
-    else if (turnEncoder.getPosition()*23.684 < 0) {
-      turnEncoder180 = ((turnEncoder.getPosition()*23.684) % 360) + 180;
+    else if (turnEncoder.getPosition()*28.125 < 0) {
+      turnEncoder180 = ((turnEncoder.getPosition()*28.125) % 360) + 180;
     }
     else {
-      turnEncoder180 = (turnEncoder.getPosition()*23.684) - 180;
+      turnEncoder180 = (turnEncoder.getPosition()*28.125) - 180;
     }
     return turnEncoder180;
   }

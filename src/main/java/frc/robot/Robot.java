@@ -47,6 +47,17 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotInit() {
+
+    Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+
+  if (isReal()) {
+      Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+  } else {
+  }
+
+// Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
+Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+
     robot = new RobotContainer();
     autoCommand = robot.getAutonomousCommand();
     Constants.m_gyro.calibrateGyro();
@@ -59,6 +70,10 @@ public class Robot extends LoggedRobot {
     Lights.strip.setData(Lights.ledBuffer);
     SmartDashboard.putNumber("Measurement", Constants.arm.getMeasurement());
     SmartDashboard.putNumber("Desired Angle ", Constants.arm.desiredAngle);
+    // SmartDashboard.putNumber("SwerveDesired FL: ", Constants.swerve.m_frontLeft.getTurn180Angle());
+    // SmartDashboard.putNumber("SwerveDesired FR: ", Constants.swerve.m_frontRight.getTurn180Angle());
+    // SmartDashboard.putNumber("SwerveDesired BL: ", Constants.swerve.m_backLeft.getTurn180Angle());
+    // SmartDashboard.putNumber("SwerveDesired BR: ", Constants.swerve.m_backRight.getTurn180Angle());
   }
 
   @Override
@@ -96,7 +111,7 @@ public class Robot extends LoggedRobot {
     if(Constants.swerve != null) {
       Constants.swerve.updateOdometry();
     }
-    Constants.arm.setGoal(Constants.arm.desiredAngle);
+    // Constants.arm.setGoal(Constants.arm.desiredAngle);
 
   
 

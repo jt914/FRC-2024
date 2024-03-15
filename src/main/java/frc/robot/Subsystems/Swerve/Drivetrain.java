@@ -33,19 +33,19 @@ import frc.robot.Constants;
 
 /** Represents a swerve drive style drivetrain. */
 public class Drivetrain extends SubsystemBase {
-  public static final double kMaxVelocity = 2; // meters/second (m/s) //cannot go over 3.3
+  public static final double kMaxVelocity = 1; // meters/second (m/s) //cannot go over 3.3
   public static final double kMaxVoltage = kMaxVelocity / (((473 / 9.25) * 0.103 * Math.PI) / 60); /* THIS CANNOT GO OVER 12 VOLTS */
-  public static final double kMaxAngularSpeed = 4 * Math.PI; // 1/2 rotation per second
+  public static final double kMaxAngularSpeed = 2 * Math.PI; // 1/2 rotation per second
 
   private final Translation2d m_frontLeftLocation;
   private final Translation2d m_frontRightLocation;
   private final Translation2d m_backLeftLocation;
   private final Translation2d m_backRightLocation;
 
-  private final SwerveModule m_frontLeft;
-  private final SwerveModule m_frontRight;
+  public final SwerveModule m_frontLeft;
+  public final SwerveModule m_frontRight;
   public final SwerveModule m_backLeft;
-  private final SwerveModule m_backRight;
+  public final SwerveModule m_backRight;
   private ChassisSpeeds speeds;
 
   public SwerveModuleState[] states = new SwerveModuleState[4];
@@ -72,10 +72,10 @@ public class Drivetrain extends SubsystemBase {
     m_backLeftLocation = new Translation2d(-Constants.drivetrainModuleOffset, Constants.drivetrainModuleOffset);
     m_backRightLocation = new Translation2d(-Constants.drivetrainModuleOffset, -Constants.drivetrainModuleOffset);
 
-    m_frontLeft = new SwerveModule(Constants.frontLeftDriveID, Constants.frontLeftTurnID, Constants.frontLeftCANCoderID);
-    m_frontRight = new SwerveModule(Constants.frontRightDriveID, Constants.frontRightTurnID, Constants.frontRightCANCoderID);
-    m_backLeft = new SwerveModule(Constants.backLeftDriveID, Constants.backLeftTurnID, Constants.backLeftCANCoderID);
-    m_backRight = new SwerveModule(Constants.backRightDriveID, Constants.backRightTurnID, Constants.backRightCANCoderID);
+    m_frontLeft = new SwerveModule(Constants.frontRightDriveID, Constants.frontRightTurnID, Constants.frontLeftCANCoderID);
+    m_frontRight = new SwerveModule(Constants.frontLeftDriveID, Constants.frontLeftTurnID, Constants.frontRightCANCoderID);
+    m_backLeft = new SwerveModule(Constants.backRightDriveID, Constants.backRightTurnID, Constants.backLeftCANCoderID);
+    m_backRight = new SwerveModule(Constants.backLeftDriveID, Constants.backLeftTurnID, Constants.backRightCANCoderID);
 
     m_kinematics =
       new SwerveDriveKinematics(
@@ -127,7 +127,7 @@ public class Drivetrain extends SubsystemBase {
     m_frontRight.setModuleState(swerveModuleStates[1], 1);
     m_backLeft.setModuleState(swerveModuleStates[2], 2);
     // m_backRight.setModuleState(swerveModuleStates[3], 3);
-    m_backRight.setModuleState(new SwerveModuleState(),3);
+    m_backRight.setModuleState(swerveModuleStates[3],3);
 
     // SmartDashboard.putNumber("xSpeed", xSpeed);
     // SmartDashboard.putNumber("ySpeed", ySpeed);
