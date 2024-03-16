@@ -35,8 +35,8 @@ public class Arm extends ProfiledPIDSubsystem{
 
     private final ArmFeedforward feedforward  = new ArmFeedforward(0, .22, 0);
     public DigitalInput armSwitchBot;
-    private static double maxVelocity = 20; 
-    private static double maxAcceleration = 50; 
+    private static double maxVelocity = 60; 
+    private static double maxAcceleration = 100; 
     
     private static ProfiledPIDController profiledPIDController = new ProfiledPIDController(
             .4,
@@ -98,7 +98,7 @@ public class Arm extends ProfiledPIDSubsystem{
             // armLeft.setVoltage(controller.calculate(armEnc.getDistance(), output) + MathUtil.clamp(feedforward.calculate(output* Math.PI / 180, k), -2, 2));
             // armRight.setVoltage(controller.calculate(armEnc.getDistance(), output) + MathUtil.clamp(feedforward.calculate(output * Math.PI / 180, k), -2, 2));
             output = output + (feedforward.calculate(Math.toRadians(desiredSetpoint.position), Math.toRadians(desiredSetpoint.velocity)));
-            output = MathUtil.clamp(output, -5, 5);
+            output = MathUtil.clamp(output, -10, 10);
             armLeft.setVoltage(output);
             armRight.setVoltage(output);
             SmartDashboard.putNumber("Desired Angle", desiredAngle);
