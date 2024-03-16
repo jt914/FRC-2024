@@ -47,6 +47,10 @@ public final class Constants {
 
     /* - - - SWERVE DRIVE CONSTANTS - - - */
 
+    public static final double wheelDiameter = 0.103;
+    public static final double RPMperVolt = 473;
+    public static final double driveGearRatio = 6.75;
+
     public static final int frontLeftDriveID = 4;
     public static final int frontRightDriveID = 6;
     public static final int backLeftDriveID = 2;

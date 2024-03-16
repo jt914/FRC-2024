@@ -70,8 +70,8 @@ public class SwerveModule {
 
     driveEncoder = driveMotor.getEncoder();
     turnEncoder = turnMotor.getEncoder();
-    driveMotor.setInverted(false);
-    turnMotor.setInverted(true);
+    driveMotor.setInverted(true);
+    turnMotor.setInverted(false);
     driveMotor.setOpenLoopRampRate(.7);
     driveMotor.burnFlash();
     turnMotor.burnFlash();
@@ -178,8 +178,9 @@ public class SwerveModule {
    * @return The current position of the module.
    */
   public SwerveModulePosition getPosition() {
+    // System.out.println(turnEncoder.getPosition()/12.8 * 2 * Math.PI);
     return new SwerveModulePosition(
-        driveEncoder.getPosition()/26.5, new Rotation2d(turnEncoder.getPosition()/12.8 * 2 * Math.PI));
+        driveEncoder.getPosition()/3.888, new Rotation2d(turnEncoder.getPosition()/12.8 * 2 * Math.PI));
 
   }
   /**
