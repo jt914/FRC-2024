@@ -30,16 +30,17 @@ public class Arm extends ProfiledPIDSubsystem{
     public DutyCycleEncoder armEnc;
     private SparkLimitSwitch limitSwitch;
     public double desiredAngle;
-
+    
     // public PIDController controller = new PIDController(.38, 0.001, .01);
 
     private final ArmFeedforward feedforward  = new ArmFeedforward(0, .22, 0);
     public DigitalInput armSwitchBot;
-    private static double maxVelocity = 100; 
-    private static double maxAcceleration = 200; 
+    private static double maxVelocity = 20; 
+    private static double maxAcceleration = 50; 
+    
     private static ProfiledPIDController profiledPIDController = new ProfiledPIDController(
             .4,
-            .05,
+            .005,
             .00008,
             new TrapezoidProfile.Constraints(
                 maxVelocity, // degrees per second
@@ -52,14 +53,14 @@ public class Arm extends ProfiledPIDSubsystem{
         armLeft.restoreFactoryDefaults();
         armLeft.setIdleMode(IdleMode.kBrake);
         armLeft.enableVoltageCompensation(11);
-        armLeft.setSmartCurrentLimit(5);
+        armLeft.setSmartCurrentLimit(12);
         armLeft.burnFlash();
 
         armRight = new CANSparkMax(Constants.armRightID, MotorType.kBrushless);
         armRight.restoreFactoryDefaults();
         armRight.setIdleMode(IdleMode.kBrake);
         armRight.enableVoltageCompensation(11);
-        armRight.setSmartCurrentLimit(5);
+        armRight.setSmartCurrentLimit(12);
         armRight.setInverted(true);
 
         armRight.burnFlash();
@@ -69,7 +70,6 @@ public class Arm extends ProfiledPIDSubsystem{
         // armEnc.setPositionOffset(.9);
         // armEnc.setDistancePerRotation(-360);
         profiledPIDController.setTolerance(.2);
-
         setGoal(getMeasurement());
     }
 
@@ -80,8 +80,7 @@ public class Arm extends ProfiledPIDSubsystem{
 
     public void setDesired(double desired){
         desiredAngle = desired;
-        desiredAngle = MathUtil.clamp(desiredAngle, 5, 120);
-
+        desiredAngle = MathUtil.clamp(desiredAngle, 5.5, 120);
     }
 
     public void moveArm() {
@@ -100,8 +99,8 @@ public class Arm extends ProfiledPIDSubsystem{
             // armRight.setVoltage(controller.calculate(armEnc.getDistance(), output) + MathUtil.clamp(feedforward.calculate(output * Math.PI / 180, k), -2, 2));
             output = output + (feedforward.calculate(Math.toRadians(desiredSetpoint.position), Math.toRadians(desiredSetpoint.velocity)));
             output = MathUtil.clamp(output, -5, 5);
-            // armLeft.setVoltage(output);
-            // armRight.setVoltage(output);
+            armLeft.setVoltage(output);
+            armRight.setVoltage(output);
             SmartDashboard.putNumber("Desired Angle", desiredAngle);
             SmartDashboard.putNumber("Voltage Output", output);  
     }

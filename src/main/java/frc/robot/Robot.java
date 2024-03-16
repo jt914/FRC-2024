@@ -47,7 +47,7 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotInit() {
-
+    Constants.arm.getController().setGoal(Constants.arm.getMeasurement());
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
   if (isReal()) {
@@ -57,11 +57,9 @@ public class Robot extends LoggedRobot {
 
 // Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
 Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
-
     robot = new RobotContainer();
     autoCommand = robot.getAutonomousCommand();
     Constants.m_gyro.calibrateGyro();
-    Constants.arm.enable();
   }
 
   @Override
@@ -89,7 +87,9 @@ Logger.start(); // Start logging! No more data receivers, replay sources, or met
   }
   
   public void teleopInit() {
+    Constants.arm.disable();
     Constants.arm.setDesired(Constants.arm.getMeasurement());
+    Constants.arm.enable();
 
     if (autoCommand != null) {
       autoCommand.cancel();
@@ -111,7 +111,9 @@ Logger.start(); // Start logging! No more data receivers, replay sources, or met
     if(Constants.swerve != null) {
       Constants.swerve.updateOdometry();
     }
-    // Constants.arm.setGoal(Constants.arm.desiredAngle);
+    Constants.arm.setGoal(Constants.arm.desiredAngle);
+    SmartDashboard.putNumber("Desired", Constants.arm.desiredAngle);
+    SmartDashboard.putNumber("Goal", Constants.arm.getController().getGoal().position);
 
   
 
