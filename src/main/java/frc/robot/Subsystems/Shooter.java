@@ -32,6 +32,7 @@ public class Shooter extends SubsystemBase{
         shooterTop.setIdleMode(IdleMode.kCoast);
         shooterTop.enableVoltageCompensation(11);
         shooterTop.setInverted(true);
+
         shooterBot = new CANSparkMax(Constants.shooterBotID, MotorType.kBrushless);
         shooterBot.restoreFactoryDefaults();
         shooterBot.setIdleMode(IdleMode.kCoast);
@@ -57,6 +58,7 @@ public class Shooter extends SubsystemBase{
         controllerBot.setI(kI);
         controllerBot.setD(kD);
         controllerBot.setFF(kFFbot);
+
         shooterBot.burnFlash();
         shooterTop.burnFlash();
 
@@ -69,16 +71,7 @@ public class Shooter extends SubsystemBase{
     public double toRPM(double percent) {
         return .01 * percent * 5676;
     }
-  /**
-   * Set top and bottom shooter speeds in percents.
-   *
-   * @param botPercent Percentage to run bottom shooter at, in integer form.
-   * @param topPercent Percentage to run top shooter at, in integer form.
-   */
-    public void setSpeed(double botPercent, double topPercent) {
-        controllerBot.setReference(toRPM(botPercent), ControlType.kVelocity);
-        controllerTop.setReference(toRPM(topPercent), ControlType.kVelocity);
-    }
+
 
     public void setVelocity() {
         //7 and 9 before
@@ -86,6 +79,12 @@ public class Shooter extends SubsystemBase{
         // shooterTop.set(SmartDashboard.getNumber("shooterTop", 0.89));
         // controllerBot.setReference(4484, ControlType.kVelocity);
         // controllerTop.setReference(5052, ControlType.kVelocity);
+
+        // System.out.println("RUNNING");
+        // shooterBot.set(0.2);
+        // shooterTop.set(0.2);
+
+
         controllerBot.setReference(toRPM(44), ControlType.kVelocity);
         controllerTop.setReference(toRPM(50), ControlType.kVelocity);
         SmartDashboard.putNumber("rpmTop", shooterTop.getEncoder().getVelocity());
@@ -94,6 +93,11 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setLowVelocity(){
+
+        // System.out.println("RUNNING");
+        // shooterBot.set(0.2);
+        // shooterTop.set(0.2);
+
         controllerBot.setReference(toRPM(20), ControlType.kVelocity);
         controllerTop.setReference(toRPM(30), ControlType.kVelocity);
     }

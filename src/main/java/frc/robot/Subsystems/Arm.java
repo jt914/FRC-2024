@@ -69,8 +69,8 @@ public class Arm extends ProfiledPIDSubsystem{
         // armEnc.setPositionOffset(.9);
         // armEnc.setDistancePerRotation(-360);
         profiledPIDController.setTolerance(.2);
+        profiledPIDController.reset(getMeasurement());
 
-        setGoal(getMeasurement());
     }
 
     @Override
@@ -89,21 +89,29 @@ public class Arm extends ProfiledPIDSubsystem{
     }
 
     @Override
-    protected void useOutput(double output, TrapezoidProfile.State desiredSetpoint) {
-            // TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(
-            //     maxVelocity, // degrees per second  
-            //     maxAcceleration); // degrees per second^2
+    public void useOutput(double output, TrapezoidProfile.State desiredSetpoint) {
+        SmartDashboard.putNumber("POSITION ERROR", profiledPIDController.getPositionError());
+        SmartDashboard.putNumber("SETPOINTT", profiledPIDController.getSetpoint().position);
+        profiledPIDController.setGoal(new TrapezoidProfile.State(getMeasurement(),0));
+
+            TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(
+                maxVelocity, // degrees per second  
+                maxAcceleration); // degrees per second^2
             
-            // profiledPIDController.setConstraints(constraints);
+            profiledPIDController.setConstraints(constraints);
+
+            SmartDashboard.putNumber("useOutput output", output);
+            SmartDashboard.putNumber("desiredSetpointt", desiredSetpoint.position);
 
             // armLeft.setVoltage(controller.calculate(armEnc.getDistance(), output) + MathUtil.clamp(feedforward.calculate(output* Math.PI / 180, k), -2, 2));
             // armRight.setVoltage(controller.calculate(armEnc.getDistance(), output) + MathUtil.clamp(feedforward.calculate(output * Math.PI / 180, k), -2, 2));
             output = output + (feedforward.calculate(Math.toRadians(desiredSetpoint.position), Math.toRadians(desiredSetpoint.velocity)));
             output = MathUtil.clamp(output, -5, 5);
-            // armLeft.setVoltage(output);
-            // armRight.setVoltage(output);
+            armLeft.setVoltage(output);
+            armRight.setVoltage(output);
             SmartDashboard.putNumber("Desired Angle", desiredAngle);
-            SmartDashboard.putNumber("Voltage Output", output);  
+            SmartDashboard.putNumber("Voltage Output", output);
+            SmartDashboard.putNumber("getgoal",profiledPIDController.getGoal().position);  
     }
 
     public boolean atSetpoint() {

@@ -39,7 +39,6 @@ public class AmpCommand extends Command {
         if(arm.getMeasurement() > 45) {
             shooter.setLowVelocity();
         }
-        arm.moveArm();
     }
 
     @Override

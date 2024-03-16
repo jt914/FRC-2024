@@ -56,12 +56,14 @@ public class Robot extends LoggedRobot {
   }
 
 // Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
-Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+  Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
 
     robot = new RobotContainer();
     autoCommand = robot.getAutonomousCommand();
     Constants.m_gyro.calibrateGyro();
     Constants.arm.enable();
+    Constants.arm.setGoal(Constants.arm.desiredAngle);
+
   }
 
   @Override
@@ -74,6 +76,9 @@ Logger.start(); // Start logging! No more data receivers, replay sources, or met
     // SmartDashboard.putNumber("SwerveDesired FR: ", Constants.swerve.m_frontRight.getTurn180Angle());
     // SmartDashboard.putNumber("SwerveDesired BL: ", Constants.swerve.m_backLeft.getTurn180Angle());
     // SmartDashboard.putNumber("SwerveDesired BR: ", Constants.swerve.m_backRight.getTurn180Angle());
+    SmartDashboard.putNumber("xDist", Constants.swerve.poseEstimator.getEstimatedPosition().getX());
+    SmartDashboard.putNumber("yDist", Constants.swerve.poseEstimator.getEstimatedPosition().getY());
+
   }
 
   @Override
@@ -89,7 +94,6 @@ Logger.start(); // Start logging! No more data receivers, replay sources, or met
   }
   
   public void teleopInit() {
-    Constants.arm.setDesired(Constants.arm.getMeasurement());
 
     if (autoCommand != null) {
       autoCommand.cancel();
@@ -111,7 +115,7 @@ Logger.start(); // Start logging! No more data receivers, replay sources, or met
     if(Constants.swerve != null) {
       Constants.swerve.updateOdometry();
     }
-    // Constants.arm.setGoal(Constants.arm.desiredAngle);
+    System.out.println(Constants.arm.desiredAngle);
 
   
 
