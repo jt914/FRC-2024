@@ -87,6 +87,7 @@ public class Shooter extends SubsystemBase{
 
         controllerBot.setReference(toRPM(44), ControlType.kVelocity);
         controllerTop.setReference(toRPM(50), ControlType.kVelocity);
+
         SmartDashboard.putNumber("rpmTop", shooterTop.getEncoder().getVelocity());
         SmartDashboard.putNumber("rpmBot", shooterBot.getEncoder().getVelocity());
 
