@@ -33,7 +33,7 @@ import frc.robot.Constants;
 
 /** Represents a swerve drive style drivetrain. */
 public class Drivetrain extends SubsystemBase {
-  public static final double kMaxVelocity = 2; // meters/second (m/s) //cannot go over 3.3
+  public static final double kMaxVelocity = 1; // meters/second (m/s) //cannot go over 3.3
   public static final double kMaxVoltage = kMaxVelocity / (((Constants.RPMperVolt / Constants.driveGearRatio) * Constants.wheelDiameter * Math.PI) / 60); /* THIS CANNOT GO OVER 12 VOLTS */
   public static final double kMaxAngularSpeed = 2 * Math.PI; // 1/2 rotation per second
 
@@ -215,5 +215,11 @@ public class Drivetrain extends SubsystemBase {
     m_frontRight.setTurnEncoder(0);
     m_backLeft.setTurnEncoder(0);
     m_backRight.setTurnEncoder(0);
+  }
+  public void resetAbsoluteModules() {
+    // m_frontLeft.resetAbsoluteModules();
+    // m_frontRight.resetAbsoluteModules();
+    // m_backLeft.resetAbsoluteModules();
+    m_backRight.resetAbsoluteModules();
   }
 }

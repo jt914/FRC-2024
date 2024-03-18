@@ -47,7 +47,6 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotInit() {
-    Constants.arm.getController().setGoal(Constants.arm.getMeasurement());
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
   if (isReal()) {
@@ -61,7 +60,6 @@ public class Robot extends LoggedRobot {
     robot = new RobotContainer();
     autoCommand = robot.getAutonomousCommand();
     Constants.m_gyro.calibrateGyro();
-    Constants.arm.enable();
     Constants.arm.setGoal(Constants.arm.desiredAngle);
 
   }
