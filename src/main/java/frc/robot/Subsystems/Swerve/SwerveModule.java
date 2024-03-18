@@ -43,6 +43,7 @@ public class SwerveModule {
 
   public RelativeEncoder driveEncoder;
   public RelativeEncoder turnEncoder;
+  private int driveId;
 
   // Gains are for example purposes only - must be determined for your own robot!
   public final PIDController drivePIDController = new PIDController(0, 0, 0);
@@ -67,10 +68,12 @@ public class SwerveModule {
     turnMotor = new CANSparkMax(turnMotorID , MotorType.kBrushless);
     turnCoder = new CANcoder(CANCoderID);
 
+    driveId = driveMotorID;
+
 
     driveEncoder = driveMotor.getEncoder();
     turnEncoder = turnMotor.getEncoder();
-    driveMotor.setInverted(true);
+    driveMotor.setInverted(false);
     turnMotor.setInverted(false);
     driveMotor.setOpenLoopRampRate(.7);
     driveMotor.burnFlash();
@@ -178,6 +181,7 @@ public class SwerveModule {
    * @return The current position of the module.
    */
   public SwerveModulePosition getPosition() {
+    SmartDashboard.putNumber("currentPos" + driveId, turnEncoder.getPosition()/12.8 * 2 * Math.PI);
     // System.out.println(turnEncoder.getPosition()/12.8 * 2 * Math.PI);
     return new SwerveModulePosition(
         driveEncoder.getPosition()/3.888, new Rotation2d(turnEncoder.getPosition()/12.8 * 2 * Math.PI));

@@ -194,30 +194,8 @@ public class Drivetrain extends SubsystemBase {
   /** Updates the field relative position of the robot. */
   public void updateOdometry() {
 
-        // Compute the robot's field-relative position exclusively from vision measurements.
+    SmartDashboard.putNumber("GYRO", m_gyro.getTotalAngleDegrees());
 
-        // try{
-        //   EstimatedRobotPose visionMeasurement3d = Constants.camera.getPose().get();
-        //   Pose2d visionMeasurement2d = visionMeasurement3d.estimatedPose.toPose2d();
-        //   poseEstimator.addVisionMeasurement(visionMeasurement2d,visionMeasurement3d.timestampSeconds);
-        // }catch (Exception e){
-        // }
-
-        // System.out.println(Constants.camera.getLatestResult().getBestTarget().getFiducialId());
-
-    // Convert robot pose from Pose3d to Pose2d needed to apply vision measurements.
-    
-    // SwerveDriveWheelPositions wheelPositions = new SwerveDriveWheelPositions(new SwerveModulePosition[] {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_backLeft.getPosition(), m_backRight.getPosition()});
-    // Rotation2d angle = new Rotation2d(Constants.m_gyro.getTotalAngleDegrees());
-
-    // Twist2d twist = m_kinematics.toTwist2d(m_previousWheelPositions, wheelPositions);
-    // twist.dtheta = angle.minus(m_previousAngle).getRadians();
-    // SmartDashboard.putNumber("twist", twist.dtheta);
-    // SmartDashboard.putNumber("twistX", twist.dx);
-    // SmartDashboard.putNumber("twistY", twist.dy);
-
-    // SmartDashboard.putString("previous", m_previousWheelPositions.toString());
-    // SmartDashboard.putString("current", wheelPositions.toString());
     //CHECK IF ROTATING CORRECT AMT
     poseEstimator.update(
         Rotation2d.fromDegrees(m_gyro.getTotalAngleDegrees()),
@@ -229,8 +207,6 @@ public class Drivetrain extends SubsystemBase {
 
         });
 
-    SmartDashboard.putNumber("frontLeft", m_frontLeft.getPosition().distanceMeters);
-    SmartDashboard.putNumber("frontRight", m_frontRight.getPosition().distanceMeters);
 
   }
 

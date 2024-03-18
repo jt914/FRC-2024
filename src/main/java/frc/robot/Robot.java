@@ -79,6 +79,7 @@ public class Robot extends LoggedRobot {
     SmartDashboard.putNumber("xDist", Constants.swerve.poseEstimator.getEstimatedPosition().getX());
     SmartDashboard.putNumber("yDist", Constants.swerve.poseEstimator.getEstimatedPosition().getY());
 
+    m_field.setRobotPose(Constants.swerve.poseEstimator.getEstimatedPosition());
   }
 
   @Override
