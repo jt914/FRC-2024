@@ -96,7 +96,6 @@ public class SwerveCommand extends Command{
 
             xSpeed = 0.4 * xSpeed;
             ySpeed = 0.4 * ySpeed;    
-              SmartDashboard.putNumber("wawasdassd", desired[1]);
 
         }
 

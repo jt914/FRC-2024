@@ -124,8 +124,6 @@ public class Drivetrain extends SubsystemBase {
   public void drive(double xSpeed, double ySpeed, double yaw) {
 
     speeds = new ChassisSpeeds(xSpeed, ySpeed, yaw);
-    SmartDashboard.putNumber("xSpeedSPEED", xSpeed);
-        SmartDashboard.putNumber("ySpeedSPEED", ySpeed);
 
 
     var swerveModuleStates = m_kinematics.toSwerveModuleStates(new ChassisSpeeds(xSpeed, ySpeed, yaw));
@@ -147,7 +145,6 @@ public class Drivetrain extends SubsystemBase {
   /** Updates the field relative position of the robot. */
   public void updateOdometry() {
 
-    SmartDashboard.putNumber("GYRO", m_gyro.getTotalAngleDegrees());
 
     poseEstimator.update(
         Rotation2d.fromDegrees(m_gyro.getTotalAngleDegrees()),

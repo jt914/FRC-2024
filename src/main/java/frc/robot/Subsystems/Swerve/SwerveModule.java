@@ -116,7 +116,6 @@ public class SwerveModule {
     // Optimize the reference state to avoid spinning further than 90 degrees
     double moduleVelocity = desiredState.speedMetersPerSecond;
     double moduleAngle = desiredState.angle.getDegrees();
-    SmartDashboard.putNumber("DesiredModuleAngle" + module, moduleAngle);
     double optimizedModuleOutput[] = glacierOptimized(moduleAngle, getTurn180Angle(), moduleVelocity);
 
     double driveOutput = optimizedModuleOutput[1];
@@ -127,7 +126,6 @@ public class SwerveModule {
 
 
 
-    SmartDashboard.putNumber("turnOutput", optimizedModuleOutput[0]);
 
     double turnOutput = MathUtil.clamp(turnPIDController.calculate(getTurn180Angle(), optimizedModuleOutput[0]), -0.4, 0.4);
     turnMotor.set(turnOutput);
@@ -181,7 +179,6 @@ public class SwerveModule {
    * @return The current position of the module.
    */
   public SwerveModulePosition getPosition() {
-    SmartDashboard.putNumber("currentPos" + driveId, turnEncoder.getPosition()/12.8 * 2 * Math.PI);
     // System.out.println(turnEncoder.getPosition()/12.8 * 2 * Math.PI);
     return new SwerveModulePosition(
         driveEncoder.getPosition()/3.888, new Rotation2d(turnEncoder.getPosition()/12.8 * 2 * Math.PI));

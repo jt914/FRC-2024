@@ -1,25 +1,17 @@
 package frc.robot.Subsystems;
 
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkLimitSwitch;
-import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 
@@ -65,10 +57,7 @@ public class Arm extends ProfiledPIDSubsystem{
 
         armRight.burnFlash();
 
-        // armSwitchBot = new DigitalInput(8);
         armEnc = new DutyCycleEncoder(8);
-        // armEnc.setPositionOffset(.9);
-        // armEnc.setDistancePerRotation(-360);
         profiledPIDController.setTolerance(.2);
         setGoal(getMeasurement());
     }
@@ -83,19 +72,13 @@ public class Arm extends ProfiledPIDSubsystem{
         desiredAngle = MathUtil.clamp(desiredAngle, 5.5, 120);
     }
 
-    public void moveArm() {
-        SmartDashboard.putNumber("Desired Angle: ", desiredAngle);
-    }
 
     @Override
     public void useOutput(double output, TrapezoidProfile.State desiredSetpoint) {
-
-            // armLeft.setVoltage(controller.calculate(armEnc.getDistance(), output) + MathUtil.clamp(feedforward.calculate(output* Math.PI / 180, k), -2, 2));
-            // armRight.setVoltage(controller.calculate(armEnc.getDistance(), output) + MathUtil.clamp(feedforward.calculate(output * Math.PI / 180, k), -2, 2));
-            output = output + (feedforward.calculate(Math.toRadians(desiredSetpoint.position), Math.toRadians(desiredSetpoint.velocity)));
-            output = MathUtil.clamp(output, -10, 10);
-            armLeft.setVoltage(output);
-            armRight.setVoltage(output);
+        output = output + (feedforward.calculate(Math.toRadians(desiredSetpoint.position), Math.toRadians(desiredSetpoint.velocity)));
+        output = MathUtil.clamp(output, -10, 10);
+        armLeft.setVoltage(output);
+        armRight.setVoltage(output);
     }
 
     public boolean atSetpoint() {
