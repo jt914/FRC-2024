@@ -43,6 +43,7 @@ public class SwerveModule {
 
   public RelativeEncoder driveEncoder;
   public RelativeEncoder turnEncoder;
+  private int driveId;
 
   // Gains are for example purposes only - must be determined for your own robot!
   public final PIDController drivePIDController = new PIDController(0, 0, 0);
@@ -68,10 +69,12 @@ public class SwerveModule {
     turnMotor = new CANSparkMax(turnMotorID , MotorType.kBrushless);
     turnCoder = new CANcoder(CANCoderID);
 
+    driveId = driveMotorID;
+
 
     driveEncoder = driveMotor.getEncoder();
     turnEncoder = turnMotor.getEncoder();
-    driveMotor.setInverted(true);
+    driveMotor.setInverted(false);
     turnMotor.setInverted(false);
     driveMotor.setOpenLoopRampRate(.7);
     driveMotor.burnFlash();
@@ -113,7 +116,6 @@ public class SwerveModule {
     // Optimize the reference state to avoid spinning further than 90 degrees
     double moduleVelocity = desiredState.speedMetersPerSecond;
     double moduleAngle = desiredState.angle.getDegrees();
-    SmartDashboard.putNumber("DesiredModuleAngle" + module, moduleAngle);
     double optimizedModuleOutput[] = glacierOptimized(moduleAngle, getTurn180Angle(), moduleVelocity);
 
     double driveOutput = optimizedModuleOutput[1];
@@ -124,7 +126,6 @@ public class SwerveModule {
 
 
 
-    SmartDashboard.putNumber("turnOutput", optimizedModuleOutput[0]);
 
     double turnOutput = MathUtil.clamp(turnPIDController.calculate(getTurn180Angle(), optimizedModuleOutput[0]), -0.4, 0.4);
     turnMotor.set(turnOutput);

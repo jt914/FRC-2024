@@ -1,8 +1,6 @@
 package frc.robot.Commands;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Lights;
 
@@ -45,7 +43,6 @@ public class IntakeShootCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-    // Constants.intakeStatus = false;
         intake.stop();
 
     }

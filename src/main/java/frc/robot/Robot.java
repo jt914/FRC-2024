@@ -68,15 +68,8 @@ public class Robot extends LoggedRobot {
   public void robotPeriodic(){
     CommandScheduler.getInstance().run();
     Lights.strip.setData(Lights.ledBuffer);
-    SmartDashboard.putNumber("Measurement", Constants.arm.getMeasurement());
-    SmartDashboard.putNumber("Desired Angle ", Constants.arm.desiredAngle);
-    // SmartDashboard.putNumber("SwerveDesired FL: ", Constants.swerve.m_frontLeft.getTurn180Angle());
-    // SmartDashboard.putNumber("SwerveDesired FR: ", Constants.swerve.m_frontRight.getTurn180Angle());
-    // SmartDashboard.putNumber("SwerveDesired BL: ", Constants.swerve.m_backLeft.getTurn180Angle());
-    // SmartDashboard.putNumber("SwerveDesired BR: ", Constants.swerve.m_backRight.getTurn180Angle());
-    SmartDashboard.putNumber("xDist", Constants.swerve.poseEstimator.getEstimatedPosition().getX());
-    SmartDashboard.putNumber("yDist", Constants.swerve.poseEstimator.getEstimatedPosition().getY());
 
+    m_field.setRobotPose(Constants.swerve.poseEstimator.getEstimatedPosition());
   }
 
   @Override
@@ -103,11 +96,6 @@ public class Robot extends LoggedRobot {
     }
 
 
-    // if(Constants.arm.getMeasurement() > 90){
-    //   Constants.arm = null;
-    // }
-
-    SmartDashboard.putData("Field", m_field);
 
   }
 
@@ -118,8 +106,6 @@ public class Robot extends LoggedRobot {
       Constants.swerve.updateOdometry();
     }
     Constants.arm.setGoal(Constants.arm.desiredAngle);
-    SmartDashboard.putNumber("Desired", Constants.arm.desiredAngle);
-    SmartDashboard.putNumber("Goal", Constants.arm.getController().getGoal().position);
 
   
 

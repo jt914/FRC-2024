@@ -38,7 +38,6 @@ public class IntakeReverseCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-    // Constants.intakeStatus = false;
         intake.stop();
         
     }
