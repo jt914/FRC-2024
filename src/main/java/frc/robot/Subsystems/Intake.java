@@ -39,7 +39,7 @@ public class Intake extends SubsystemBase{
     public void runFast() {
 
         intakePidController.setReference(2000, ControlType.kVelocity);
-=
+
         running = true;
     }
     public void run() {
