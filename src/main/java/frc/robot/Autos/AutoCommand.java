@@ -1,14 +1,10 @@
 package frc.robot.Autos;
-import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.Commands.IntakeCommand;
-import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Shooter;
 import frc.robot.Subsystems.Swerve.Drivetrain;
@@ -61,10 +57,6 @@ public class AutoCommand extends Command {
 
         if(target != null){
             counter = 0;
-            SmartDashboard.putNumber("xCurrent", target.getX());
-            SmartDashboard.putNumber("yCurrent", target.getY());
-            SmartDashboard.putNumber("Step", step);
-            //shoot
             if(step == 0){
                 shooter.setVelocity();
                 shooterCounter++;
@@ -94,9 +86,6 @@ public class AutoCommand extends Command {
                 yaw = 0;
                 swerve.drive(xSpeed, ySpeed, yaw);
 
-                SmartDashboard.putNumber("xSpeedwasd", xSpeed);
-                SmartDashboard.putNumber("ySpeedwasd", ySpeed);
-                System.out.println("doing number2");
 
                 intake.run();
 

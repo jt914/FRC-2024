@@ -96,9 +96,6 @@ public class Arm extends ProfiledPIDSubsystem{
             output = MathUtil.clamp(output, -10, 10);
             armLeft.setVoltage(output);
             armRight.setVoltage(output);
-            SmartDashboard.putNumber("Desired Angle", desiredAngle);
-            SmartDashboard.putNumber("Voltage Output", output);
-            SmartDashboard.putNumber("getgoal",profiledPIDController.getGoal().position);  
     }
 
     public boolean atSetpoint() {

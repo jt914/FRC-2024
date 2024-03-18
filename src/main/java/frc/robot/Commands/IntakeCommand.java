@@ -1,5 +1,4 @@
 package frc.robot.Commands;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -33,8 +32,6 @@ public class IntakeCommand extends Command {
     public void execute(){
         intake.run();
         lights.setColorRed(30, 150, 50);
-        SmartDashboard.putNumber("IntakeSens", Constants.intake.intakeSensor.getVoltage());
-        SmartDashboard.putBoolean("Intake Trigger", triggered);
 
         if(Constants.intake.intakeSensor.getVoltage()<.5) {
             triggered = true;

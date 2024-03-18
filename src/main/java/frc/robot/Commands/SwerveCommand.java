@@ -2,11 +2,9 @@ package frc.robot.Commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Swerve.Drivetrain;
 
@@ -108,48 +106,9 @@ public class SwerveCommand extends Command{
       }
 
     
-      // SmartDashboard.putNumber("prevX", prevXSpeed);
-      // SmartDashboard.putNumber("prevY", prevYSpeed);
-      // SmartDashboard.putNumber("x", xSpeed);
-      // SmartDashboard.putNumber("y", ySpeed);
-
-      //if desired X Speed = 0
-      //-1, 0, 1
-      //-1, 0, 1
-
-      // if(Math.abs(xSpeed) < 0.1){
-      //   xSpeed = prevXSpeed + (-0.1 * Math.signum(prevXSpeed));
-      // }
-      // else if(Math.abs(prevXSpeed - xSpeed) > 0.6){
-      //   xSpeed = prevXSpeed + (0.1 * Math.signum(xSpeed));
-      // }
-      // if(Math.abs(xSpeed) < 0.07){
-      //   xSpeed = 0;
-      // }
-
-      // if(Math.abs(ySpeed) < 0.1){
-      //   ySpeed = prevYSpeed + (-0.1 * Math.signum(prevYSpeed));
-      // }
-      // else if(Math.abs(prevYSpeed - ySpeed) > 0.6){
-      //   ySpeed = prevYSpeed + (0.1 * Math.signum(ySpeed));
-      // }
-      // if(Math.abs(xSpeed) < 0.07){
-      //   ySpeed = 0;
-      // }
-
-      // currTime = System.currentTimeMillis();
-
-      // SmartDashboard.putNumber("xSpeedSwerve", xSpeed);
-      // SmartDashboard.putNumber("ySpeedSwerve", ySpeed);
-
-      // SmartDashboard.putNumber("time Diff", currTime - prevTime);
       if(Constants.swerve != null) {
         Constants.swerve.drive(ySpeed, xSpeed, yaw);
       }
-      // prevXSpeed = xSpeed;
-      // prevYSpeed = ySpeed;
-
-      // prevTime = currTime;
       
     }
 }
