@@ -31,7 +31,7 @@ public class ResetModulesCommand extends Command {
     }
     @Override
     public void execute(){
-        swerve.resetAbsoluteModules();
+        swerve.resetAllAbsoluteModules();
     }
     @Override
     public void end(boolean interrupted) {

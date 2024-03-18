@@ -77,6 +77,11 @@ public class Drivetrain extends SubsystemBase {
     m_backLeft = new SwerveModule(Constants.backLeftDriveID, Constants.backLeftTurnID, Constants.backLeftCANCoderID);
     m_backRight = new SwerveModule(Constants.backRightDriveID, Constants.backRightTurnID, Constants.backRightCANCoderID);
 
+    m_frontLeft.setMagnetOffset(-0.020751953125);
+    m_frontRight.setMagnetOffset(-0.041748046875);
+    m_backLeft.setMagnetOffset(0.268310546875);
+    m_backRight.setMagnetOffset(0.24755859375);
+
     m_kinematics =
       new SwerveDriveKinematics(
           m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation);
@@ -234,16 +239,10 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
-  public void resetModules() {
-    m_frontLeft.setTurnEncoder(0);
-    m_frontRight.setTurnEncoder(0);
-    m_backLeft.setTurnEncoder(0);
-    m_backRight.setTurnEncoder(0);
-  }
-  public void resetAbsoluteModules() {
-    // m_frontLeft.resetAbsoluteModules();
-    // m_frontRight.resetAbsoluteModules();
-    // m_backLeft.resetAbsoluteModules();
-    m_backRight.resetAbsoluteModules();
+  public void resetAllAbsoluteModules() {
+    m_frontLeft.resetAbsoluteModule();
+    m_frontRight.resetAbsoluteModule();
+    m_backLeft.resetAbsoluteModule();
+    m_backRight.resetAbsoluteModule();
   }
 }

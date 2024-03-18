@@ -55,7 +55,8 @@ public class SwerveModule {
   // private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(.5549, 0, 0);
   private double turnEncoder180;
   DigitalInput swerveLimitSwitch;
-
+  CANcoderConfigurator turnConfig;
+  MagnetSensorConfigs turnMagConfig;
   /**
    * Constructs a SwerveModule with a drive motor, turning motor, drive encoder and turning encoder.
    *
@@ -97,11 +98,9 @@ public class SwerveModule {
     // to be continuous.
     turnPIDController.enableContinuousInput(-180,  180);
 
-    CANcoderConfigurator turnConfig = turnCoder.getConfigurator();
-    MagnetSensorConfigs turnMagConfig = new MagnetSensorConfigs();
-    turnConfig.refresh(turnMagConfig);
-    turnConfig.apply(turnMagConfig.withMagnetOffset(1));
-    
+    turnConfig = turnCoder.getConfigurator();
+    turnMagConfig = new MagnetSensorConfigs();
+    turnConfig.refresh(turnMagConfig);    
   }
 
   /**
@@ -110,6 +109,7 @@ public class SwerveModule {
    * @param desiredState Desired state with speed and angle.
    */
   public void setModuleState(SwerveModuleState desiredState, int module) {
+    SmartDashboard.putNumber("TurnEncoderPosition: " + module, 360 * turnCoder.getAbsolutePosition().getValueAsDouble());
     // Optimize the reference state to avoid spinning further than 90 degrees
     double moduleVelocity = desiredState.speedMetersPerSecond;
     double moduleAngle = desiredState.angle.getDegrees();
@@ -128,10 +128,7 @@ public class SwerveModule {
 
     double turnOutput = MathUtil.clamp(turnPIDController.calculate(getTurn180Angle(), optimizedModuleOutput[0]), -0.4, 0.4);
     turnMotor.set(turnOutput);
-    if(swerveLimitSwitch.get() == false)
-    {
-      turnEncoder.setPosition(0);
-    }
+
 
   }
 
@@ -201,10 +198,10 @@ public class SwerveModule {
     return turnEncoder180;
   }
 
-  public void setTurnEncoder(double angle) {
-    turnEncoder.setPosition(angle);
+  public void setMagnetOffset(double offset) {
+      turnConfig.apply(turnMagConfig.withMagnetOffset(offset));
   }
-  public void resetAbsoluteModules() {
-    turnEncoder.setPosition(turnCoder.getPosition().getValueAsDouble());
+  public void resetAbsoluteModule() {
+    turnEncoder.setPosition(12.8 * turnCoder.getPosition().getValueAsDouble());
   }
 }

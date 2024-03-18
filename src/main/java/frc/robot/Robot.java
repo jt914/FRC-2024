@@ -95,6 +95,7 @@ public class Robot extends LoggedRobot {
     Constants.arm.disable();
     Constants.arm.setDesired(Constants.arm.getMeasurement());
     Constants.arm.enable();
+    Constants.swerve.resetAllAbsoluteModules();
 
     if (autoCommand != null) {
       autoCommand.cancel();
