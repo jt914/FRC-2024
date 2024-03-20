@@ -33,7 +33,7 @@ public class Camera {
     Transform3d robotToCam = new Transform3d(new Translation3d(0.13, 0.33, 0.35), new Rotation3d(0,35,Math.PI)); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
 
     public Camera(){
-        cam = new PhotonCamera("photonvision");
+        cam = new PhotonCamera("Arducam_OV9782_USB_Camera");
         photonPoseEstimator = new PhotonPoseEstimator(AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(), PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cam, robotToCam);
     }
 
@@ -80,7 +80,6 @@ public class Camera {
 
     //if null the command to get desired shoot should just do nothing
     public double[] getDesiredShoot(double ySpeed){
-
         double[] retVal = new double[3];
 
         /*
