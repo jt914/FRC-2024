@@ -23,6 +23,7 @@ import frc.robot.Constants;
 public class Winch extends SubsystemBase{
 
     private CANSparkMax winchLeft,winchRight;
+    public RelativeEncoder winchLeftEncoder, winchRightEncoder;
 
     public Winch() {
         winchLeft = new CANSparkMax(Constants.winchLeftID, MotorType.kBrushless);
@@ -41,27 +42,43 @@ public class Winch extends SubsystemBase{
         winchRight.burnFlash();
         winchLeft.burnFlash();
 
+        winchLeftEncoder = winchLeft.getEncoder();
+        winchRightEncoder = winchRight.getEncoder();
     }
     public void moveOut() {
-        winchLeft.set(-0.1);
-        winchRight.set(-0.1);
-    }
-    public void moveRightIn(){
-        winchRight.set(0.1);
+        if(winchRightEncoder.getPosition() < 100 && winchLeftEncoder.getPosition() < 100) {
+            winchLeft.set(-0.1);
+            winchRight.set(-0.1);
+        }
 
     }
-    public void moveLeftIn(){
-        winchLeft.set(0.1);
+    public void moveRightOut(){
+        if(winchRightEncoder.getPosition() < 85) {
+            winchRight.set(0.1);
+        }
 
     }
-    public void moveLeftOut() {
-        winchLeft.set(-.1);
+    public void moveLeftOut(){
+        if(winchLeftEncoder.getPosition() < 72) {
+            winchLeft.set(0.1);
+        }
+
     }
-    public void moveRightOut() {
-        winchLeft.set(-.1);
+    public void moveLeftIn() {
+        if(winchLeftEncoder.getPosition() > 5) {
+            winchLeft.set(-0.1);
+        }
+
     }
+    public void moveRightIn() {
+        if(winchRightEncoder.getPosition() > 5) {
+            winchRight.set(-0.1);
+        }
+    }
+
     public void stop() {
         winchLeft.set(0);
         winchRight.set(0);
+
     }
 }
