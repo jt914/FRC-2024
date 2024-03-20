@@ -29,31 +29,36 @@ public class Winch extends SubsystemBase{
         winchLeft.restoreFactoryDefaults();
         winchLeft.setIdleMode(IdleMode.kBrake);
         winchLeft.enableVoltageCompensation(11);
+        winchLeft.setSmartCurrentLimit(1);
 
         winchRight = new CANSparkMax(Constants.winchRightID, MotorType.kBrushless);
         winchRight.restoreFactoryDefaults();
         winchRight.setIdleMode(IdleMode.kBrake);
         winchRight.enableVoltageCompensation(11);
         winchRight.setInverted(true);
+        winchRight.setSmartCurrentLimit(1);
 
         winchRight.burnFlash();
         winchLeft.burnFlash();
 
     }
-
     public void moveOut() {
-        winchLeft.set(-0.2);
-        winchRight.set(-0.2);
+        winchLeft.set(-0.1);
+        winchRight.set(-0.1);
     }
-
     public void moveRightIn(){
-        winchRight.set(0.2);
+        winchRight.set(0.1);
 
     }
-
     public void moveLeftIn(){
-        winchLeft.set(0.2);
+        winchLeft.set(0.1);
 
+    }
+    public void moveLeftOut() {
+        winchLeft.set(-.1);
+    }
+    public void moveRightOut() {
+        winchLeft.set(-.1);
     }
     public void stop() {
         winchLeft.set(0);
