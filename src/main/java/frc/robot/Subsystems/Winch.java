@@ -23,40 +23,62 @@ import frc.robot.Constants;
 public class Winch extends SubsystemBase{
 
     private CANSparkMax winchLeft,winchRight;
+    public RelativeEncoder winchLeftEncoder, winchRightEncoder;
 
     public Winch() {
         winchLeft = new CANSparkMax(Constants.winchLeftID, MotorType.kBrushless);
         winchLeft.restoreFactoryDefaults();
         winchLeft.setIdleMode(IdleMode.kBrake);
         winchLeft.enableVoltageCompensation(11);
+        winchLeft.setSmartCurrentLimit(1);
 
         winchRight = new CANSparkMax(Constants.winchRightID, MotorType.kBrushless);
         winchRight.restoreFactoryDefaults();
         winchRight.setIdleMode(IdleMode.kBrake);
         winchRight.enableVoltageCompensation(11);
         winchRight.setInverted(true);
+        winchRight.setSmartCurrentLimit(1);
 
         winchRight.burnFlash();
         winchLeft.burnFlash();
 
+        winchLeftEncoder = winchLeft.getEncoder();
+        winchRightEncoder = winchRight.getEncoder();
     }
-
     public void moveOut() {
-        winchLeft.set(-0.2);
-        winchRight.set(-0.2);
-    }
-
-    public void moveRightIn(){
-        winchRight.set(0.2);
+        if(winchRightEncoder.getPosition() < 100 && winchLeftEncoder.getPosition() < 100) {
+            winchLeft.set(-0.1);
+            winchRight.set(-0.1);
+        }
 
     }
-
-    public void moveLeftIn(){
-        winchLeft.set(0.2);
+    public void moveRightOut(){
+        if(winchRightEncoder.getPosition() < 85) {
+            winchRight.set(0.1);
+        }
 
     }
+    public void moveLeftOut(){
+        if(winchLeftEncoder.getPosition() < 72) {
+            winchLeft.set(0.1);
+        }
+
+    }
+    public void moveLeftIn() {
+        if(winchLeftEncoder.getPosition() > 5) {
+            winchLeft.set(-0.1);
+        }
+
+    }
+    public void moveRightIn() {
+        if(winchRightEncoder.getPosition() > 5) {
+            winchRight.set(-0.1);
+        }
+    }
+
     public void stop() {
         winchLeft.set(0);
         winchRight.set(0);
+
     }
 }
