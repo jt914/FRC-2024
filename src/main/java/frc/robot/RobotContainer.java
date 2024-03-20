@@ -61,7 +61,7 @@ public class RobotContainer {
 
     (Constants.swerveController.rightBumper()).toggleOnTrue(new IntakeCommand());
     (Constants.swerveController.x()).toggleOnTrue(new ResetModulesCommand());
-    //Change this back to ArmCommand ^
+    (Constants.alternateController.x()).toggleOnTrue(new ArmCommand());
     (Constants.swerveController.leftBumper()).whileTrue(new IntakeReverseCommand());
     (Constants.swerveController.a()).toggleOnTrue(new AmpCommand());
     Constants.swerveController.y().onTrue(new ToggleAutoAimCommand());

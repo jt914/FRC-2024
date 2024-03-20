@@ -22,7 +22,7 @@ public class IntakeCommand extends Command {
         triggered = false;
         elapsed = 0;
         arm = Constants.arm;
-        arm.setDesired(6);
+        arm.setDesired(5.5);
         addRequirements(Constants.arm);
         lights = Constants.lights;
     }   

@@ -44,10 +44,11 @@ public class Intake extends SubsystemBase{
     }
     public void run() {
 
-        intakePidController.setReference(1000, ControlType.kVelocity);
+        intakePidController.setReference(1300, ControlType.kVelocity);
 
         running = true;
     }
+    
 
     public void runSlow(){
         intakePidController.setReference(800, ControlType.kVelocity);

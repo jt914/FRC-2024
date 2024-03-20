@@ -27,8 +27,8 @@ public class Arm extends ProfiledPIDSubsystem{
 
     private final ArmFeedforward feedforward  = new ArmFeedforward(0, .22, 0);
     public DigitalInput armSwitchBot;
-    private static double maxVelocity = 60; 
-    private static double maxAcceleration = 100; 
+    private static double maxVelocity = 70; 
+    private static double maxAcceleration = 140; 
     
     private static ProfiledPIDController profiledPIDController = new ProfiledPIDController(
             .4,
@@ -76,7 +76,7 @@ public class Arm extends ProfiledPIDSubsystem{
     @Override
     public void useOutput(double output, TrapezoidProfile.State desiredSetpoint) {
         output = output + (feedforward.calculate(Math.toRadians(desiredSetpoint.position), Math.toRadians(desiredSetpoint.velocity)));
-        output = MathUtil.clamp(output, -10, 10);
+        output = MathUtil.clamp(output, -12, 12);
         armLeft.setVoltage(output);
         armRight.setVoltage(output);
     }
