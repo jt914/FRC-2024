@@ -70,6 +70,8 @@ public class Robot extends LoggedRobot {
     Lights.strip.setData(Lights.ledBuffer);
 
     m_field.setRobotPose(Constants.swerve.poseEstimator.getEstimatedPosition());
+    SmartDashboard.putData(m_field);
+
   }
 
   @Override

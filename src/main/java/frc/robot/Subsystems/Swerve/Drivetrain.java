@@ -132,6 +132,8 @@ public class Drivetrain extends SubsystemBase {
 
 
     var swerveModuleStates = m_kinematics.toSwerveModuleStates(new ChassisSpeeds(xSpeed, ySpeed, yaw));
+
+    SmartDashboard.putNumber("drive Yaw", yaw);
     
     Logger.recordOutput("MyStates", swerveModuleStates);
 

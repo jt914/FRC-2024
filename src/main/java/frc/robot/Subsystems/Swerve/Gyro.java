@@ -3,7 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.Subsystems.Swerve;
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
 import com.kauailabs.navx.frc.*;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Gyro {
   // private AHRS m_gyro;
@@ -27,7 +31,10 @@ public class Gyro {
   }
 
   public double getTotalAngleDegrees() {
-    return m_gyro.getAngle() + gyroAngleOffset;
+    double angle = m_gyro.getAngle() + gyroAngleOffset;
+    SmartDashboard.putNumber("gyroAngle",angle);
+
+    return angle;
   }
 
   
