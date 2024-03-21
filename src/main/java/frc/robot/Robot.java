@@ -107,6 +107,7 @@ public class Robot extends LoggedRobot {
     if(Constants.swerve != null) {
       Constants.swerve.updateOdometry();
     }
+    SmartDashboard.putNumber("desired", Constants.arm.getMeasurement());
     Constants.arm.setGoal(Constants.arm.desiredAngle);
 
   

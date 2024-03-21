@@ -12,8 +12,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 import frc.robot.Commands.IntakeCommand;
+import frc.robot.Commands.ResetModulesCommand;
 import frc.robot.Commands.ToggleAutoAimCommand;
 import frc.robot.Subsystems.Arm;
+import frc.robot.Subsystems.Camera;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Shooter;
 import frc.robot.Subsystems.Swerve.Drivetrain;
@@ -43,7 +45,10 @@ public class TwoNoteCommand extends Command {
     private int elapsed = 0;
     public Trigger trig;
     public BooleanSupplier autoAim;
-    public boolean aim = false;;
+    public boolean aim = false;
+    public Camera cam;
+    InterpolatingDoubleTreeMap tm = new InterpolatingDoubleTreeMap();
+
 
     public TwoNoteCommand(){
         swerve = Constants.swerve;
@@ -53,10 +58,14 @@ public class TwoNoteCommand extends Command {
         autoAim = () -> aim;
         trig = new Trigger(autoAim);
         trig.onTrue(new ToggleAutoAimCommand());
-        
+            
     }
     @Override
     public void initialize(){
+        tm.put(3.74, 33.0);
+        tm.put(2.4, 26.0);
+        tm.put(1.3, 15.5);
+        Constants.swerve.resetAllAbsoluteModules();
 
   
     }
@@ -66,6 +75,11 @@ public class TwoNoteCommand extends Command {
     @Override
     public void execute(){
         aim = true;
+
+        SmartDashboard.putNumber("YAW", yaw);
+
+        yaw = autoAim(Constants.camera.getDesiredShoot(0));
+        swerve.drive(-2,0,yaw);
         // if(step == 0){
         //     Constants.arm.setDesired(4);
         //     counter++;
@@ -99,7 +113,21 @@ public class TwoNoteCommand extends Command {
     }
     @Override
     public void end(boolean interrupted) {
+        swerve.drive(0,0,0);
 
+    }
+
+    private double autoAim(double[] desired){
+        if(desired != null && desired[0] != 0){
+            Constants.arm.setDesired(tm.get(desired[2]) + (xSpeed * 1.05));
+            return -1 * aimController.calculate(desired[0], -1);
+
+        }
+        else{
+            return 0;
+        }
+        
+        
     }
 }
 

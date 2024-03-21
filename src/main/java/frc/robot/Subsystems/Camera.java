@@ -108,6 +108,12 @@ public class Camera {
                     Units.degreesToRadians(15),
                     Units.degreesToRadians(shooterTarget.getPitch()));
 
+                
+
+
+            retVal[2] = shooterTarget.getBestCameraToTarget().getX();
+            System.out.println(retVal[2]);
+            SmartDashboard.putNumber("Camerrraa", retVal[1]);
 
             return retVal;
         }
