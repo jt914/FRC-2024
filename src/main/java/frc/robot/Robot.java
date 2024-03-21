@@ -71,6 +71,7 @@ public class Robot extends LoggedRobot {
 
     m_field.setRobotPose(Constants.swerve.poseEstimator.getEstimatedPosition());
     SmartDashboard.putData(m_field);
+    Constants.swerve.updateOdometry();
 
   }
 
