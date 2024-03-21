@@ -80,10 +80,16 @@ public class Robot extends LoggedRobot {
     if(autoCommand != null){
       autoCommand.schedule();
     }
+    Constants.arm.disable();
+    Constants.arm.setDesired(Constants.arm.getMeasurement());
+    Constants.arm.enable();
+
   }
 
   @Override
   public void autonomousPeriodic() {
+        Constants.arm.setGoal(Constants.arm.desiredAngle);
+
 
   }
   

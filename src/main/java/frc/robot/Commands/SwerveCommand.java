@@ -78,6 +78,8 @@ public class SwerveCommand extends Command{
 
           SmartDashboard.putNumber("yController", yController);
           SmartDashboard.putNumber("xController", xController);
+          SmartDashboard.putNumber("CURRENTX", Constants.swerve.poseEstimator.getEstimatedPosition().getX());
+          SmartDashboard.putNumber("CURRENTY", Constants.swerve.poseEstimator.getEstimatedPosition().getY());
 
           
 
