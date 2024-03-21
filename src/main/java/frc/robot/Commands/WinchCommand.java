@@ -25,16 +25,24 @@ public class WinchCommand extends Command{
 
         if(leftTrigger || rightTrigger || leftBumper || rightBumper){
             if(Constants.alternateController.leftTrigger().getAsBoolean()) {
-                winch.moveLeftOut();
+                if(winch.winchRightEncoder.getPosition() < 85) {
+                    winch.moveLeftOut();
+                }
             }
             if(Constants.alternateController.rightTrigger().getAsBoolean()) {
-                winch.moveRightOut();
+                if(winch.winchLeftEncoder.getPosition() < 72) {
+                    winch.moveRightOut();
+                }
             }
             if(Constants.alternateController.leftBumper().getAsBoolean()) {
-                winch.moveLeftIn();
+                if(winch.winchLeftEncoder.getPosition() > 0) {
+                    winch.moveLeftIn();
+                }
             }
             if(Constants.alternateController.rightBumper().getAsBoolean()) {
-                winch.moveRightIn();
+                if(winch.winchRightEncoder.getPosition() > 0) {
+                     winch.moveRightIn();
+                }
             }
         }
         else{
