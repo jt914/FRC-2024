@@ -7,6 +7,18 @@
       "window": {
         "visible": true
       }
+    },
+    "Other Devices": {
+      "CANCoder (v6)[22]": {
+        "header": {
+          "open": true
+        }
+      },
+      "navX-Sensor[0]": {
+        "header": {
+          "open": true
+        }
+      }
     }
   },
   "NTProvider": {

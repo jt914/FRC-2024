@@ -1,4 +1,6 @@
 package frc.robot.Autos;
+import java.util.function.BooleanSupplier;
+
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -7,8 +9,10 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 import frc.robot.Commands.IntakeCommand;
+import frc.robot.Commands.ToggleAutoAimCommand;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Shooter;
@@ -37,12 +41,18 @@ public class TwoNoteCommand extends Command {
     private IntakeCommand intakeCommand;
     private boolean triggered = false;
     private int elapsed = 0;
+    public Trigger trig;
+    public BooleanSupplier autoAim;
+    public boolean aim = false;;
 
     public TwoNoteCommand(){
         swerve = Constants.swerve;
         arm = Constants.arm;
         shooter = Constants.shooter;
         intake = Constants.intake;
+        autoAim = () -> aim;
+        trig = new Trigger(autoAim);
+        trig.onTrue(new ToggleAutoAimCommand());
         
     }
     @Override
@@ -55,35 +65,36 @@ public class TwoNoteCommand extends Command {
     //Tune PID and Drive PID
     @Override
     public void execute(){
-        if(step == 0){
-            Constants.arm.setDesired(4);
-            counter++;
-            if(counter > 50){
-                step = 1;
-                counter = 0;
-            }
-        }
+        aim = true;
+        // if(step == 0){
+        //     Constants.arm.setDesired(4);
+        //     counter++;
+        //     if(counter > 50){
+        //         step = 1;
+        //         counter = 0;
+        //     }
+        // }
 
 
-        if(step == 1){
-            Constants.shooter.setVelocity();
-            counter++;
-            if(counter > 50){
-                step = 2;
-                counter = 0;
-            }
-        }
+        // if(step == 1){
+        //     Constants.shooter.setVelocity();
+        //     counter++;
+        //     if(counter > 50){
+        //         step = 2;
+        //         counter = 0;
+        //     }
+        // }
 
-        if(step == 2){
-            intake.run();
-            counter++;
-            if(counter > 50){
-                counter = 0;
-                step = 4;
-                shooter.stop();
-                intake.stop();
-            }
-        }
+        // if(step == 2){
+        //     intake.run();
+        //     counter++;
+        //     if(counter > 50){
+        //         counter = 0;
+        //         step = 4;
+        //         shooter.stop();
+        //         intake.stop();
+        //     }
+        // }
 
     }
     @Override
