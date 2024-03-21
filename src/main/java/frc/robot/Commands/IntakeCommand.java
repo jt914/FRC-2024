@@ -38,7 +38,7 @@ public class IntakeCommand extends Command {
         if(triggered == true) {
             elapsed++;
         }
-        if(elapsed > 2) {
+        if(triggered) {
             isFinished = true;
             elapsed = 0;
             Constants.hasNote = true;

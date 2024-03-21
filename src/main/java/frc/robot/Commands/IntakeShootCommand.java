@@ -34,6 +34,7 @@ public class IntakeShootCommand extends Command {
         if(elapsed > 20) {
             isFinished = true;
             elapsed = 0;
+            // Constants.autoAim = false;
         }
     }
 

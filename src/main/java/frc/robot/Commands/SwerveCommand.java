@@ -31,9 +31,9 @@ public class SwerveCommand extends Command{
 
     @Override
     public void initialize(){
-      tm.put(10.74, 22.0);
-      tm.put(7.1, 18.0);
-      tm.put(4.3, 12.5);
+      tm.put(10.74, 27.0);
+      tm.put(7.1, 23.0);
+      tm.put(4.3, 18.5);
       prevTime = System.currentTimeMillis();
       currTime = System.currentTimeMillis();
 
@@ -86,7 +86,7 @@ public class SwerveCommand extends Command{
         ySpeed = 0;
         xSpeed = 0;
       }
-      yaw = Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(-1 * Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
+      yaw = Constants.m_rotLimiter.calculate(MathUtil.applyDeadband(Constants.swerveController.getRightX(), Constants.swerveControllerRightXDeadband)) * Drivetrain.kMaxAngularSpeed;
 
       if(autoAim){
           Constants.shooter.setVelocity();

@@ -85,8 +85,8 @@ public class Shooter extends SubsystemBase{
         // shooterTop.set(0.2);
 
 
-        controllerTop.setReference(toRPM(75), ControlType.kVelocity);
-        controllerBot.setReference(toRPM(62), ControlType.kVelocity);
+        controllerTop.setReference(toRPM(70), ControlType.kVelocity);
+        controllerBot.setReference(toRPM(80), ControlType.kVelocity);
 
 
     }
