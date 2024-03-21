@@ -21,19 +21,21 @@ public class SwerveCommand extends Command{
     InterpolatingDoubleTreeMap tm = new InterpolatingDoubleTreeMap();
     double prevXSpeed, prevYSpeed;
     long prevTime, currTime;
+    double a;
 
 
     public SwerveCommand(){
       if(Constants.swerve != null) {
         addRequirements(Constants.swerve);
       }
+      a = 0.1;
     }
 
     @Override
     public void initialize(){
-      tm.put(10.74, 27.0);
-      tm.put(7.1, 23.0);
-      tm.put(4.3, 18.5);
+      tm.put(3.74, 33.0);
+      tm.put(2.4, 26.0);
+      tm.put(1.3, 15.5);
       prevTime = System.currentTimeMillis();
       currTime = System.currentTimeMillis();
 
@@ -70,12 +72,24 @@ public class SwerveCommand extends Command{
       if (Math.abs(Math.sqrt(Math.pow(Constants.swerveController.getLeftX(), 2) + Math.pow(Constants.swerveController.getLeftY(), 2))) > Constants.swerveControllerLeftStickDeadband) {
         aboveDeadband = true;
         if (fieldRelative == true) {
-          ySpeed = (Constants.m_yspeedLimiter.calculate(Constants.swerveController.getLeftY() * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) - (Constants.swerveController.getLeftX()) * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage);
-          xSpeed = Constants.m_xspeedLimiter.calculate(Constants.swerveController.getLeftY() * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) + (Constants.swerveController.getLeftX()) * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage;
+
+          double yController = a * Math.pow(Constants.swerveController.getLeftY(),3) + (1-a) * Constants.swerveController.getLeftY();
+          double xController = a * Math.pow(Constants.swerveController.getLeftX(),3) + (1-a) * Constants.swerveController.getLeftX();
+
+          SmartDashboard.putNumber("yController", yController);
+          SmartDashboard.putNumber("xController", xController);
+
+          
+
+
+          ySpeed = Constants.m_yspeedLimiter.calculate(yController * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) - (xController) * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage;
+          xSpeed = Constants.m_xspeedLimiter.calculate(yController * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) + (xController) * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage;
+          System.out.println(ySpeed);
+
         }
         else {
-          xSpeed = Constants.m_yspeedLimiter.calculate(Constants.swerveController.getLeftX()) * Drivetrain.kMaxVoltage;
-          ySpeed = Constants.m_xspeedLimiter.calculate(Constants.swerveController.getLeftY()) * Drivetrain.kMaxVoltage;
+          ySpeed = 0;
+          xSpeed = 0;
         }
       }
       else {
@@ -92,8 +106,8 @@ public class SwerveCommand extends Command{
           Constants.shooter.setVelocity();
           desired = Constants.camera.getDesiredShoot(0.7 * -1 * ySpeed);
           if(desired != null && desired[0] != 0){
-            yaw = -aimController.calculate(desired[0], 3);
-            Constants.arm.setDesired(tm.get(desired[1]) + (xSpeed * 1.05));
+            yaw = -1 * aimController.calculate(desired[0], -1);
+            Constants.arm.setDesired(tm.get(desired[2]) + (xSpeed * 1.05));
             xSpeed = 0.6 * xSpeed;
             ySpeed = 0.6 * ySpeed;    
 
