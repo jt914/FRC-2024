@@ -59,6 +59,8 @@ public class Drivetrain extends SubsystemBase {
 
   public final PIDController turnPIDController = new PIDController(0.006, 0.000, 0.00001);
 
+  public PIDController odometryController = new PIDController(1.2, .05, 0);
+
   public final SimpleMotorFeedforward driveSimpleMotorFeedforward = new SimpleMotorFeedforward(.00001, 0);
   public Gyro m_gyro;
 
@@ -143,6 +145,20 @@ public class Drivetrain extends SubsystemBase {
     m_backLeft.setModuleState(swerveModuleStates[2], 2);
     m_backRight.setModuleState(swerveModuleStates[3],3);
 
+  }
+  /**
+   * Returns next position increment to reach xMeters
+   * @param xMeters Desired position in meters for x axis(Forward+Back)
+   */
+  public double tunedDriveX(double xMeters) {
+    return odometryController.calculate(poseEstimator.getEstimatedPosition().getX(), xMeters);
+  }
+  /**
+   * Returns next position increment to reach yMeters
+   * @param yMeters Desired position in meters for y axis(Left+Right)
+   */
+  public double tunedDriveY(double yMeters) {
+    return odometryController.calculate(poseEstimator.getEstimatedPosition().getY(), yMeters);
   }
 
   public double getSpeed(){

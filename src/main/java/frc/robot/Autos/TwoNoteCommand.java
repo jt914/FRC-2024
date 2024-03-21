@@ -43,7 +43,7 @@ public class TwoNoteCommand extends Command {
     private int elapsed = 0;
     public Trigger trig;
     public BooleanSupplier autoAim;
-    public boolean aim = false;;
+    public boolean aim = false;
 
     public TwoNoteCommand(){
         swerve = Constants.swerve;
@@ -58,27 +58,24 @@ public class TwoNoteCommand extends Command {
     @Override
     public void initialize(){
 
-  
     }
-    //things to do: Figure out if gyro is rotating which direction
-    //Find exact locations of the notes
-    //Tune PID and Drive PID
     @Override
     public void execute(){
-        aim = true;
-        // if(step == 0){
-        //     Constants.arm.setDesired(4);
-        //     counter++;
-        //     if(counter > 50){
-        //         step = 1;
-        //         counter = 0;
-        //     }
-        // }
+        if(step == 0){
+            counter++;
+            swerve.drive(swerve.tunedDriveX(1), 0, 0);
+            SmartDashboard.putNumber("XDrive", swerve.tunedDriveX(1));
+            SmartDashboard.putNumber("currentPos", swerve.poseEstimator.getEstimatedPosition().getX());
+            // if(counter > 50){
+            //     step = 1;
+            //     counter = 0;
+            // }
+        }
 
 
         // if(step == 1){
-        //     Constants.shooter.setVelocity();
         //     counter++;
+
         //     if(counter > 50){
         //         step = 2;
         //         counter = 0;
@@ -86,13 +83,12 @@ public class TwoNoteCommand extends Command {
         // }
 
         // if(step == 2){
-        //     intake.run();
         //     counter++;
+
         //     if(counter > 50){
         //         counter = 0;
-        //         step = 4;
-        //         shooter.stop();
-        //         intake.stop();
+        //         step = 3;
+
         //     }
         // }
 
