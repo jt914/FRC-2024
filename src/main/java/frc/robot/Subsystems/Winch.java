@@ -35,7 +35,7 @@ public class Winch extends SubsystemBase{
         winchRight.restoreFactoryDefaults();
         winchRight.setIdleMode(IdleMode.kBrake);
         winchRight.enableVoltageCompensation(11);
-        winchRight.setInverted(true);
+        winchRight.setInverted(false);
 
         winchRight.burnFlash();
         winchLeft.burnFlash();
@@ -51,28 +51,32 @@ public class Winch extends SubsystemBase{
 
     }
     public void moveRightOut(){
-            winchRight.set(0.1);
+            winchRight.set(0.2);
         
 
     }
     public void moveLeftOut(){
-            winchLeft.set(0.1);
+            winchLeft.set(0.2);
         
 
     }
     public void moveLeftIn() {
-            winchLeft.set(-0.1);
+            winchLeft.set(-0.2);
         
 
     }
     public void moveRightIn() {
-            winchRight.set(-0.1);
+            winchRight.set(-0.2);
         
     }
 
-    public void stop() {
+    public void leftStop() {
         winchLeft.set(0);
+
+    }
+    public void rightStop() {
         winchRight.set(0);
 
     }
+
 }
