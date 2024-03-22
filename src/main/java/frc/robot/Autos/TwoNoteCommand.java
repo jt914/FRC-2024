@@ -69,10 +69,11 @@ public class TwoNoteCommand extends Command {
     }
     @Override
     public void execute(){
-
         if(step == -1){
             counter++;
-            swerve.drive(-0.1, swerve.tunedDriveY(-1.8), 0);
+            // swerve.drive(0, -swerve.tunedDriveY(-2.7), 0);
+            swerve.drive(0, -swerve.tunedDriveY(4.5), 0);
+
             if(counter > 50){
                 step = 0;
                 counter = 0;
@@ -83,7 +84,7 @@ public class TwoNoteCommand extends Command {
 
         if(step == 0){
             shooter.setVelocity();
-            Constants.arm.setDesired(6);
+            Constants.arm.setDesired(7);
             counter++;
             double[] desired = Constants.camera.getDesiredShoot(0);
             if(desired != null){
@@ -106,18 +107,55 @@ public class TwoNoteCommand extends Command {
                 arm.setDesired(5);
             }
         }
-
-
         if(step == 2){
             counter++;
-            swerve.drive(swerve.tunedDriveX(-6), 0, 0);
-            
-            if(counter > 50){
+            if(counter > 100){
                 step = 3;
+                counter = 0;
+            }
+
+        }
+
+
+        if(step == 3){
+            counter++;
+            swerve.drive(-1.5, 0, 0);
+            arm.setDesired(5.5);
+            intake.run();
+            if(Constants.intake.intakeSensor.getVoltage()<.5){
+                intake.stop();
+                step = 4;
                 counter = 0;
                 swerve.drive(0,0,0);
             }
         }
+        if(step == 4){
+            shooter.setVelocity();
+            counter++;
+            double[] desired = Constants.camera.getDesiredShoot(0);
+            Constants.arm.setDesired(22.5);
+
+            if(desired != null){
+                swerve.drive(0,0, -1 * aimController.calculate(desired[0], -6));
+            }
+            if(counter > 100){
+                step = 5;
+                counter = 0;
+            }
+        }
+
+        if(step == 5){
+            intake.runFast();
+            counter++;
+            if(counter > 100){
+                step = 6;
+                counter = 0;
+                intake.stop();
+                shooter.stop();
+                arm.setDesired(5);
+            }
+        }
+
 
 
    

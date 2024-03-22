@@ -75,9 +75,6 @@ public class SwerveCommand extends Command{
           double xController = a * Math.pow(Constants.swerveController.getLeftX(),3) + (1-a) * Constants.swerveController.getLeftX();
 
 
-          
-
-
           ySpeed = Constants.m_yspeedLimiter.calculate(yController * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) - (xController) * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage;
           xSpeed = Constants.m_xspeedLimiter.calculate(yController * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) + (xController) * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage;
           System.out.println(ySpeed);
