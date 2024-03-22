@@ -24,7 +24,6 @@ public class IntakeShootCommand extends Command {
 
     @Override
     public void execute(){
-        SmartDashboard.putNumber("Elapsed", elapsed);
         elapsed++;
         if(Constants.hasNote) {
             lights.off();

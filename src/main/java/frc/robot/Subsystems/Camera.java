@@ -112,7 +112,6 @@ public class Camera {
 
 
             retVal[2] = shooterTarget.getBestCameraToTarget().getX();
-            SmartDashboard.putNumber("Camerrraa", retVal[1]);
 
             return retVal;
         }

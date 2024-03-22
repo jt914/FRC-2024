@@ -52,13 +52,11 @@ public class Winch extends SubsystemBase{
     }
     public void moveRightOut(){
             winchRight.set(0.2);
-        
 
     }
     public void moveLeftOut(){
             winchLeft.set(0.2);
         
-
     }
     public void moveLeftIn() {
             winchLeft.set(-0.2);

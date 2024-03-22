@@ -43,7 +43,6 @@ public class SwerveCommand extends Command{
 
     @Override
     public void execute(){
-      SmartDashboard.putBoolean("field", Constants.fieldRelative);
 
         if(Constants.swerveController.back().getAsBoolean()){
           Constants.fieldRelative = true;
@@ -51,7 +50,6 @@ public class SwerveCommand extends Command{
 
         }
 
-        SmartDashboard.putNumber("Gyrorr", Constants.m_gyro.getTotalAngleDegrees());
         driveWithJoystick(Constants.fieldRelative, Constants.autoAim);
 
       }
@@ -76,10 +74,6 @@ public class SwerveCommand extends Command{
           double yController = a * Math.pow(Constants.swerveController.getLeftY(),3) + (1-a) * Constants.swerveController.getLeftY();
           double xController = a * Math.pow(Constants.swerveController.getLeftX(),3) + (1-a) * Constants.swerveController.getLeftX();
 
-          SmartDashboard.putNumber("yController", yController);
-          SmartDashboard.putNumber("xController", xController);
-          SmartDashboard.putNumber("CURRENTX", Constants.swerve.poseEstimator.getEstimatedPosition().getX());
-          SmartDashboard.putNumber("CURRENTY", Constants.swerve.poseEstimator.getEstimatedPosition().getY());
 
           ySpeed = Constants.m_yspeedLimiter.calculate(yController * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) - (xController) * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage;
           xSpeed = Constants.m_xspeedLimiter.calculate(yController * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) + (xController) * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage;

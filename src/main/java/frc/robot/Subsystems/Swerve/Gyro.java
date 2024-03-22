@@ -32,7 +32,6 @@ public class Gyro {
 
   public double getTotalAngleDegrees() {
     double angle = m_gyro.getAngle() + gyroAngleOffset;
-    SmartDashboard.putNumber("gyroAngle",angle);
 
     return angle;
   }

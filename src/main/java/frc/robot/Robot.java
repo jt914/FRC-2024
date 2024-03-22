@@ -39,7 +39,6 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.SPI;
 
 public class Robot extends LoggedRobot {
-    Field2d m_field = new Field2d();
     private boolean startedSwerve = false;
     private RobotContainer robot;
     Command autoCommand;
@@ -47,15 +46,6 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotInit() {
-    Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
-
-  if (isReal()) {
-      Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-  } else {
-  }
-
-// Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
-  Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
 
     robot = new RobotContainer();
     autoCommand = robot.getAutonomousCommand();
@@ -73,8 +63,6 @@ public class Robot extends LoggedRobot {
     CommandScheduler.getInstance().run();
     Lights.strip.setData(Lights.ledBuffer);
 
-    m_field.setRobotPose(Constants.swerve.poseEstimator.getEstimatedPosition());
-    SmartDashboard.putData(m_field);
     Constants.swerve.updateOdometry();
 
   }
@@ -87,6 +75,7 @@ public class Robot extends LoggedRobot {
     Constants.arm.disable();
     Constants.arm.setDesired(Constants.arm.getMeasurement());
     Constants.arm.enable();
+    Constants.swerve.resetAllAbsoluteModules();
 
   }
 
@@ -118,7 +107,6 @@ public class Robot extends LoggedRobot {
     if(Constants.swerve != null) {
       Constants.swerve.updateOdometry();
     }
-    SmartDashboard.putNumber("desired", Constants.arm.getMeasurement());
     Constants.arm.setGoal(Constants.arm.desiredAngle);
 
   

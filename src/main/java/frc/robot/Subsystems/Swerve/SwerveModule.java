@@ -112,7 +112,6 @@ public class SwerveModule {
    * @param desiredState Desired state with speed and angle.
    */
   public void setModuleState(SwerveModuleState desiredState, int module) {
-    SmartDashboard.putNumber("TurnEncoderPosition: " + module, 360 * turnCoder.getAbsolutePosition().getValueAsDouble());
     // Optimize the reference state to avoid spinning further than 90 degrees
     double moduleVelocity = desiredState.speedMetersPerSecond;
     double moduleAngle = desiredState.angle.getDegrees();
