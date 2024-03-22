@@ -72,7 +72,9 @@ public class TwoNoteCommand extends Command {
     public void execute(){
         if(step == -1){
             counter++;
-            swerve.drive(0, swerve.tunedDriveY(-2.7), 0);
+            // swerve.drive(0, -swerve.tunedDriveY(-2.7), 0);
+            swerve.drive(0, -swerve.tunedDriveY(4.5), 0);
+
             if(counter > 50){
                 step = 0;
                 counter = 0;
@@ -132,10 +134,10 @@ public class TwoNoteCommand extends Command {
             shooter.setVelocity();
             counter++;
             double[] desired = Constants.camera.getDesiredShoot(0);
-            Constants.arm.setDesired(20);
+            Constants.arm.setDesired(22.5);
 
             if(desired != null){
-                swerve.drive(0,0, -1 * aimController.calculate(desired[0], -1));
+                swerve.drive(0,0, -1 * aimController.calculate(desired[0], -6));
             }
             if(counter > 100){
                 step = 5;
