@@ -23,15 +23,10 @@ public class WinchCommand extends Command{
         SmartDashboard.putNumber("rightWinchEncoder", winch.winchRightEncoder.getPosition());
 
 
-        if(leftTrigger || rightTrigger || leftBumper || rightBumper){
+        if(leftTrigger || leftBumper){
             if(Constants.alternateController.leftTrigger().getAsBoolean()) {
                 if(winch.winchRightEncoder.getPosition() < 85) {
                     winch.moveLeftOut();
-                }
-            }
-            if(Constants.alternateController.rightTrigger().getAsBoolean()) {
-                if(winch.winchLeftEncoder.getPosition() < 72) {
-                    winch.moveRightOut();
                 }
             }
             if(Constants.alternateController.leftBumper().getAsBoolean()) {
@@ -39,21 +34,34 @@ public class WinchCommand extends Command{
                     winch.moveLeftIn();
                 }
             }
+        }
+        else{
+            winch.leftStop();
+        }
+
+        
+        if(rightTrigger || rightBumper){
+            if(Constants.alternateController.rightTrigger().getAsBoolean()) {
+                if(winch.winchRightEncoder.getPosition() < 72) {
+                    winch.moveRightOut();
+                }
+            }
             if(Constants.alternateController.rightBumper().getAsBoolean()) {
-                if(winch.winchRightEncoder.getPosition() > 0) {
-                     winch.moveRightIn();
+                if(winch.winchLeftEncoder.getPosition() > 0) {
+                    winch.moveRightIn();
                 }
             }
         }
         else{
-            winch.stop();
-
+            winch.rightStop();
         }
+
         
     }
     @Override
     public void end(boolean interrupted){
-        winch.stop();
+        winch.leftStop();
+        winch.rightStop();
     }
     @Override
     public boolean isFinished() {
