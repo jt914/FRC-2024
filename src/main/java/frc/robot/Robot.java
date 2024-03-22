@@ -66,6 +66,10 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotPeriodic(){
+    SmartDashboard.putNumber("CURRENTX", Constants.swerve.poseEstimator.getEstimatedPosition().getX());
+    SmartDashboard.putNumber("CURRENTY", Constants.swerve.poseEstimator.getEstimatedPosition().getY());
+
+
     CommandScheduler.getInstance().run();
     Lights.strip.setData(Lights.ledBuffer);
 
