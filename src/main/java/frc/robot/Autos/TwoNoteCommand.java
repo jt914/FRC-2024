@@ -71,7 +71,7 @@ public class TwoNoteCommand extends Command {
     public void execute(){
         if(step == -1){
             counter++;
-            // swerve.drive(0, -swerve.tunedDriveY(-2.7), 0);
+            // swerve.drive(0, swerve.tunedDriveY(-2.7), 0);
             swerve.drive(0, -swerve.tunedDriveY(4.5), 0);
 
             if(counter > 50){

@@ -35,7 +35,7 @@ public class OneNote extends Command {
     private PIDController drivePID = new PIDController(5, 0.0001, 0);
     private PIDController aimController = new PIDController(.19, 0.000001, 0);
     private int counter = 0;
-    private int step = -1;
+    private int step = 0;
     private double xSpeed, ySpeed, yaw;
     private Shooter shooter;
     private Arm arm;
@@ -70,25 +70,12 @@ public class OneNote extends Command {
     @Override
     public void execute(){
 
-        if(step == -1){
-            counter++;
-            swerve.drive(-0.1, swerve.tunedDriveY(-1.8), 0);
-            if(counter > 50){
-                step = 0;
-                counter = 0;
-                swerve.drive(0,0,0);
-            }
-        }
 
 
         if(step == 0){
             shooter.setVelocity();
             Constants.arm.setDesired(6);
             counter++;
-            double[] desired = Constants.camera.getDesiredShoot(0);
-            if(desired != null){
-                swerve.drive(0,0, -1 * aimController.calculate(desired[0], -1));
-            }
             if(counter > 100){
                 step = 1;
                 counter = 0;
@@ -107,17 +94,6 @@ public class OneNote extends Command {
             }
         }
 
-
-        if(step == 2){
-            counter++;
-            swerve.drive(swerve.tunedDriveX(-6), 0, 0);
-            
-            if(counter > 50){
-                step = 3;
-                counter = 0;
-                swerve.drive(0,0,0);
-            }
-        }
 
 
    

@@ -93,9 +93,16 @@ public class OneNoteDrive extends Command {
                 arm.setDesired(5);
             }
         }
-
-
         if(step == 2){
+            counter++;
+                if(counter > 200){
+                    step = 3;
+                    counter = 0;
+                }
+        }
+
+
+        if(step == 3){
             counter++;
             swerve.drive(swerve.tunedDriveX(-6), 0, 0);
             
