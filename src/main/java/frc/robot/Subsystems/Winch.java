@@ -46,7 +46,7 @@ public class Winch extends SubsystemBase{
     public void moveOut() {
         if(winchRightEncoder.getPosition() < 100 && winchLeftEncoder.getPosition() < 100) {
             winchLeft.set(-0.1);
-            winchRight.set(-0.2);
+            winchRight.set(-0.3);
         }
 
     }
