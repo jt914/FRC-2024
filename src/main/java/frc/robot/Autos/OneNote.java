@@ -20,7 +20,7 @@ import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Shooter;
 import frc.robot.Subsystems.Swerve.Drivetrain;
 
-public class TwoNoteCommand extends Command {
+public class OneNote extends Command {
     // private Arm arm;
     // private Intake intake;
     private boolean isFinished = false;
@@ -50,7 +50,7 @@ public class TwoNoteCommand extends Command {
     InterpolatingDoubleTreeMap tm = new InterpolatingDoubleTreeMap();
 
 
-    public TwoNoteCommand(){
+    public OneNote(){
         swerve = Constants.swerve;
         arm = Constants.arm;
         shooter = Constants.shooter;

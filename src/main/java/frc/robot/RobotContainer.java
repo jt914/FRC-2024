@@ -13,15 +13,16 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.simulation.XboxControllerSim;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Subsystems.*;
-import frc.robot.Autos.AutoCommand;
-import frc.robot.Autos.BlankAuto;
-import frc.robot.Autos.TwoNoteCommand;
+import frc.robot.Autos.*;
 // import frc.robot.Autos.AutoCommand;
 import frc.robot.Commands.*;
+import frc.robot.Commands.Climber.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -33,6 +34,12 @@ import frc.robot.Commands.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  private final Command oneLeft  = new OneNote();
+  private final Command oneCenter  = new OneCenter();
+  private final Command twoRight  = new TwoNoteCommand();
+
+
 
   // The robot's subsystems and commands are defined here...
   //
@@ -43,6 +50,12 @@ public class RobotContainer {
   public RobotContainer() {
 
     configureButtonBindings();
+    m_chooser.setDefaultOption("One Note Left", oneLeft);
+    m_chooser.addOption("One Note Center", oneCenter);
+    m_chooser.addOption("Two Note Right", twoRight);
+    SmartDashboard.putData(m_chooser);
+
+
   }
 
   /**
@@ -61,10 +74,16 @@ public class RobotContainer {
 
     (Constants.swerveController.rightBumper()).toggleOnTrue(new IntakeCommand());
     (Constants.swerveController.x()).toggleOnTrue(new ResetModulesCommand());
-    (Constants.alternateController.x()).toggleOnTrue(new WinchCommand());
     (Constants.swerveController.leftBumper()).whileTrue(new IntakeReverseCommand());
     (Constants.swerveController.a()).toggleOnTrue(new AmpCommand());
     Constants.swerveController.y().onTrue(new ToggleAutoAimCommand());
+
+    Constants.alternateController.rightTrigger().whileTrue(new RightOutClimber());
+    Constants.alternateController.rightBumper().whileTrue(new RightInClimber());
+
+    Constants.alternateController.leftTrigger().whileTrue(new LeftOutClimber());
+    Constants.alternateController.leftBumper().whileTrue(new LeftInClimber());
+
 
     //Press x to turn the arm on. If something goes wrong, just press X again and it will turn the arm off
 
@@ -76,6 +95,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new TwoNoteCommand();
+    return m_chooser.getSelected();
   }
 }
