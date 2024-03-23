@@ -35,7 +35,7 @@ public class TwoNoteCommand extends Command {
     private PIDController drivePID = new PIDController(5, 0.0001, 0);
     private PIDController aimController = new PIDController(.19, 0.000001, 0);
     private int counter = 0;
-    private int step = -1;
+    private int step = -2;
     private double xSpeed, ySpeed, yaw;
     private Shooter shooter;
     private Arm arm;
@@ -70,7 +70,15 @@ public class TwoNoteCommand extends Command {
     @Override
     public void execute(){
 
-        System.out.println("Two Note");
+        if(step == -2){
+            counter++;
+            arm.setDesired(5.5);
+            if(counter > 100){
+                step = -1;
+                counter = 0;
+            }
+        }
+
 
         if(step == -1){
             counter++;

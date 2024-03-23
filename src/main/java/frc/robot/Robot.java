@@ -16,6 +16,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -50,6 +51,7 @@ public class Robot extends LoggedRobot {
     robot = new RobotContainer();
     Constants.m_gyro.calibrateGyro();
     Constants.arm.setGoal(Constants.arm.desiredAngle);
+    PortForwarder.add(5800, "photonvision.local", 5800);
 
   }
 
