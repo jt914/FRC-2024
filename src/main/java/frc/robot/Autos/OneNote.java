@@ -70,6 +70,8 @@ public class OneNote extends Command {
     @Override
     public void execute(){
 
+        System.out.println("ONE NOTE");
+
 
 
         if(step == 0){

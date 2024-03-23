@@ -35,8 +35,8 @@ import frc.robot.Commands.Climber.*;
  */
 public class RobotContainer {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-  private final Command oneLeft  = new OneNote();
-  private final Command oneCenter  = new OneCenter();
+  private final Command OneNote  = new OneNote();
+  private final Command OneNoteDrive  = new OneNoteDrive();
   private final Command twoRight  = new TwoNoteCommand();
 
 
@@ -50,9 +50,9 @@ public class RobotContainer {
   public RobotContainer() {
 
     configureButtonBindings();
-    m_chooser.setDefaultOption("One Note Left", oneLeft);
-    m_chooser.addOption("One Note Center", oneCenter);
-    m_chooser.addOption("Two Note Right", twoRight);
+    m_chooser.setDefaultOption("One Note", OneNote);
+    m_chooser.addOption("One Note Drive", OneNoteDrive);
+    m_chooser.addOption("Two Note", twoRight);
     SmartDashboard.putData(m_chooser);
 
 

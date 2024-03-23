@@ -69,6 +69,7 @@ public class OneNoteDrive extends Command {
     }
     @Override
     public void execute(){
+        System.out.println("ONE NOTE Drive");
 
 
 
@@ -95,7 +96,7 @@ public class OneNoteDrive extends Command {
         }
         if(step == 2){
             counter++;
-                if(counter > 200){
+                if(counter > 400){
                     step = 3;
                     counter = 0;
                 }
@@ -104,10 +105,10 @@ public class OneNoteDrive extends Command {
 
         if(step == 3){
             counter++;
-            swerve.drive(swerve.tunedDriveX(-6), 0, 0);
+            swerve.drive(-2, 0, 1);
             
-            if(counter > 50){
-                step = 3;
+            if(counter > 150){
+                step = 4;
                 counter = 0;
                 swerve.drive(0,0,0);
             }

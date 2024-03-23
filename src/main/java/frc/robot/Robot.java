@@ -48,7 +48,6 @@ public class Robot extends LoggedRobot {
   public void robotInit() {
 
     robot = new RobotContainer();
-    autoCommand = robot.getAutonomousCommand();
     Constants.m_gyro.calibrateGyro();
     Constants.arm.setGoal(Constants.arm.desiredAngle);
 
@@ -69,6 +68,8 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousInit() {
+    autoCommand = robot.getAutonomousCommand();
+
     if(autoCommand != null){
       autoCommand.schedule();
     }

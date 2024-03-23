@@ -59,7 +59,7 @@ public class Drivetrain extends SubsystemBase {
 
   public final PIDController turnPIDController = new PIDController(0.006, 0.000, 0.00001);
 
-  public PIDController odometryController = new PIDController(1.8, .1, 0);
+  public PIDController odometryController = new PIDController(1.5, .1, 0);
 
   public final SimpleMotorFeedforward driveSimpleMotorFeedforward = new SimpleMotorFeedforward(.00001, 0);
   public Gyro m_gyro;
