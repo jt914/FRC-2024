@@ -47,6 +47,6 @@ public class IntakeShootCommand extends Command {
         intake.stop();
         elapsed = 0;
         isFinished = false;
-
+        Constants.autoAim = false;
     }
 }

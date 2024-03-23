@@ -12,7 +12,6 @@ import frc.robot.Subsystems.Swerve.Drivetrain;
 public class SwerveCommand extends Command{
 
     int autoAimLoop;
-    boolean autoAim = false;
     public static double[] desired;
     boolean isFinished = false;
     double desiredOffset;
