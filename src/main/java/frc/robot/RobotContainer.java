@@ -78,7 +78,7 @@ public class RobotContainer {
     (Constants.swerveController.a()).toggleOnTrue(new AmpCommand());
     Constants.swerveController.y().onTrue(new ToggleAutoAimCommand());
 
-    Constants.swerveController.rightTrigger().whileTrue(new RightOutClimber());
+    Constants.alternateController.rightTrigger().whileTrue(new RightOutClimber());
     Constants.alternateController.rightBumper().whileTrue(new RightInClimber());
 
     Constants.alternateController.leftTrigger().whileTrue(new LeftOutClimber());
