@@ -35,7 +35,7 @@ public class OneNote extends Command {
     private PIDController drivePID = new PIDController(5, 0.0001, 0);
     private PIDController aimController = new PIDController(.19, 0.000001, 0);
     private int counter = 0;
-    private int step = 0;
+    private int step = -1;
     private double xSpeed, ySpeed, yaw;
     private Shooter shooter;
     private Arm arm;
@@ -70,7 +70,16 @@ public class OneNote extends Command {
     @Override
     public void execute(){
 
-        System.out.println("ONE NOTE");
+
+        
+        if(step == -1){
+            counter++;
+            arm.setDesired(5.5);
+            if(counter > 100){
+                step = 0;
+                counter = 0;
+            }
+        }
 
 
 

@@ -23,7 +23,7 @@ public final class Constants {
     public static boolean intakeRunning = false;
     public static boolean fieldRelative = false;
     public static boolean armRunning = false;
-    public static final double swerveControllerLeftStickDeadband = 0.1;
+    public static final double swerveControllerLeftStickDeadband = 0.2;
     public static final double swerveControllerRightXDeadband = 0.1;
 
     // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.

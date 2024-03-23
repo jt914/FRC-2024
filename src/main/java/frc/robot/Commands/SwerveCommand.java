@@ -33,7 +33,7 @@ public class SwerveCommand extends Command{
 
     @Override
     public void initialize(){
-      tm.put(3.74, 33.5);
+      tm.put(3.74, 31.5);
       tm.put(2.4, 26.5);
       tm.put(1.3, 15.5);
       prevTime = System.currentTimeMillis();
@@ -83,7 +83,7 @@ public class SwerveCommand extends Command{
 
           ySpeed = Constants.m_yspeedLimiter.calculate(yController * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) - (xController) * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage;
           xSpeed = Constants.m_xspeedLimiter.calculate(yController * Math.sin(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees())) + (xController) * Math.cos(Math.toRadians(Constants.m_gyro.getTotalAngleDegrees()))) * Drivetrain.kMaxVoltage;
-          System.out.println(ySpeed);
+          // System.out.println(ySpeed);
 
         }
         else {
