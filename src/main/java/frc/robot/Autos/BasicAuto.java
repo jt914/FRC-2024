@@ -47,7 +47,7 @@ public class BaseAuto extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        swerve.drive(0,0,0);
+        swerve.drive(0, 0, 0);
     }
 
 }
