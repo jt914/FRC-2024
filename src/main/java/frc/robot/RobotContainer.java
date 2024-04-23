@@ -38,7 +38,7 @@ public class RobotContainer {
   private final Command OneNote  = new OneNote();
   private final Command OneNoteDrive  = new OneNoteDrive();
   private final Command twoRight  = new TwoNoteCommand();
-
+  private final Command basicAuto = new BasicAuto();
 
 
   // The robot's subsystems and commands are defined here...
@@ -53,6 +53,7 @@ public class RobotContainer {
     m_chooser.setDefaultOption("One Note", OneNote);
     m_chooser.addOption("One Note Drive", OneNoteDrive);
     m_chooser.addOption("Two Note", twoRight);
+    m_chooser.addOption("Basic Auto", basicAuto);
     SmartDashboard.putData(m_chooser);
 
 
