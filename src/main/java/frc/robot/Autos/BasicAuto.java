@@ -27,18 +27,17 @@ public class BaseAuto extends Command {
     private Trigger trig;
     private InterpolatingDoubleTreeMap tm = new InterpolatingDoubleTreeMap();
 
-    public OneNote(){
+    public BaseAuto(){
+        autoAim = () -> false;
         trig = new Trigger(autoAim);
         trig.onTrue(new ToggleAutoAimCommand());
-            
     }
   
     @Override
-    public void initialize(){
+    public void initialize() {
         tm.put(3.74, 33.0);
         tm.put(2.4, 26.0);
         tm.put(1.3, 15.5);
-
     }
   
     @Override
