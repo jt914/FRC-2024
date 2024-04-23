@@ -38,7 +38,7 @@ public class BaseAuto extends Command {
         tm.put(3.74, 33.0);
         tm.put(2.4, 26.0);
         tm.put(1.3, 15.5);
-        Constants.lights.setColor(30, 150, 0, 123, 255);
+        Constants.lights.setColor(30, 150, 0, 0, 255);
     }
   
     @Override
